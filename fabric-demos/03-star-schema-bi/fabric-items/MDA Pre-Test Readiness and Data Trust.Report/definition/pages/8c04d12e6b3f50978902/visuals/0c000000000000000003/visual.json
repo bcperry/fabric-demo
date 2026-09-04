@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0c000000000000000003", "position": {"x": 960, "y": 180, "z": 1, "height": 260, "width": 420},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_data_source_readiness"}}, "Property": "Missing Feeds"}}, "queryRef": "gold_data_source_readiness.Missing Feeds"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Feeds unavailable'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

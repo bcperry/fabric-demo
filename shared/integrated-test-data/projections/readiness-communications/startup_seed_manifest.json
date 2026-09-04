@@ -1,0 +1,57 @@
+{
+  "demo_id": "10-test-readiness-communications",
+  "scenario_id": "scn-demo10-readiness-comms-001",
+  "test_event_id": "test-demo10-integrated-20261105",
+  "run_manifest_id": "run-demo10-readiness-001",
+  "seed_mode": "explicit-fixed",
+  "root_startup_seed": 74110,
+  "classification": "SYNTHETIC_UNCLASS",
+  "fictional_notice": "FICTIONAL / DEMO ONLY",
+  "sources": [
+    {
+      "source_instance_id": "hmon-pod-alpha",
+      "startup_seed": 74111,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "hmon-pod-bravo",
+      "startup_seed": 74112,
+      "issue_profile": "observes_seeded_outage"
+    },
+    {
+      "source_instance_id": "hmon-pod-charlie",
+      "startup_seed": 74113,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "hmon-pod-delta",
+      "startup_seed": 74114,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "hmon-pod-echo",
+      "startup_seed": 74115,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "network-monitor-01",
+      "startup_seed": 74121,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "readiness-controller-01",
+      "startup_seed": 74131,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "operator-control-01",
+      "startup_seed": 74141,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "safety-monitor-01",
+      "startup_seed": 74151,
+      "issue_profile": "nominal"
+    }
+  ]
+}

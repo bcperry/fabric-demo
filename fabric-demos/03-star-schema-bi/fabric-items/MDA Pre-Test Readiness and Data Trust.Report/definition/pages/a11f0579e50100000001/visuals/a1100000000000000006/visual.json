@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a1100000000000000006",
+  "position": {"x": 40, "y": 380, "z": 2, "height": 620, "width": 720},
+  "visual": {
+    "visualType": "azureMap",
+    "query": {"queryState": {
+      "Category": {"projections": [{"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "site_name"}}, "queryRef": "gold_mirror_site_locations.site_name", "nativeQueryRef": "Site"}]},
+      "X": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Average Longitude"}}, "queryRef": "gold_mirror_site_locations.Average Longitude", "nativeQueryRef": "Longitude"}]},
+      "Y": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Average Latitude"}}, "queryRef": "gold_mirror_site_locations.Average Latitude", "nativeQueryRef": "Latitude"}]},
+      "Size": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Active Site Risks"}}, "queryRef": "gold_mirror_site_locations.Active Site Risks", "nativeQueryRef": "Active risks"}]},
+      "Legend": {"projections": [{"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "site_risk_level"}}, "queryRef": "gold_mirror_site_locations.site_risk_level", "nativeQueryRef": "Highest risk"}]},
+      "Tooltips": {"projections": [
+        {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "city"}}, "queryRef": "gold_mirror_site_locations.city", "nativeQueryRef": "City"},
+        {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "country_name"}}, "queryRef": "gold_mirror_site_locations.country_name", "nativeQueryRef": "Country"},
+        {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "theater"}}, "queryRef": "gold_mirror_site_locations.theater", "nativeQueryRef": "Theater"},
+        {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "site_risk_level"}}, "queryRef": "gold_mirror_site_locations.site_risk_level", "nativeQueryRef": "Highest risk"},
+        {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "constrained_system_count"}}, "queryRef": "gold_mirror_site_locations.constrained_system_count", "nativeQueryRef": "Constrained systems"}
+      ]}
+    }},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Where mission risk is concentrated'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

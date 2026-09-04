@@ -1,0 +1,3 @@
+state_event_id,effective_time_utc,source_instance_id,readiness_state,clock_health,calibration_status,coverage_expectation,notes,classification
+state-watch-receiver-alpha-01,2026-11-03T15:00:06.400Z,receiver-alpha-01,READY,LOCKED,VERIFIED,continuous_1hz_multi_track,Anchor receiver remained within planned offset window.,SYNTHETIC_UNCLASS
+state-degraded-receiver-bravo-01,2026-11-03T15:00:06.650Z,receiver-bravo-01,DEGRADED,DRIFTING,VERIFIED,clock_drift_and_intermittent_loss_expected_for_seeded_issue,Seeded issue enabled: drift growth and intermittent packet loss.,SYNTHETIC_UNCLASS

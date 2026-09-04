@@ -1,0 +1,47 @@
+{
+  "demo_id": "09-range-instrumentation-ground-truth",
+  "scenario_id": "scn-demo09-range-gt-001",
+  "test_event_id": "test-demo09-range-20261103",
+  "run_manifest_id": "run-demo09-range-001",
+  "seed_mode": "explicit-fixed",
+  "root_startup_seed": 73091,
+  "classification": "SYNTHETIC_UNCLASS",
+  "fictional_notice": "FICTIONAL / DEMO ONLY",
+  "sources": [
+    {
+      "source_instance_id": "target-vehicle-01",
+      "startup_seed": 73101,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "interceptor-vehicle-01",
+      "startup_seed": 73102,
+      "issue_profile": "nominal"
+    },
+    {
+      "source_instance_id": "receiver-alpha-01",
+      "startup_seed": 73103,
+      "issue_profile": "nominal_anchor_receiver"
+    },
+    {
+      "source_instance_id": "receiver-bravo-01",
+      "startup_seed": 73104,
+      "issue_profile": "seeded_clock_drift_and_loss"
+    },
+    {
+      "source_instance_id": "optical-alpha-01",
+      "startup_seed": 73105,
+      "issue_profile": "visibility_sensitive"
+    },
+    {
+      "source_instance_id": "truth-cell-01",
+      "startup_seed": 73106,
+      "issue_profile": "authoritative_demo_truth"
+    },
+    {
+      "source_instance_id": "environment-cell-01",
+      "startup_seed": 73107,
+      "issue_profile": "nominal"
+    }
+  ]
+}

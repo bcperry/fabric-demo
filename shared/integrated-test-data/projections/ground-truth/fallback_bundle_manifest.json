@@ -1,0 +1,67 @@
+{
+  "fallback_bundle_id": "fallback-demo09-range-001",
+  "demo_id": "09-range-instrumentation-ground-truth",
+  "scenario_id": "scn-demo09-range-gt-001",
+  "test_event_id": "test-demo09-range-20261103",
+  "run_manifest_id": "run-demo09-range-001",
+  "generated_from_root_seed": 73091,
+  "classification": "SYNTHETIC_UNCLASS",
+  "fictional_notice": "FICTIONAL / DEMO ONLY",
+  "files": [
+    {
+      "path": "data/postgres_batch_manifest.json",
+      "role": "PostgreSQL fallback batch order",
+      "row_count": 4
+    },
+    {
+      "path": "data/postgres_source_registry_batch01.csv",
+      "role": "Administrative source registry",
+      "row_count": 7
+    },
+    {
+      "path": "data/postgres_objective_coverage_batch01.csv",
+      "role": "Objective coverage thresholds",
+      "row_count": 7
+    },
+    {
+      "path": "data/postgres_source_state_batch01.csv",
+      "role": "Initial source readiness states",
+      "row_count": 7
+    },
+    {
+      "path": "data/postgres_source_state_batch02.csv",
+      "role": "Seeded source readiness updates",
+      "row_count": 2
+    },
+    {
+      "path": "data/startup_seed_manifest.json",
+      "role": "Explicit startup seed registry",
+      "row_count": 7
+    },
+    {
+      "path": "data/target_telemetry.jsonl",
+      "role": "Target telemetry replay",
+      "row_count": 11
+    },
+    {
+      "path": "data/interceptor_telemetry.jsonl",
+      "role": "Interceptor telemetry replay",
+      "row_count": 6
+    },
+    {
+      "path": "data/instrumentation_observation.jsonl",
+      "role": "Range receiver and optical observation replay",
+      "row_count": 34
+    },
+    {
+      "path": "data/ground_truth_observation.jsonl",
+      "role": "Independent ground truth replay",
+      "row_count": 17
+    },
+    {
+      "path": "data/environment_observation.jsonl",
+      "role": "Environment annotation replay",
+      "row_count": 3
+    }
+  ]
+}

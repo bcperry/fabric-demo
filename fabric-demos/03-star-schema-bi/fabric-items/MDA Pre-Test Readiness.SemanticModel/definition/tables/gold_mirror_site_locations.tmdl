@@ -1,0 +1,204 @@
+table gold_mirror_site_locations
+	lineageTag: 83bcb18d-eed4-439a-af91-8c1bb03e1a71
+	sourceLineageTag: [dbo].[gold_mirror_site_locations]
+
+	measure 'Mirrored Sites' = DISTINCTCOUNT(gold_mirror_site_locations[site_id])
+		formatString: 0
+
+	measure 'Mirrored Systems' = SUM(gold_mirror_site_locations[system_count])
+		formatString: 0
+
+	measure 'Constrained Mirrored Systems' = SUM(gold_mirror_site_locations[constrained_system_count])
+		formatString: 0
+
+	measure 'Locations in Scope' = DISTINCTCOUNT(gold_mirror_site_locations[site_id])
+		formatString: 0
+
+	measure 'Participant Systems' = SUM(gold_mirror_site_locations[system_count])
+		formatString: 0
+
+	measure 'Participant Readiness Brief' = ```
+			VAR TotalSystems = [Participant Systems]
+			VAR ConstrainedSystems = SUM(gold_mirror_site_locations[constrained_system_count])
+			VAR ReadySystems = TotalSystems - ConstrainedSystems
+			RETURN FORMAT(ReadySystems, "#,0") & " ready (" & FORMAT(DIVIDE(ReadySystems, TotalSystems), "0.0%") & ")"
+			```
+
+	measure 'Participant Readiness Title' = ```
+			VAR TotalSystems = [Participant Systems]
+			VAR ConstrainedSystems = SUM(gold_mirror_site_locations[constrained_system_count])
+			RETURN "Participant systems | Threshold: 100% | Required: " & FORMAT(TotalSystems, "#,0") & " | Not ready: " & FORMAT(ConstrainedSystems, "#,0")
+			```
+
+	measure 'Site Risk Priority' = SWITCH(SELECTEDVALUE(gold_mirror_site_locations[site_risk_level]), "CRITICAL", 4, "HIGH", 3, "MEDIUM", 2, "LOW", 1, 0)
+		formatString: 0
+
+	measure 'Site Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_site_locations[site_risk_level]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", "5 | CLEAR")
+
+	measure 'Site Decision Banner' = ```
+			"Integrated Defense Rehearsal 001 | 03 Nov 2026 | 1500-1515Z | " &
+			IF(
+			    [Locations in Scope] < CALCULATE([Locations in Scope], REMOVEFILTERS(gold_mirror_site_locations)),
+			    FORMAT([Locations in Scope], "0") & " SITES SELECTED - reset selections to restore all sites",
+			    "ALL SITES"
+			)
+			```
+
+	measure 'Active Site Risks' = SUM(gold_mirror_site_locations[active_risk_count])
+		formatString: 0
+
+	measure 'Average Latitude' = AVERAGE(gold_mirror_site_locations[latitude])
+		formatString: 0.00000
+
+	measure 'Average Longitude' = AVERAGE(gold_mirror_site_locations[longitude])
+		formatString: 0.00000
+
+	measure 'Mirror Source' = SELECTEDVALUE(gold_mirror_site_locations[data_origin], "Azure PostgreSQL -> Fabric mirrored database")
+
+	column site_id
+		dataType: string
+		lineageTag: 55bbb463-7440-4428-98cf-c4a77024f6da
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+	column site_name
+		dataType: string
+		lineageTag: d889a4e7-2baf-4831-b064-a4b7ef181449
+		sourceLineageTag: site_name
+		summarizeBy: none
+		sourceColumn: site_name
+
+	column city
+		dataType: string
+		lineageTag: 6dd60285-6a2f-46da-b528-7474d9c7ea93
+		sourceLineageTag: city
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: city
+
+	column country_name
+		dataType: string
+		lineageTag: a14430e4-f6f5-4dc4-8530-bce2e7795250
+		sourceLineageTag: country_name
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: country_name
+
+	column country_code
+		dataType: string
+		lineageTag: e50eb9b4-726b-47f0-af43-f1035fd1f74a
+		sourceLineageTag: country_code
+		summarizeBy: none
+		sourceColumn: country_code
+
+	column theater
+		dataType: string
+		lineageTag: afb7af4f-6a1d-4621-980b-d38406b471bc
+		sourceLineageTag: theater
+		summarizeBy: none
+		sourceColumn: theater
+
+	column site_type
+		dataType: string
+		lineageTag: 9de2c62c-44b1-4ee7-b935-a081c3c5164b
+		sourceLineageTag: site_type
+		summarizeBy: none
+		sourceColumn: site_type
+
+	column latitude
+		dataType: double
+		lineageTag: 2b51f675-21f8-45ef-8243-aa4a8660e99c
+		sourceLineageTag: latitude
+		dataCategory: Latitude
+		summarizeBy: average
+		sourceColumn: latitude
+
+	column longitude
+		dataType: double
+		lineageTag: 89609529-12a8-4f76-afcf-2d7cc9c57bb7
+		sourceLineageTag: longitude
+		dataCategory: Longitude
+		summarizeBy: average
+		sourceColumn: longitude
+
+	column system_count
+		dataType: int64
+		formatString: 0
+		lineageTag: a6da5e35-daf3-4f91-94fe-12e057011089
+		sourceLineageTag: system_count
+		summarizeBy: sum
+		sourceColumn: system_count
+
+	column constrained_system_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 085455cd-c8ae-4c0a-8107-b66d2f71011f
+		sourceLineageTag: constrained_system_count
+		summarizeBy: sum
+		sourceColumn: constrained_system_count
+
+	column active_risk_count
+		dataType: int64
+		formatString: 0
+		lineageTag: c04d41d9-f3ca-46ad-a57e-25f70ee8294f
+		sourceLineageTag: active_risk_count
+		summarizeBy: sum
+		sourceColumn: active_risk_count
+
+	column critical_risk_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f936ea12-a09b-411b-8e77-a8428ccf5f9b
+		sourceLineageTag: critical_risk_count
+		summarizeBy: sum
+		sourceColumn: critical_risk_count
+
+	column site_risk_level
+		dataType: string
+		lineageTag: 43053cdf-437b-42a8-aa42-c7b6831ea93f
+		sourceLineageTag: site_risk_level
+		summarizeBy: none
+		sourceColumn: site_risk_level
+
+	column system_families
+		dataType: string
+		lineageTag: 50c2a891-f938-44ec-90bd-e6dbece0f37d
+		sourceLineageTag: system_families
+		summarizeBy: none
+		sourceColumn: system_families
+
+	column location_notice
+		dataType: string
+		lineageTag: b8797a33-4c3a-443c-ac41-71743b190f30
+		sourceLineageTag: location_notice
+		summarizeBy: none
+		sourceColumn: location_notice
+
+	column updated_at_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e0ea931b-b818-488c-8de6-b49bf8692619
+		sourceLineageTag: updated_at_utc
+		summarizeBy: none
+		sourceColumn: updated_at_utc
+
+	column data_origin
+		dataType: string
+		lineageTag: 6e9c532a-2d77-4cfb-a7b8-f09eeaac2881
+		sourceLineageTag: data_origin
+		summarizeBy: none
+		sourceColumn: data_origin
+
+	column mirror_source_tables
+		dataType: string
+		lineageTag: 08e7960a-c739-4ce5-8beb-5d91b30e3484
+		sourceLineageTag: mirror_source_tables
+		summarizeBy: none
+		sourceColumn: mirror_source_tables
+
+	partition gold_mirror_site_locations = entity
+		mode: directLake
+		source
+			entityName: gold_mirror_site_locations
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

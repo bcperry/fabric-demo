@@ -1,0 +1,92 @@
+{{- $root := . -}}
+{{- range .Values.producers }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-producer
+  namespace: {{ $root.Values.namespace }}
+  labels:
+    {{- include "mda-demo.labels" $root | nindent 4 }}
+    app.kubernetes.io/name: {{ .name }}-producer
+    app.kubernetes.io/component: producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .name }}-producer
+  template:
+    metadata:
+      labels:
+        {{- include "mda-demo.labels" $root | nindent 8 }}
+        app.kubernetes.io/name: {{ .name }}-producer
+        app.kubernetes.io/component: producer
+        {{- if $root.Values.workloadIdentity.enabled }}
+        azure.workload.identity/use: "true"
+        {{- end }}
+    spec:
+      serviceAccountName: {{ $root.Values.workloadIdentity.serviceAccountName }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: producer
+          image: "{{ $root.Values.image.repository }}:{{ $root.Values.image.tag }}"
+          imagePullPolicy: {{ $root.Values.image.pullPolicy }}
+          args:
+            - --scenario
+            - $(SCENARIO_PATH)
+            - --duration-seconds
+            - $(DURATION_SECONDS)
+            - --start-time-utc
+            - $(RUN_START_TIME_UTC)
+            - --run-id
+            - $(RUN_ID)
+            - --manifest-output
+            - $(MANIFEST_OUTPUT_DIR)/{{ .name }}-manifest.json
+            - --transport
+            - {{ $root.Values.runtime.transport }}
+            {{- if eq $root.Values.runtime.transport "kafka" }}
+            - --bootstrap-servers
+            - $(KAFKA_BOOTSTRAP_SERVERS)
+            - --managed-identity-client-id
+            - $(AZURE_CLIENT_ID)
+            {{- end }}
+            {{- range .sourceSystems }}
+            - --source-system
+            - {{ . }}
+            {{- end }}
+            {{- if $root.Values.runtime.realtime }}
+            - --realtime
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: emulator-runtime
+          volumeMounts:
+            - name: manifest-cache
+              mountPath: {{ $root.Values.runtime.manifestOutputDir }}
+          startupProbe:
+            exec:
+              command: ["python", "-c", "import mda_emulators"]
+            periodSeconds: 2
+            failureThreshold: 15
+          readinessProbe:
+            exec:
+              command: ["python", "-c", "import mda_emulators"]
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["python", "-c", "import mda_emulators"]
+            periodSeconds: 30
+          resources:
+            {{- toYaml $root.Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: manifest-cache
+          emptyDir: {}
+{{- end }}

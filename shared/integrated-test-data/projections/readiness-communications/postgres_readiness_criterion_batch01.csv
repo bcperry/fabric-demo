@@ -1,0 +1,8 @@
+criterion_id,criterion_name,objective_id,evidence_type,threshold_rule,blocking_severity,planned_time_utc,classification
+crit-feed-publishers,All required feeds publish at least one prestart record,obj-demo10-feed-reconciliation,feed_health,observed_publishers >= expected_publishers,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-hmon-scale,Five health-monitor pod identities are preserved,obj-demo10-hmon-scale,instrumentation_health,distinct_publishers = 5,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-network-baseline,No outage exists before scenario start,obj-demo10-network-recovery,network_health,outage_start_time >= scenario_start,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-dry-run-critical,No critical dry-run issue remains unresolved,obj-demo10-feed-reconciliation,dry_run_issue,critical_open_issue_count = 0,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-safety-boundary,Safety evidence remains advisory only,obj-demo10-safety-boundary,safety_status,authority_scope = evidence_only,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-report-lineage,Outage limitation is linked to finding evidence and action,obj-demo10-report-lineage,lineage,lineage_complete = true,WATCH,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+crit-approval-gate,Final approval is blocked when required reviews are missing,obj-demo10-approval-gate,report_review,approval_allowed = false when reviews are absent,BLOCKING,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS

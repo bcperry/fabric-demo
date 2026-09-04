@@ -1,0 +1,2 @@
+corrective_action_id,finding_id,action_title,action_status,owner_role,due_time_utc,recorded_at_utc,classification
+action-clock-alignment-001,finding-clock-alignment-001,Recalibrate timing cell and preserve reporting limitation,IN_PROGRESS,role-data-control,2026-11-10T15:00:00Z,2026-11-03T15:01:40Z,SYNTHETIC_UNCLASS

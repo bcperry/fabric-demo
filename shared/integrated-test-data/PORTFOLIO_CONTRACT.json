@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "release_id": "2026.11.03",
+  "scenario_id": "integrated-defense-001",
+  "classification": "SYNTHETIC_UNCLASS",
+  "generator": "generate.py",
+  "authoritative_inputs": {
+    "scenario": "01-contracts/examples/scenario.integrated-defense.json",
+    "contracts": "01-contracts",
+    "observed_events": "data/observed_eventstream.jsonl",
+    "administrative_state": "data/postgres_batch_manifest.json",
+    "predicted_baseline": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/manifest.json"
+  },
+  "release_projections": {
+    "foundation": "projections/foundation",
+    "medallion": "projections/medallion",
+    "realtime": "projections/realtime",
+    "model_governance": "projections/model-governance",
+    "star_schema": "projections/star-schema",
+    "dataops": "projections/dataops",
+    "ground_truth": "projections/ground-truth",
+    "readiness_communications": "projections/readiness-communications"
+  },
+  "consumers": [
+    "01-data-lake-basics",
+    "02-database-mirroring",
+    "03-star-schema-bi",
+    "04-real-time-ingestion",
+    "05-ml-models",
+    "06-ai-data-agent"
+  ],
+  "ownership_rule": "Demo folders may contain code and Fabric item definitions, but never source data."
+}

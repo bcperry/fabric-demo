@@ -1,0 +1,130 @@
+{
+  "demo_id": "integrated-test-data",
+  "title": "Integrated Test Data Product",
+  "classification": "SYNTHETIC_UNCLASS",
+  "no_execution_claims": "This folder provides a deterministic local capstone package only. It does not claim that Kubernetes, Eventstream, Eventhouse, PostgreSQL, ADLS, or Fabric items were deployed or executed from this repository.",
+  "scenario_id": "integrated-defense-001",
+  "observed_run_manifest_id": "run-demo07-integrated-001",
+  "predicted_run_manifest_id": "sim-demo07-integrated-001",
+  "observed_event_count": 405,
+  "observed_event_topics": {
+    "system-status": 126,
+    "environment-observation": 6,
+    "instrumentation-health": 6,
+    "sustainment": 3,
+    "network-health": 5,
+    "readiness-poll": 7,
+    "operator-test-event": 5,
+    "safety-status": 4,
+    "target-telemetry": 56,
+    "instrumentation-observation": 41,
+    "ground-truth-observation": 28,
+    "sensor-observation": 82,
+    "command-integration": 6,
+    "interceptor-telemetry": 30
+  },
+  "delayed_event_id": "bf6d8fee-3224-590d-bebf-8a716fa13158",
+  "delayed_target_instance_id": "army-int-bravo-01",
+  "artifacts": [
+    {
+      "path": "data/observed_eventstream.jsonl",
+      "role": "Observed streaming fallback package",
+      "row_count": 405
+    },
+    {
+      "path": "data/startup_seed_manifest.json",
+      "role": "Persisted startup seed and source identity manifest",
+      "row_count": 19
+    },
+    {
+      "path": "data/postgres_batch_manifest.json",
+      "role": "PostgreSQL batch load order and checksums",
+      "row_count": 13
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_tracks.jsonl",
+      "role": "ADLS baseline predicted tracks",
+      "row_count": 196
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_events.jsonl",
+      "role": "ADLS baseline predicted command events",
+      "row_count": 6
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_measures.jsonl",
+      "role": "ADLS baseline predicted measures",
+      "row_count": 4
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/environmental_assumptions.jsonl",
+      "role": "ADLS baseline environmental assumptions",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_test_event_batch01.csv",
+      "role": "PostgreSQL test event",
+      "row_count": 1
+    },
+    {
+      "path": "data/postgres_test_objective_batch01.csv",
+      "role": "PostgreSQL test objective",
+      "row_count": 5
+    },
+    {
+      "path": "data/postgres_required_feed_batch01.csv",
+      "role": "PostgreSQL required feed",
+      "row_count": 9
+    },
+    {
+      "path": "data/postgres_site_batch01.csv",
+      "role": "PostgreSQL site",
+      "row_count": 3
+    },
+    {
+      "path": "data/postgres_system_instance_batch01.csv",
+      "role": "PostgreSQL system instance",
+      "row_count": 19
+    },
+    {
+      "path": "data/postgres_readiness_history_batch01.csv",
+      "role": "PostgreSQL readiness history batch01",
+      "row_count": 19
+    },
+    {
+      "path": "data/postgres_readiness_history_batch02.csv",
+      "role": "PostgreSQL readiness history batch02",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_maintenance_action_batch01.csv",
+      "role": "PostgreSQL maintenance action",
+      "row_count": 1
+    },
+    {
+      "path": "data/postgres_inventory_position_batch01.csv",
+      "role": "PostgreSQL inventory position",
+      "row_count": 3
+    },
+    {
+      "path": "data/postgres_finding_batch01.csv",
+      "role": "PostgreSQL finding",
+      "row_count": 1
+    },
+    {
+      "path": "data/postgres_finding_evidence_batch01.csv",
+      "role": "PostgreSQL finding evidence",
+      "row_count": 6
+    },
+    {
+      "path": "data/postgres_corrective_action_batch01.csv",
+      "role": "PostgreSQL corrective action",
+      "row_count": 1
+    },
+    {
+      "path": "data/postgres_report_review_batch01.csv",
+      "role": "PostgreSQL report review",
+      "row_count": 2
+    }
+  ]
+}

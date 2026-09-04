@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_type": "run.manifest",
+  "classification": "SYNTHETIC_UNCLASS",
+  "scenario_id": "integrated-defense-001",
+  "test_event_id": "test-integrated-defense-001",
+  "simulation_run_id": "run-demo07-integrated-001",
+  "run_manifest_id": "run-demo07-integrated-001",
+  "location_notice": "SYNTHETIC / NOT FOR NAVIGATION",
+  "start_time_utc": "2026-11-03T15:00:00Z",
+  "duration_seconds": 180,
+  "time_scale": 10,
+  "sources": [
+    {
+      "site_id": "site-alpha",
+      "source_system": "TPY2",
+      "source_instance_id": "tpy2-alpha-01",
+      "role": "SYNTHETIC_SENSOR",
+      "event_profile": "NORMAL",
+      "startup_seed": 20284339,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 10.53664,
+        "longitude": -47.86512,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-alpha",
+      "source_system": "BATTLE_MANAGEMENT",
+      "source_instance_id": "bm-alpha-01",
+      "role": "SHARED_TRACK_INTEGRATION",
+      "event_profile": "NORMAL",
+      "startup_seed": 20263849,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 10.53664,
+        "longitude": -47.86512,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "ARMY_INTEGRATION",
+      "source_instance_id": "army-int-bravo-01",
+      "role": "LOWER_TIER_INTEGRATION",
+      "event_profile": "NORMAL",
+      "startup_seed": 20351799,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "PATRIOT",
+      "source_instance_id": "patriot-bravo-01",
+      "role": "LOWER_TIER_PARTICIPANT",
+      "event_profile": "NORMAL",
+      "startup_seed": 20341965,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "PATRIOT",
+      "source_instance_id": "patriot-bravo-02",
+      "role": "LOWER_TIER_PARTICIPANT",
+      "event_profile": "DEGRADED",
+      "startup_seed": 20278569,
+      "readiness_state": "LIMITED",
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "THAAD",
+      "source_instance_id": "thaad-charlie-01",
+      "role": "UPPER_TIER_PARTICIPANT",
+      "event_profile": "NORMAL",
+      "startup_seed": 20263938,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "PATRIOT",
+      "source_instance_id": "patriot-charlie-01",
+      "role": "LOWER_TIER_PARTICIPANT",
+      "event_profile": "NORMAL",
+      "startup_seed": 20303593,
+      "readiness_state": "READY",
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-alpha",
+      "source_system": "TARGET_RANGE",
+      "source_instance_id": "target-range-alpha-01",
+      "role": "TARGET_TELEMETRY",
+      "event_profile": "NORMAL",
+      "startup_seed": 20283075,
+      "readiness_state": null,
+      "location": {
+        "latitude": 10.53664,
+        "longitude": -47.86512,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-alpha",
+      "source_system": "RANGE_RECEIVER",
+      "source_instance_id": "range-receiver-alpha-01",
+      "role": "INSTRUMENTATION_RECEIVER",
+      "event_profile": "NORMAL",
+      "startup_seed": 20265613,
+      "readiness_state": null,
+      "location": {
+        "latitude": 10.53664,
+        "longitude": -47.86512,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "INSTRUMENTATION_MONITOR",
+      "source_instance_id": "instrumentation-monitor-bravo-01",
+      "role": "TIMING_AND_HEALTH_MONITOR",
+      "event_profile": "DEGRADED",
+      "startup_seed": 20308645,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "NETWORK_MONITOR",
+      "source_instance_id": "network-monitor-bravo-01",
+      "role": "ABSTRACT_NETWORK_MONITOR",
+      "event_profile": "DEGRADED",
+      "startup_seed": 20350882,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "READINESS_CONTROLLER",
+      "source_instance_id": "readiness-controller-bravo-01",
+      "role": "AUTHORITATIVE_READINESS_COLLECTOR",
+      "event_profile": "NORMAL",
+      "startup_seed": 20319151,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "OPERATOR_CONTROL",
+      "source_instance_id": "operator-control-bravo-01",
+      "role": "HUMAN_DECISION_TRACKER",
+      "event_profile": "NORMAL",
+      "startup_seed": 20344201,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "SAFETY_MONITOR",
+      "source_instance_id": "safety-monitor-bravo-01",
+      "role": "ADVISORY_SAFETY_EVIDENCE",
+      "event_profile": "ADVISORY",
+      "startup_seed": 20268762,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "INTERCEPTOR_RANGE",
+      "source_instance_id": "interceptor-range-charlie-01",
+      "role": "INTERCEPTOR_TELEMETRY",
+      "event_profile": "NORMAL",
+      "startup_seed": 20340555,
+      "readiness_state": null,
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "OPTICAL_TRACKER",
+      "source_instance_id": "optical-tracker-charlie-01",
+      "role": "OPTICAL_CONFIRMATION",
+      "event_profile": "NORMAL",
+      "startup_seed": 20358790,
+      "readiness_state": null,
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "GROUND_TRUTH",
+      "source_instance_id": "truth-cell-charlie-01",
+      "role": "INDEPENDENT_REFERENCE_TRACK",
+      "event_profile": "NORMAL",
+      "startup_seed": 20353552,
+      "readiness_state": null,
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-charlie",
+      "source_system": "ENVIRONMENT",
+      "source_instance_id": "environment-cell-charlie-01",
+      "role": "ENVIRONMENT_CONTEXT",
+      "event_profile": "NORMAL",
+      "startup_seed": 20346317,
+      "readiness_state": null,
+      "location": {
+        "latitude": 14.8961,
+        "longitude": -48.61719,
+        "synthetic": true
+      }
+    },
+    {
+      "site_id": "site-bravo",
+      "source_system": "SUSTAINMENT",
+      "source_instance_id": "sustainment-producer-01",
+      "role": "POSTGRES_PROJECTOR_INPUT",
+      "event_profile": "NORMAL",
+      "startup_seed": 20334717,
+      "readiness_state": null,
+      "location": {
+        "latitude": 11.16502,
+        "longitude": -42.07628,
+        "synthetic": true
+      }
+    }
+  ],
+  "topics": [
+    "command-integration",
+    "environment-observation",
+    "ground-truth-observation",
+    "instrumentation-health",
+    "instrumentation-observation",
+    "interceptor-telemetry",
+    "network-health",
+    "operator-test-event",
+    "readiness-poll",
+    "safety-status",
+    "sensor-observation",
+    "sustainment",
+    "system-status",
+    "target-telemetry"
+  ]
+}

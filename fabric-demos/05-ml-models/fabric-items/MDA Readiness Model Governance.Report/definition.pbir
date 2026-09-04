@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+  "version": "4.0",
+  "datasetReference": {
+    "byConnection": {
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/mda-fabric-demo;initial catalog=\"MDA Readiness Model Governance\";integrated security=ClaimsToken;semanticmodelid=80ab25bc-5fd3-4526-95c5-9d6a528c1600"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+planned_time_utc,objective_id,objective_name,required_source_instance_id,required_track_id,metric_name,threshold_operator,threshold_value,threshold_units,classification
+2026-11-02T18:00:00.000Z,obj-clock-integrity-alpha,Receiver alpha clock integrity,receiver-alpha-01,trk-target-01,max_clock_offset_ms,<=,120,milliseconds,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-clock-integrity-bravo,Receiver bravo clock integrity,receiver-bravo-01,trk-target-01,max_clock_offset_ms,<=,120,milliseconds,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-optical-coverage,Optical corroboration coverage,optical-alpha-01,trk-target-01,observation_count,>=,8,observations,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-truth-coverage,Ground truth continuity,truth-cell-01,trk-target-01,observation_count,>=,17,observations,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-target-continuity,Target telemetry continuity,target-vehicle-01,trk-target-01,observation_count,=,11,observations,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-interceptor-continuity,Interceptor telemetry continuity,interceptor-vehicle-01,trk-interceptor-01,observation_count,=,6,observations,SYNTHETIC_UNCLASS
+2026-11-02T18:00:00.000Z,obj-environment-annotation,Environment annotation continuity,environment-cell-01,,observation_count,=,3,observations,SYNTHETIC_UNCLASS

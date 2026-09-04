@@ -1,0 +1,28 @@
+relationship ObjectiveStatus_Observed
+	fromColumn: gold_observed_vs_predicted.test_objective_id
+	toColumn: gold_test_objective_status.test_objective_id
+
+relationship ObjectiveStatus_FeedReadiness
+	fromColumn: gold_data_source_readiness.test_objective_id
+	toColumn: gold_test_objective_status.test_objective_id
+
+relationship ObjectiveStatus_DryRun
+	fromColumn: gold_dry_run_discrepancies.test_objective_id
+	toColumn: gold_test_objective_status.test_objective_id
+
+relationship ObjectiveStatus_Findings
+	fromColumn: gold_finding_evidence.test_objective_id
+	toColumn: gold_test_objective_status.test_objective_id
+
+relationship Participant_Observed
+	fromColumn: gold_observed_vs_predicted.system_instance_id
+	toColumn: gold_integrated_readiness.system_instance_id
+
+relationship Participant_FeedReadiness
+	fromColumn: gold_data_source_readiness.system_instance_id
+	toColumn: gold_integrated_readiness.system_instance_id
+
+relationship Participant_DryRun
+	fromColumn: gold_dry_run_discrepancies.system_instance_id
+	toColumn: gold_integrated_readiness.system_instance_id
+

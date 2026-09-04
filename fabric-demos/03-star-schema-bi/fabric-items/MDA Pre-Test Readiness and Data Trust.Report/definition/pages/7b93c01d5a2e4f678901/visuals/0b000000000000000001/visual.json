@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0b000000000000000001", "position": {"x": 40, "y": 100, "z": 1, "height": 240, "width": 590},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_integrated_readiness"}}, "Property": "Total Systems"}}, "queryRef": "gold_integrated_readiness.Total Systems"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Systems in scope'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

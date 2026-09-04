@@ -1,0 +1,10 @@
+required_feed_id,feed_name,source_pattern,expected_topic,classification
+feed-sensor-observation,TPY-2 sensor observation,streaming,sensor-observation,SYNTHETIC_UNCLASS
+feed-command-integration,Integration command events,streaming,command-integration,SYNTHETIC_UNCLASS
+feed-range-evidence,Instrumentation and optical evidence,streaming,instrumentation-observation,SYNTHETIC_UNCLASS
+feed-network-health,Abstract network health,streaming,network-health,SYNTHETIC_UNCLASS
+feed-readiness-poll,Authoritative readiness poll,streaming,readiness-poll,SYNTHETIC_UNCLASS
+feed-operator-control,Authoritative operator decisions,streaming,operator-test-event,SYNTHETIC_UNCLASS
+feed-safety-evidence,Advisory safety evidence,streaming,safety-status,SYNTHETIC_UNCLASS
+feed-postgres-admin,PostgreSQL administrative control plane,postgresql,,SYNTHETIC_UNCLASS
+feed-adls-baseline,Emulated baseline package,adls,,SYNTHETIC_UNCLASS

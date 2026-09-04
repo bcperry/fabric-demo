@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "fallback-demo07-integrated-001",
+  "classification": "SYNTHETIC_UNCLASS",
+  "scenario_id": "integrated-defense-001",
+  "observed_run_manifest_id": "run-demo07-integrated-001",
+  "observed_event_count": 405,
+  "observed_event_sha256": "493902f1dc3e927dd539618e1a809c04f02f25f6e520618319a4f4250112f7a1",
+  "postgres_batch_manifest": "data/postgres_batch_manifest.json",
+  "baseline_manifest": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/manifest.json"
+}

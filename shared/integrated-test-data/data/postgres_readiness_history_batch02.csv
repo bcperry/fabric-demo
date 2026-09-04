@@ -1,0 +1,3 @@
+readiness_event_id,system_instance_id,readiness_state,health_score,reason_code,effective_at_utc,recorded_at_utc,classification
+ready-army-int-bravo-01-002,army-int-bravo-01,LIMITED,0.78,CLOCK_ALIGNMENT_DELAY_REVIEW,2026-11-03T15:01:30Z,2026-11-03T15:01:35Z,SYNTHETIC_UNCLASS
+ready-army-int-bravo-01-003,army-int-bravo-01,READY,0.94,CORRECTIVE_ACTION_APPLIED,2026-11-03T15:01:40Z,2026-11-03T15:01:40Z,SYNTHETIC_UNCLASS

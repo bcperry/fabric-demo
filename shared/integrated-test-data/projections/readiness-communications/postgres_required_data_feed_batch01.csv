@@ -1,0 +1,6 @@
+required_feed_id,feed_name,expected_topic,phase_scope,expected_publisher_count,freshness_threshold_seconds,owner_role_id,limitation_policy,classification
+feed-instrumentation-health,Instrumentation health,demo.readiness.instrumentation-health,Setup|Running,5,90,role-instrumentation-lead,All five pod identities must publish.,SYNTHETIC_UNCLASS
+feed-network-health,Network health,demo.readiness.network-health,Setup|Running,1,60,role-network-analyst,Recovered outage remains reportable if mirrored evidence is incomplete.,SYNTHETIC_UNCLASS
+feed-readiness-poll,Readiness poll,demo.readiness.readiness-poll,Setup|Running,1,120,role-data-control,Readiness responses must reconcile to required feed evidence.,SYNTHETIC_UNCLASS
+feed-operator-test-event,Operator and test-control,demo.readiness.operator-test-event,Running|Reporting,1,120,role-test-director,Authoritative hold and resume decisions stay in this feed.,SYNTHETIC_UNCLASS
+feed-safety-status,Safety-status evidence,demo.readiness.safety-status,Running|Reporting,1,120,role-safety-liaison,Evidence only; never authoritative control.,SYNTHETIC_UNCLASS

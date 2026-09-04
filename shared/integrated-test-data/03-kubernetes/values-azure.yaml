@@ -1,0 +1,6 @@
+runtime:
+  transport: kafka
+
+workloadIdentity:
+  enabled: true
+  clientId: REPLACE_WITH_MANAGED_IDENTITY_CLIENT_ID

@@ -1,0 +1,418 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+    "name": "dab2bfe3d6f1906844a2",
+    "position": {
+        "x": 40,
+        "y": 672,
+        "z": 1,
+        "height": 368,
+        "width": 915
+    },
+    "visual": {
+        "visualType": "barChart",
+        "query": {
+            "queryState": {
+                "Category": {
+                    "projections": [
+                        {
+                            "field": {
+                                "Column": {
+                                    "Expression": {
+                                        "SourceRef": {
+                                            "Entity": "gold_data_source_readiness"
+                                        }
+                                    },
+                                    "Property": "data_feed"
+                                }
+                            },
+                            "queryRef": "gold_data_source_readiness.data_feed",
+                            "nativeQueryRef": "Feed readiness"
+                        }
+                    ]
+                },
+                "Series": {
+                    "projections": [
+                        {
+                            "field": {
+                                "Column": {
+                                    "Expression": {
+                                        "SourceRef": {
+                                            "Entity": "gold_data_source_readiness"
+                                        }
+                                    },
+                                    "Property": "feed_readiness"
+                                }
+                            },
+                            "queryRef": "gold_data_source_readiness.feed_readiness",
+                            "nativeQueryRef": "Setup result"
+                        }
+                    ]
+                },
+                "Y": {
+                    "projections": [
+                        {
+                            "field": {
+                                "Measure": {
+                                    "Expression": {
+                                        "SourceRef": {
+                                            "Entity": "gold_data_source_readiness"
+                                        }
+                                    },
+                                    "Property": "Required Feeds"
+                                }
+                            },
+                            "queryRef": "gold_data_source_readiness.Required Feeds",
+                            "nativeQueryRef": "Required feeds"
+                        }
+                    ]
+                }
+            },
+            "sortDefinition": {
+                "sort": [
+                    {
+                        "field": {
+                            "Measure": {
+                                "Expression": {
+                                    "SourceRef": {
+                                        "Entity": "gold_data_source_readiness"
+                                    }
+                                },
+                                "Property": "Required Feeds"
+                            }
+                        },
+                        "direction": "Descending"
+                    }
+                ]
+            }
+        },
+        "objects": {
+            "categoryAxis": [
+                {
+                    "properties": {
+                        "showAxisTitle": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "false"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "valueAxis": [
+                {
+                    "properties": {
+                        "showAxisTitle": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "false"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "visualContainerObjects": {
+            "dropShadow": [
+                {
+                    "properties": {
+                        "show": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "true"
+                                }
+                            }
+                        },
+                        "color": {
+                            "solid": {
+                                "color": {
+                                    "expr": {
+                                        "Literal": {
+                                            "Value": "'#A6ADC6'"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "preset": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "'Custom'"
+                                }
+                            }
+                        },
+                        "shadowSpread": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "0L"
+                                }
+                            }
+                        },
+                        "shadowBlur": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "5L"
+                                }
+                            }
+                        },
+                        "angle": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "90L"
+                                }
+                            }
+                        },
+                        "shadowDistance": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "4L"
+                                }
+                            }
+                        },
+                        "transparency": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "85L"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "background": [
+                {
+                    "properties": {
+                        "show": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "true"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "border": [
+                {
+                    "properties": {
+                        "show": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "true"
+                                }
+                            }
+                        },
+                        "color": {
+                            "solid": {
+                                "color": {
+                                    "expr": {
+                                        "Literal": {
+                                            "Value": "'#E0E0E0'"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "radius": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "4L"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "title": [
+                {
+                    "properties": {
+                        "show": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "true"
+                                }
+                            }
+                        },
+                        "text": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "'Are required data feeds ready?'"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "subTitle": [
+                {
+                    "properties": {
+                        "show": {
+                            "expr": {
+                                "Literal": {
+                                    "Value": "false"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "drillFilterOtherVisuals": true
+    },
+    "filterConfig": {
+        "filters": [
+            {
+                "name": "c0b95907c32b676bea9a",
+                "field": {
+                    "Column": {
+                        "Expression": {
+                            "SourceRef": {
+                                "Entity": "gold_data_source_readiness"
+                            }
+                        },
+                        "Property": "required_feed_id"
+                    }
+                },
+                "type": "Categorical",
+                "filter": {
+                    "Version": 2,
+                    "From": [
+                        {
+                            "Name": "g",
+                            "Entity": "gold_data_source_readiness",
+                            "Type": 0
+                        }
+                    ],
+                    "Where": [
+                        {
+                            "Condition": {
+                                "Not": {
+                                    "Expression": {
+                                        "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                                "Column": {
+                                                    "Expression": {
+                                                        "SourceRef": {
+                                                            "Source": "g"
+                                                        }
+                                                    },
+                                                    "Property": "required_feed_id"
+                                                }
+                                            },
+                                            "Right": {
+                                                "Literal": {
+                                                    "Value": "null"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "restatement": "Required feed id is not null",
+                "howCreated": "User"
+            },
+            {
+                "name": "3abe1602d01d486d9f21",
+                "field": {
+                    "Column": {
+                        "Expression": {
+                            "SourceRef": {
+                                "Entity": "gold_data_source_readiness"
+                            }
+                        },
+                        "Property": "required_feed_id"
+                    }
+                },
+                "type": "Categorical",
+                "filter": {
+                    "Version": 2,
+                    "From": [
+                        {
+                            "Name": "g",
+                            "Entity": "gold_data_source_readiness",
+                            "Type": 0
+                        }
+                    ],
+                    "Where": [
+                        {
+                            "Condition": {
+                                "Not": {
+                                    "Expression": {
+                                        "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                                "Column": {
+                                                    "Expression": {
+                                                        "SourceRef": {
+                                                            "Source": "g"
+                                                        }
+                                                    },
+                                                    "Property": "required_feed_id"
+                                                }
+                                            },
+                                            "Right": {
+                                                "Literal": {
+                                                    "Value": "''"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "restatement": "Required feed id is not \"\"",
+                "howCreated": "User"
+            },
+            {
+                "name": "8009cfcd1fa038684b3a",
+                "field": {
+                    "Column": {
+                        "Expression": {
+                            "SourceRef": {
+                                "Entity": "gold_data_source_readiness"
+                            }
+                        },
+                        "Property": "setup_check_result"
+                    }
+                },
+                "type": "Categorical"
+            },
+            {
+                "name": "5b0985866695f33f601e",
+                "field": {
+                    "Column": {
+                        "Expression": {
+                            "SourceRef": {
+                                "Entity": "gold_data_source_readiness"
+                            }
+                        },
+                        "Property": "required_feed_status"
+                    }
+                },
+                "type": "Categorical"
+            },
+            {
+                "name": "7ad739bda90280172f29",
+                "field": {
+                    "Aggregation": {
+                        "Expression": {
+                            "SourceRef": {
+                                "Entity": "gold_data_source_readiness"
+                            }
+                        },
+                        "Function": 2
+                    }
+                },
+                "type": "Advanced"
+            }
+        ]
+    },
+    "howCreated": "Copilot"
+}

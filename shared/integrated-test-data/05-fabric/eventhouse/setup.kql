@@ -1,0 +1,411 @@
+// Synthetic UNCLASS demo tables for Fabric Eventhouse.
+
+.create-merge table SensorObservation (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    observation_type:string,
+    quality:dynamic,
+    position:dynamic,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table TargetTelemetry (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    track_role:string,
+    phase:string,
+    position:dynamic,
+    velocity:dynamic,
+    source_clock_offset_ms:long,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table InterceptorTelemetry (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    track_role:string,
+    phase:string,
+    position:dynamic,
+    update_receipt_state:string,
+    source_clock_offset_ms:long,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table InstrumentationObservation (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    sensor_modality:string,
+    measurement_quality:real,
+    position:dynamic,
+    clock_offset_ms:long,
+    sample_state:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table GroundTruthObservation (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    truth_role:string,
+    position:dynamic,
+    reference_state:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table EnvironmentObservation (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    condition_id:string,
+    condition_summary:string,
+    wind_factor:real,
+    visibility_state:string,
+    scenario_effect:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table SystemStatus (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    correlation_id:string,
+    causation_id:string,
+    operating_state:string,
+    readiness_state:string,
+    health_score:real,
+    metrics:dynamic,
+    contributing_conditions:dynamic,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table InstrumentationHealth (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    component_id:string,
+    status:string,
+    observed_lag_ms:long,
+    issue_profile:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table NetworkHealth (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    circuit_id:string,
+    status:string,
+    availability_pct:real,
+    packet_loss_pct:real,
+    latency_ms:long,
+    event_scope:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table CommandIntegration (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    correlation_id:string,
+    causation_id:string,
+    track_id:string,
+    action:string,
+    target_instance_id:string,
+    status:string,
+    processing_delay_ms:long,
+    data_product_version:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table ReadinessPoll (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    poll_id:string,
+    participant_role:string,
+    response:string,
+    is_authoritative:bool,
+    limitation_note:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table OperatorTestEvent (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    marker:string,
+    decision:string,
+    decision_authority:string,
+    related_feed:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table SafetyStatus (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    run_manifest_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    startup_seed:long,
+    correlation_id:string,
+    causation_id:string,
+    condition:string,
+    authority_scope:string,
+    advisory_state:string,
+    recommended_action:string,
+    classification:string,
+    synthetic:bool
+)
+
+.create-merge table SustainmentEvent (
+    event_id:string,
+    event_type:string,
+    schema_version:string,
+    scenario_id:string,
+    simulation_run_id:string,
+    test_event_id:string,
+    site_id:string,
+    source_system:string,
+    source_instance_id:string,
+    ordering_key:string,
+    sequence_number:long,
+    event_time_utc:datetime,
+    ingest_time_utc:datetime,
+    correlation_id:string,
+    causation_id:string,
+    asset_id:string,
+    action:string,
+    status:string,
+    readiness_before:string,
+    readiness_after:string,
+    reason_code:string,
+    details:dynamic,
+    classification:string,
+    synthetic:bool
+)
+
+.alter-merge table SensorObservation policy retention softdelete = 30d recoverability = enabled
+.alter-merge table TargetTelemetry policy retention softdelete = 30d recoverability = enabled
+.alter-merge table InterceptorTelemetry policy retention softdelete = 30d recoverability = enabled
+.alter-merge table InstrumentationObservation policy retention softdelete = 30d recoverability = enabled
+.alter-merge table GroundTruthObservation policy retention softdelete = 30d recoverability = enabled
+.alter-merge table EnvironmentObservation policy retention softdelete = 30d recoverability = enabled
+.alter-merge table SystemStatus policy retention softdelete = 30d recoverability = enabled
+.alter-merge table InstrumentationHealth policy retention softdelete = 30d recoverability = enabled
+.alter-merge table NetworkHealth policy retention softdelete = 30d recoverability = enabled
+.alter-merge table CommandIntegration policy retention softdelete = 30d recoverability = enabled
+.alter-merge table ReadinessPoll policy retention softdelete = 30d recoverability = enabled
+.alter-merge table OperatorTestEvent policy retention softdelete = 30d recoverability = enabled
+.alter-merge table SafetyStatus policy retention softdelete = 30d recoverability = enabled
+.alter-merge table SustainmentEvent policy retention softdelete = 30d recoverability = enabled
+
+.create-or-alter function with (folder = 'demo07') LatestOperationalStatus(runId:string) {
+    SystemStatus
+    | where simulation_run_id == runId
+    | summarize arg_max(event_time_utc, *) by source_instance_id
+    | project source_instance_id, source_system, site_id, readiness_state, operating_state, health_score, metrics
+}
+
+.create-or-alter function with (folder = 'demo07') DelayedIntegrationEvents(runId:string) {
+    CommandIntegration
+    | where simulation_run_id == runId
+    | where status == 'DELAYED' or processing_delay_ms > 1000
+    | project event_time_utc, track_id, source_instance_id, action, status, processing_delay_ms
+}
+
+.create-or-alter function with (folder = 'demo07') EvidenceWindow(runId:string) {
+    union
+        (InstrumentationHealth | where simulation_run_id == runId | project event_time_utc, source='InstrumentationHealth', detail=strcat(component_id, ':', status), severity=tostring(observed_lag_ms)),
+        (NetworkHealth | where simulation_run_id == runId | project event_time_utc, source='NetworkHealth', detail=strcat(circuit_id, ':', status), severity=tostring(latency_ms)),
+        (OperatorTestEvent | where simulation_run_id == runId | project event_time_utc, source='OperatorTestEvent', detail=marker, severity=decision),
+        (SafetyStatus | where simulation_run_id == runId | project event_time_utc, source='SafetyStatus', detail=condition, severity=recommended_action)
+    | order by event_time_utc asc
+}

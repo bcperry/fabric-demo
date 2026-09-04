@@ -1,0 +1,14 @@
+# Keep ontology artifacts in this demo repo
+!Ontology/fabriciq_ontology_accelerator-0.1.0-py3-none-any.whl
+!Ontology/mda_test_ontology.iq
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.ipynb_checkpoints/
+__pycache__/
+~$*.docx
+
+# Local handouts are not part of the checked-in demo package
+Fabric IQ Lab.docx

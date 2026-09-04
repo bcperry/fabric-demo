@@ -1,0 +1,269 @@
+table gold_mirror_casework
+	lineageTag: be506c79-c2ea-43fc-b0b5-2416584dd8d4
+	sourceLineageTag: [dbo].[gold_mirror_casework]
+
+	measure 'Mirrored Active Findings' = DISTINCTCOUNT(gold_mirror_casework[finding_id])
+		formatString: 0
+
+	measure 'Mirrored Evidence Records' = SUM(gold_mirror_casework[evidence_count])
+		formatString: 0
+
+	measure 'Mirrored Corrective Actions' = SUM(gold_mirror_casework[corrective_action_count])
+		formatString: 0
+
+	measure 'Open Mirrored Actions' = SUM(gold_mirror_casework[open_action_count])
+		formatString: 0
+
+	measure 'Recovery Actions Open' = SUM(gold_mirror_casework[open_action_count])
+		formatString: 0
+
+	measure 'Risk Priority' = SWITCH(SELECTEDVALUE(gold_mirror_casework[severity]), "CRITICAL", 4, "HIGH", 3, "MEDIUM", 2, "LOW", 1, 0)
+		formatString: 0
+
+	measure 'Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_casework[severity]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", "5 | CLEAR")
+
+	measure 'Critical Risks' = CALCULATE(DISTINCTCOUNT(gold_mirror_casework[finding_id]), gold_mirror_casework[severity] = "CRITICAL")
+		formatString: 0
+
+	measure 'High Risks' = CALCULATE(DISTINCTCOUNT(gold_mirror_casework[finding_id]), gold_mirror_casework[severity] = "HIGH")
+		formatString: 0
+
+	measure 'Director Recommendation' = ```
+			IF(
+			    [Critical Risks] > 0 || [Missing Feeds] > 0 || [Constrained Systems] > 0,
+			    "HOLD - TEST EXECUTION NOT AUTHORIZED | Recovery activity authorized through 1430Z gate review",
+			    "PROCEED - approved thresholds satisfied"
+			)
+			```
+
+	measure 'Decision Scope Banner' = ```
+			"Decision scope | PRE-TEST GATE | " &
+			IF(
+			    ISCROSSFILTERED(gold_mirror_casework[severity]) ||
+			    ISCROSSFILTERED(gold_test_objective_status[objective_result]) ||
+			    ISCROSSFILTERED(gold_data_source_readiness[data_feed]),
+			    "SELECTED VIEW - reset selections to restore full mission scope",
+			    "ALL SITES"
+			)
+			```
+
+	measure 'Lead Event Window' = SELECTEDVALUE(gold_mirror_casework[event_name], "Integrated defense rehearsal 001") & " | " & FORMAT(MIN(gold_mirror_casework[planned_start_time_utc]), "dd mmm yyyy HHmm") & "-" & FORMAT(MIN(gold_mirror_casework[planned_end_time_utc]), "HHmm") & "Z"
+
+	measure 'Evidence Current As Of' = "Evidence current as of " & FORMAT(MAX(gold_mirror_casework[source_as_of_utc]), "dd mmm yyyy HH:mm") & "Z"
+
+	column scenario_id
+		dataType: string
+		lineageTag: e98be9cc-8210-44b8-932b-8105fb937fbe
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+	column test_event_id
+		dataType: string
+		lineageTag: 6bab9f51-c7fc-4736-8218-54a60312cbb7
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+	column event_name
+		dataType: string
+		lineageTag: e5973323-9594-43ad-a1fc-a6c9faf866be
+		sourceLineageTag: event_name
+		summarizeBy: none
+		sourceColumn: event_name
+
+	column planned_start_time_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4ca58a88-58f7-40f2-a233-f5c5d415ea59
+		sourceLineageTag: planned_start_time_utc
+		summarizeBy: none
+		sourceColumn: planned_start_time_utc
+
+	column planned_end_time_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e9205ec8-521c-40c4-a946-952767f99c43
+		sourceLineageTag: planned_end_time_utc
+		summarizeBy: none
+		sourceColumn: planned_end_time_utc
+
+	column site_id
+		dataType: string
+		lineageTag: d3e267ea-2fdc-4f44-830e-9d841f29b1cb
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+	column affected_site
+		dataType: string
+		lineageTag: bce04faf-8049-446b-b6ad-148f4e87a917
+		sourceLineageTag: affected_site
+		summarizeBy: none
+		sourceColumn: affected_site
+
+	column affected_country
+		dataType: string
+		lineageTag: ffc3b037-d1b3-49b5-8835-e98bc201de19
+		sourceLineageTag: affected_country
+		summarizeBy: none
+		sourceColumn: affected_country
+
+	column objective_id
+		dataType: string
+		lineageTag: d90ec87d-297b-4d86-8a18-da8cf45be501
+		sourceLineageTag: objective_id
+		summarizeBy: none
+		sourceColumn: objective_id
+
+	column affected_objective
+		dataType: string
+		lineageTag: 35e44e07-1221-4a27-861c-c5ff85278168
+		sourceLineageTag: affected_objective
+		summarizeBy: none
+		sourceColumn: affected_objective
+
+	column finding_id
+		dataType: string
+		lineageTag: 4d996d84-6874-4a43-be07-d97a3897569c
+		sourceLineageTag: finding_id
+		summarizeBy: none
+		sourceColumn: finding_id
+
+	column severity
+		dataType: string
+		lineageTag: 61a6154d-ea1e-47b3-ae0a-e1052a4f5490
+		sourceLineageTag: severity
+		summarizeBy: none
+		sourceColumn: severity
+
+	column finding_status
+		dataType: string
+		lineageTag: c0071601-a017-4f5e-8267-bd15310becd0
+		sourceLineageTag: finding_status
+		summarizeBy: none
+		sourceColumn: finding_status
+
+	column finding_title
+		dataType: string
+		lineageTag: f0725371-c78c-47b2-b21a-afb2408659be
+		sourceLineageTag: finding_title
+		summarizeBy: none
+		sourceColumn: finding_title
+
+	column finding_summary
+		dataType: string
+		lineageTag: a19cf914-9d00-46fc-860d-64bb8169d493
+		sourceLineageTag: finding_summary
+		summarizeBy: none
+		sourceColumn: finding_summary
+
+	column identified_at_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c095254d-9f98-45d0-a8ad-e4c1c0ae1ec5
+		sourceLineageTag: identified_at_utc
+		summarizeBy: none
+		sourceColumn: identified_at_utc
+
+	column evidence_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 35e01c7a-8a8f-431c-a34a-e494e03363b3
+		sourceLineageTag: evidence_count
+		summarizeBy: sum
+		sourceColumn: evidence_count
+
+	column evidence_sources
+		dataType: string
+		lineageTag: df334f11-fbe1-49b8-badb-af500683cf11
+		sourceLineageTag: evidence_sources
+		summarizeBy: none
+		sourceColumn: evidence_sources
+
+	column representative_evidence_type
+		dataType: string
+		lineageTag: 05ef5241-f339-487d-a59d-0ebd0c13a596
+		sourceLineageTag: representative_evidence_type
+		summarizeBy: none
+		sourceColumn: representative_evidence_type
+
+	column representative_evidence_reference
+		dataType: string
+		lineageTag: a87f1bc0-9805-4f40-927f-c22ce30fd07b
+		sourceLineageTag: representative_evidence_reference
+		summarizeBy: none
+		sourceColumn: representative_evidence_reference
+
+	column corrective_action_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e04c0f4-2b36-4eb6-9214-405f50586750
+		sourceLineageTag: corrective_action_count
+		summarizeBy: sum
+		sourceColumn: corrective_action_count
+
+	column open_action_count
+		dataType: int64
+		formatString: 0
+		lineageTag: c9cda22f-c058-417e-9294-efcd5ef4a3bf
+		sourceLineageTag: open_action_count
+		summarizeBy: sum
+		sourceColumn: open_action_count
+
+	column next_action
+		dataType: string
+		lineageTag: d1deebc3-9db7-4288-a417-6356cdd8c29b
+		sourceLineageTag: next_action
+		summarizeBy: none
+		sourceColumn: next_action
+
+	column next_action_status
+		dataType: string
+		lineageTag: a245be5f-ae3c-4550-be3b-c731688eff32
+		sourceLineageTag: next_action_status
+		summarizeBy: none
+		sourceColumn: next_action_status
+
+	column next_action_owner
+		dataType: string
+		lineageTag: ebd5b34e-aae2-4ad1-bbad-86800f303526
+		sourceLineageTag: next_action_owner
+		summarizeBy: none
+		sourceColumn: next_action_owner
+
+	column next_action_due_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ea864938-f70a-416a-9380-53117b4ddd7b
+		sourceLineageTag: next_action_due_utc
+		summarizeBy: none
+		sourceColumn: next_action_due_utc
+
+	column source_as_of_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 28239fe1-f015-4bb0-ad64-57415e50c1cd
+		sourceLineageTag: source_as_of_utc
+		summarizeBy: none
+		sourceColumn: source_as_of_utc
+
+	column data_origin
+		dataType: string
+		lineageTag: e6e6e13d-1199-45da-8ce5-79c38f15e8f7
+		sourceLineageTag: data_origin
+		summarizeBy: none
+		sourceColumn: data_origin
+
+	column mirror_source_tables
+		dataType: string
+		lineageTag: 9e651e2a-73a1-4586-94d5-936575a2f33d
+		sourceLineageTag: mirror_source_tables
+		summarizeBy: none
+		sourceColumn: mirror_source_tables
+
+	partition gold_mirror_casework = entity
+		mode: directLake
+		source
+			entityName: gold_mirror_casework
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

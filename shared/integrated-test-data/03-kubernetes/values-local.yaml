@@ -1,0 +1,6 @@
+runtime:
+  transport: stdout
+  durationSeconds: 180
+
+workloadIdentity:
+  enabled: false

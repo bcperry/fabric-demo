@@ -1,0 +1,94 @@
+table silver_quarantine_records
+	lineageTag: b3e0a2d2-dafc-49f1-a1ac-dc556716c63b
+	sourceLineageTag: [dbo].[silver_quarantine_records]
+
+	measure 'Quarantine Records' = COUNTROWS(silver_quarantine_records)
+		formatString: 0
+
+	column source_lane
+		dataType: string
+		lineageTag: 0cd6b20a-de7a-4dfb-ba31-199a80ab76d3
+		sourceLineageTag: source_lane
+		summarizeBy: none
+		sourceColumn: source_lane
+
+		annotation SummarizationSetBy = Automatic
+
+	column record_id
+		dataType: string
+		lineageTag: 4053e270-b8c1-4d67-8ac6-362a407d2e18
+		sourceLineageTag: record_id
+		summarizeBy: none
+		sourceColumn: record_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarantine_reason
+		dataType: string
+		lineageTag: 4f5a824d-3fa1-439b-8de5-0cd5c5af203c
+		sourceLineageTag: quarantine_reason
+		summarizeBy: none
+		sourceColumn: quarantine_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_type
+		dataType: string
+		lineageTag: b4227e50-4f7e-48ea-af6e-fdc97d3f3fc4
+		sourceLineageTag: event_type
+		summarizeBy: none
+		sourceColumn: event_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_feed_id
+		dataType: string
+		lineageTag: 75b4d486-3502-4fc8-b374-3385f601623a
+		sourceLineageTag: required_feed_id
+		summarizeBy: none
+		sourceColumn: required_feed_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		dataType: string
+		lineageTag: bd5d0382-9f71-4b84-9d92-477acbf30161
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 17375deb-f441-42f5-9135-054f19b6043c
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column raw_time_text
+		dataType: string
+		lineageTag: 07afd425-7825-4ccb-8481-b272af1cbf09
+		sourceLineageTag: raw_time_text
+		summarizeBy: none
+		sourceColumn: raw_time_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column raw_payload_json
+		dataType: string
+		lineageTag: 433f7d04-b929-4c51-bdd5-5a2ad662190b
+		sourceLineageTag: raw_payload_json
+		summarizeBy: none
+		sourceColumn: raw_payload_json
+
+		annotation SummarizationSetBy = Automatic
+
+	partition silver_quarantine_records = entity
+		mode: directLake
+		source
+			entityName: silver_quarantine_records
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'
+

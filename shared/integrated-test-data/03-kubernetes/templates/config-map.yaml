@@ -1,0 +1,17 @@
+{{- $renderTime := now -}}
+{{- $runStart := default ($renderTime | date "2006-01-02T15:04:05Z") .Values.runtime.startTimeUtc -}}
+{{- $runId := default (printf "run-%s" ($renderTime | date "20060102T150405Z")) .Values.runtime.runId -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: emulator-runtime
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "mda-demo.labels" . | nindent 4 }}
+data:
+  SCENARIO_PATH: {{ .Values.runtime.scenarioPath | quote }}
+  DURATION_SECONDS: {{ .Values.runtime.durationSeconds | quote }}
+  KAFKA_BOOTSTRAP_SERVERS: {{ .Values.runtime.kafkaBootstrapServers | quote }}
+  MANIFEST_OUTPUT_DIR: {{ .Values.runtime.manifestOutputDir | quote }}
+  RUN_START_TIME_UTC: {{ $runStart | quote }}
+  RUN_ID: {{ $runId | quote }}

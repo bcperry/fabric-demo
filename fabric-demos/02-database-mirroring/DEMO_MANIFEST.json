@@ -1,0 +1,20 @@
+{
+  "demo_id": "02-database-mirroring",
+  "title": "Database Mirroring",
+  "release_id": "2026.11.03",
+  "source_engine": "Azure Database for PostgreSQL",
+  "source_database": "mdaoperations",
+  "source_schema": "mda_ops",
+  "authentication": "Microsoft Entra only; PostgreSQL password authentication disabled",
+  "server_identity": "SystemAssigned",
+  "fabric_item": "MDA Operations Mirror",
+  "expected_tables": 14,
+  "native_mode": "Fabric mirrored database",
+  "fallback_mode": "Manifest-ordered incremental ingestion",
+  "infrastructure": "infrastructure/main.bicep",
+  "large_seed": "sql/seed_large.sql",
+  "large_seed_default_rows": 34674,
+  "leadership_hook": "Current operational readiness without manual extracts",
+  "professional_hook": "CDC replication, freshness, row-count reconciliation, and lineage",
+  "status": "azure_source_deployed_and_seeded_requires_fabric_connection"
+}

@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0d000000000000000001", "position": {"x": 40, "y": 180, "z": 1, "height": 260, "width": 420},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_test_objective_status"}}, "Property": "Objectives Requiring Attention"}}, "queryRef": "gold_test_objective_status.Objectives Requiring Attention"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Objectives needing attention'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

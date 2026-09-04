@@ -1,0 +1,2 @@
+finding_id,test_event_id,severity,finding_status,finding_title,finding_summary,identified_at_utc,classification
+finding-clock-alignment-001,test-integrated-defense-001,MEDIUM,OPEN,Synthetic clock-alignment delay affected one assignment acknowledgement,Observed assignment acknowledgement lag exceeded the predicted baseline and aligned with network and instrumentation evidence.,2026-11-03T15:01:30Z,SYNTHETIC_UNCLASS

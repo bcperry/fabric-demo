@@ -1,0 +1,158 @@
+table gold_data_source_readiness
+	lineageTag: daf6edaf-056b-4b38-8c13-9e33a8c704d4
+	sourceLineageTag: [dbo].[gold_data_source_readiness]
+
+	measure 'Required Feeds' = DISTINCTCOUNT(gold_data_source_readiness[required_feed_id])
+		formatString: 0
+
+	measure 'Available Feeds' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_data_source_readiness[required_feed_id]),
+			    gold_data_source_readiness[required_feed_status] = "AVAILABLE"
+			)
+			```
+		formatString: 0
+
+	measure 'Missing Feeds' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_data_source_readiness[required_feed_id]),
+			    gold_data_source_readiness[required_feed_status] = "MISSING"
+			)
+			```
+		formatString: 0
+
+	column scenario_id
+		dataType: string
+		lineageTag: 0f32c464-b22b-4afd-bf41-699e62f515c6
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_event_id
+		dataType: string
+		lineageTag: cd1632e6-45c3-496d-ad59-a8b9c5c583b7
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective_id
+		dataType: string
+		lineageTag: 01cf9b2d-5ec1-4f1f-ad85-f4f5c7733c49
+		sourceLineageTag: test_objective_id
+		summarizeBy: none
+		sourceColumn: test_objective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_feed_id
+		dataType: string
+		lineageTag: 97a60074-71e2-4e29-9369-e53e408b2446
+		sourceLineageTag: required_feed_id
+		summarizeBy: none
+		sourceColumn: required_feed_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 78601aef-de1d-4924-99cd-69be4c60e87b
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_feed_status
+		dataType: string
+		lineageTag: ef9b8c90-0438-4e79-b2c5-ba7db2f59e74
+		sourceLineageTag: required_feed_status
+		summarizeBy: none
+		sourceColumn: required_feed_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column setup_check_result
+		dataType: string
+		lineageTag: 971f0d15-8ffa-4e6c-8d88-a67a0636653f
+		sourceLineageTag: setup_check_result
+		summarizeBy: none
+		sourceColumn: setup_check_result
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_record_count
+		dataType: double
+		lineageTag: 1b93147e-f758-4130-be13-de40175c1be7
+		sourceLineageTag: snapshot_record_count
+		summarizeBy: sum
+		sourceColumn: snapshot_record_count
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valid_observed_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 45acd3d6-8d3e-47ce-b259-531331261220
+		sourceLineageTag: valid_observed_count
+		summarizeBy: sum
+		sourceColumn: valid_observed_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column late_record_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 53e6e621-8a11-4b72-8174-137ca9b508b4
+		sourceLineageTag: late_record_count
+		summarizeBy: sum
+		sourceColumn: late_record_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column notes
+		dataType: string
+		lineageTag: c0d9351b-05e6-46de-a00e-3bc0cd2b0092
+		sourceLineageTag: notes
+		summarizeBy: none
+		sourceColumn: notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column lesson_stand_in
+		dataType: string
+		lineageTag: 0f33bebc-c6a0-4355-ad6f-f7a709679752
+		sourceLineageTag: lesson_stand_in
+		summarizeBy: none
+		sourceColumn: lesson_stand_in
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_feed
+		dataType: string
+		lineageTag: c34a5f4d-e3e8-47ea-b711-f1cf5a6bfeb9
+		sourceLineageTag: data_feed
+		summarizeBy: none
+		sourceColumn: data_feed
+
+		annotation SummarizationSetBy = Automatic
+
+	column feed_readiness
+		dataType: string
+		lineageTag: a4f43a2d-3182-4b73-a0ab-bdf5ecfdd8e2
+		sourceLineageTag: feed_readiness
+		summarizeBy: none
+		sourceColumn: feed_readiness
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_data_source_readiness = entity
+		mode: directLake
+		source
+			entityName: gold_data_source_readiness
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

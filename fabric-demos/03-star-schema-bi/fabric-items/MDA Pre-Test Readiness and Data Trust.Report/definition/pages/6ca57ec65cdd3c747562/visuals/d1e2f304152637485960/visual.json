@@ -1,0 +1,93 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+    "name": "d1e2f304152637485960",
+    "position": {
+        "x": 965,
+        "y": 294,
+        "z": 3,
+        "height": 368,
+        "width": 915
+    },
+    "visual": {
+        "visualType": "textbox",
+        "objects": {
+            "general": [
+                {
+                    "properties": {
+                        "paragraphs": [
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Top 3 of 4 Critical/High risks",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "16pt",
+                                            "fontWeight": "bold",
+                                            "color": "#242424"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "CRITICAL | Andersen sensor readiness",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "14pt",
+                                            "fontWeight": "bold",
+                                            "color": "#A4262C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Objective: Readiness posture recoverable | Close: recovery poll accepted | Guam Sensor Integration Team | 03 Nov 2026 1300Z",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "12pt",
+                                            "color": "#424242"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "CRITICAL | Basa command-integration timing",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "14pt",
+                                            "fontWeight": "bold",
+                                            "color": "#A4262C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Objective: Shared track reaches both lanes | Close: timing run passes | Joint Command Integration Lead | 03 Nov 2026 1230Z\n\nHIGH | Osan participant recovery\nObjective: Readiness posture recoverable | Close: recovery certified | Korea Participant Readiness Cell | 03 Nov 2026 1330Z",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "12pt",
+                                            "color": "#424242"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "drillFilterOtherVisuals": true
+    }
+}

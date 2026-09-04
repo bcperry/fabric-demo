@@ -1,0 +1,8 @@
+finding_evidence_id,finding_id,evidence_source_type,evidence_reference,evidence_summary,classification
+evidence-demo10-001,finding-demo10-001,postgres_dry_run_issue,dryrun-issue-002,Accepted dry-run issue predicted a mirrored gap during failover.,SYNTHETIC_UNCLASS
+evidence-demo10-002,finding-demo10-001,stream_event,network-health-0009,Seeded outage start observed on the test-control backhaul circuit.,SYNTHETIC_UNCLASS
+evidence-demo10-003,finding-demo10-001,stream_event,network-health-0011,Recovery observed after the outage window.,SYNTHETIC_UNCLASS
+evidence-demo10-004,finding-demo10-001,stream_event,operator-test-event-0005,Operator workflow logged the limitation during the hold window.,SYNTHETIC_UNCLASS
+evidence-demo10-005,finding-demo10-001,report_package,report-demo10-final-001,Final report package retains the limitation statement.,SYNTHETIC_UNCLASS
+evidence-demo10-006,finding-demo10-002,stream_event,safety-status-0003,Safety monitor issued an advisory hold observation.,SYNTHETIC_UNCLASS
+evidence-demo10-007,finding-demo10-002,stream_event,operator-test-event-0004,Authoritative hold decision remained in operator control.,SYNTHETIC_UNCLASS

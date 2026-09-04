@@ -1,0 +1,3 @@
+report_package_id,package_type,current_state,requested_release_state,required_review_profile,limitation_statement_count,package_summary,report_time_utc,classification
+report-demo10-quicklook-001,QUICK_LOOK,RELEASED,RELEASED,quicklook_test_director,1,Initial summary with one known limitation statement.,2026-11-05T15:10:00.000Z,SYNTHETIC_UNCLASS
+report-demo10-final-001,FINAL,SUBMITTED_FOR_APPROVAL,APPROVED,final_required_three_role,1,Final package requests approval but is still gated by missing review evidence.,2026-11-05T15:10:00.000Z,SYNTHETIC_UNCLASS

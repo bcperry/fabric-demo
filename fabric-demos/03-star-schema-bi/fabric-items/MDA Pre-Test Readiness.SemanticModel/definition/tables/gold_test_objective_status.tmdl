@@ -1,0 +1,141 @@
+table gold_test_objective_status
+	lineageTag: 576ed56c-3242-47e7-927a-25d3e97a2ab2
+	sourceLineageTag: [dbo].[gold_test_objective_status]
+
+	measure 'Total Objectives' = DISTINCTCOUNT(gold_test_objective_status[test_objective_id])
+		formatString: 0
+
+	measure 'Objectives Met' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_test_objective_status[test_objective_id]),
+			    gold_test_objective_status[objective_status] = "MET"
+			)
+			```
+		formatString: 0
+
+	measure 'Objectives Requiring Attention' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_test_objective_status[test_objective_id]),
+			    gold_test_objective_status[objective_status] <> "MET"
+			)
+			```
+		formatString: 0
+
+	column scenario_id
+		dataType: string
+		lineageTag: 9aeb5807-a1e3-4d64-8fa9-652d6adbed84
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_event_id
+		dataType: string
+		lineageTag: 8141becf-081d-4837-ae41-e0ccdac1e061
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective_id
+		dataType: string
+		lineageTag: 5deb218f-8285-4d30-b16c-0310dc8f74f0
+		sourceLineageTag: test_objective_id
+		summarizeBy: none
+		sourceColumn: test_objective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column planned_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: 363fe1a4-0f9a-42c0-a486-a0e1b1db86fa
+		sourceLineageTag: planned_checks
+		summarizeBy: sum
+		sourceColumn: planned_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_plan_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: c1a11d66-bf1d-4a56-9c0b-9593c76d5740
+		sourceLineageTag: on_plan_checks
+		summarizeBy: sum
+		sourceColumn: on_plan_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	column partial_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: 881f09b0-8fc7-4349-98ef-1fbdb19fa596
+		sourceLineageTag: partial_checks
+		summarizeBy: sum
+		sourceColumn: partial_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	column not_met_checks
+		dataType: int64
+		formatString: 0
+		lineageTag: 866e354f-7d87-4b7c-bed6-c41c53f1aac4
+		sourceLineageTag: not_met_checks
+		summarizeBy: sum
+		sourceColumn: not_met_checks
+
+		annotation SummarizationSetBy = Automatic
+
+	column late_evidence_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c9f8be3-23ec-45e0-a13d-f8a276d84635
+		sourceLineageTag: late_evidence_count
+		summarizeBy: sum
+		sourceColumn: late_evidence_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column objective_status
+		dataType: string
+		lineageTag: b26752cb-5c72-4b62-834f-37c19173d952
+		sourceLineageTag: objective_status
+		summarizeBy: none
+		sourceColumn: objective_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column objective_note
+		dataType: string
+		lineageTag: 338a3851-a9a5-49af-bc0f-a9f391c371f7
+		sourceLineageTag: objective_note
+		summarizeBy: none
+		sourceColumn: objective_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective
+		dataType: string
+		lineageTag: 917d5d0e-bfbb-4ccc-b15a-771096f67d1d
+		sourceLineageTag: test_objective
+		summarizeBy: none
+		sourceColumn: test_objective
+
+		annotation SummarizationSetBy = Automatic
+
+	column objective_result
+		dataType: string
+		lineageTag: a194b875-42c3-40d5-98c5-e130017fdc60
+		sourceLineageTag: objective_result
+		summarizeBy: none
+		sourceColumn: objective_result
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_test_objective_status = entity
+		mode: directLake
+		source
+			entityName: gold_test_objective_status
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

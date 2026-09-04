@@ -1,0 +1,7 @@
+role_id,role_name,team_name,readiness_required,required_final_review,poll_order,classification
+role-test-director,Test Director,Test Control,Y,Y,1,SYNTHETIC_UNCLASS
+role-instrumentation-lead,Instrumentation Lead,Data Collection,Y,N,2,SYNTHETIC_UNCLASS
+role-data-control,Data Control Lead,Data Operations,Y,N,3,SYNTHETIC_UNCLASS
+role-network-analyst,Network Analyst,Communications Monitoring,Y,N,4,SYNTHETIC_UNCLASS
+role-safety-liaison,Safety Liaison,Safety Oversight,Y,Y,5,SYNTHETIC_UNCLASS
+role-independent-evaluator,Independent Evaluator,Evaluation,N,Y,6,SYNTHETIC_UNCLASS

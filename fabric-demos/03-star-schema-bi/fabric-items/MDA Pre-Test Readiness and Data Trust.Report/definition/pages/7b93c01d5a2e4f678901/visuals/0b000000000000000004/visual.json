@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0b000000000000000004", "position": {"x": 40, "y": 400, "z": 1, "height": 240, "width": 590},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_observed_vs_predicted"}}, "Property": "Planned Checks"}}, "queryRef": "gold_observed_vs_predicted.Planned Checks"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Checks planned'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

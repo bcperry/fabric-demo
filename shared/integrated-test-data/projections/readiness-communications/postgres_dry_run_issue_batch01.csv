@@ -1,0 +1,3 @@
+dry_run_issue_id,dry_run_id,severity,issue_state,report_limitation_required_if_observed,issue_summary,classification
+dryrun-issue-001,dryrun-001,LOW,RESOLVED,N,Checklist timestamp label was corrected before execution.,SYNTHETIC_UNCLASS
+dryrun-issue-002,dryrun-002,MODERATE,ACCEPTED_LIMITATION,Y,Backhaul failover may leave a three-second mirrored evidence gap and must remain a report limitation if observed.,SYNTHETIC_UNCLASS

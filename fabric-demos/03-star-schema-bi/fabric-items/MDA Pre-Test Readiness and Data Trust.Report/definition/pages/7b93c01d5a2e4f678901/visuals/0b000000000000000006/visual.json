@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0b000000000000000006", "position": {"x": 1290, "y": 400, "z": 1, "height": 240, "width": 590},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_observed_vs_predicted"}}, "Property": "Partial Checks"}}, "queryRef": "gold_observed_vs_predicted.Partial Checks"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Checks needing review'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

@@ -1,0 +1,131 @@
+{
+  "bundle_id": "fallback-demo10-readiness-001",
+  "demo_id": "10-test-readiness-communications",
+  "scenario_id": "scn-demo10-readiness-comms-001",
+  "test_event_id": "test-demo10-integrated-20261105",
+  "run_manifest_id": "run-demo10-readiness-001",
+  "classification": "SYNTHETIC_UNCLASS",
+  "generated_by": "demo10_support.py",
+  "files": [
+    {
+      "path": "data/postgres_test_event_batch01.csv",
+      "asset_type": "csv",
+      "role": "test event control state",
+      "row_count": 1
+    },
+    {
+      "path": "data/postgres_test_objective_batch01.csv",
+      "asset_type": "csv",
+      "role": "test objective control state",
+      "row_count": 6
+    },
+    {
+      "path": "data/postgres_required_data_feed_batch01.csv",
+      "asset_type": "csv",
+      "role": "required feed control state",
+      "row_count": 5
+    },
+    {
+      "path": "data/postgres_participant_role_batch01.csv",
+      "asset_type": "csv",
+      "role": "participant roles and review gates",
+      "row_count": 6
+    },
+    {
+      "path": "data/postgres_readiness_criterion_batch01.csv",
+      "asset_type": "csv",
+      "role": "readiness criteria",
+      "row_count": 7
+    },
+    {
+      "path": "data/postgres_readiness_poll_batch01.csv",
+      "asset_type": "csv",
+      "role": "stored readiness poll records",
+      "row_count": 8
+    },
+    {
+      "path": "data/postgres_dry_run_batch01.csv",
+      "asset_type": "csv",
+      "role": "dry-run records",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_dry_run_issue_batch01.csv",
+      "asset_type": "csv",
+      "role": "dry-run issue records",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_finding_batch01.csv",
+      "asset_type": "csv",
+      "role": "finding records",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_finding_evidence_batch01.csv",
+      "asset_type": "csv",
+      "role": "finding evidence lineage",
+      "row_count": 7
+    },
+    {
+      "path": "data/postgres_corrective_action_batch01.csv",
+      "asset_type": "csv",
+      "role": "corrective actions",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_report_package_batch01.csv",
+      "asset_type": "csv",
+      "role": "report package state",
+      "row_count": 2
+    },
+    {
+      "path": "data/postgres_report_review_batch01.csv",
+      "asset_type": "csv",
+      "role": "report review state",
+      "row_count": 3
+    },
+    {
+      "path": "data/postgres_approval_record_batch01.csv",
+      "asset_type": "csv",
+      "role": "approval record state",
+      "row_count": 1
+    },
+    {
+      "path": "data/startup_seed_manifest.json",
+      "asset_type": "json",
+      "role": "seed manifest",
+      "row_count": 9
+    },
+    {
+      "path": "data/instrumentation_health.jsonl",
+      "asset_type": "jsonl",
+      "role": "health-monitor pod evidence",
+      "row_count": 20
+    },
+    {
+      "path": "data/network_health.jsonl",
+      "asset_type": "jsonl",
+      "role": "network outage and recovery evidence",
+      "row_count": 18
+    },
+    {
+      "path": "data/readiness_poll.jsonl",
+      "asset_type": "jsonl",
+      "role": "readiness poll stream evidence",
+      "row_count": 8
+    },
+    {
+      "path": "data/operator_test_event.jsonl",
+      "asset_type": "jsonl",
+      "role": "operator and decision evidence",
+      "row_count": 7
+    },
+    {
+      "path": "data/safety_status.jsonl",
+      "asset_type": "jsonl",
+      "role": "advisory safety-status evidence",
+      "row_count": 5
+    }
+  ]
+}

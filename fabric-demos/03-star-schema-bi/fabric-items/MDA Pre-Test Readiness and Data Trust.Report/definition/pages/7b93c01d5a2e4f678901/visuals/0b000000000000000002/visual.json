@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0b000000000000000002", "position": {"x": 665, "y": 100, "z": 1, "height": 240, "width": 590},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_integrated_readiness"}}, "Property": "Constrained Systems"}}, "queryRef": "gold_integrated_readiness.Constrained Systems"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Systems constrained'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

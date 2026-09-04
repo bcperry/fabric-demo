@@ -1,0 +1,162 @@
+table gold_integrated_readiness
+	lineageTag: 97d31413-75c9-4b23-af7d-f2f9a0a73be3
+	sourceLineageTag: [dbo].[gold_integrated_readiness]
+
+	measure 'Total Systems' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_integrated_readiness[system_instance_id]),
+			    gold_integrated_readiness[readiness_scope] = "SYSTEM"
+			)
+			```
+		formatString: 0
+
+	measure 'Ready Systems' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_integrated_readiness[system_instance_id]),
+			    gold_integrated_readiness[readiness_scope] = "SYSTEM",
+			    gold_integrated_readiness[integrated_readiness_status] = "READY"
+			)
+			```
+		formatString: 0
+
+	measure 'Constrained Systems' = [Total Systems] - [Ready Systems]
+		formatString: 0
+
+	measure 'Readiness Percentage' = DIVIDE([Ready Systems], [Total Systems])
+		formatString: 0.0%
+
+	measure 'Systems Ready Brief' = FORMAT([Ready Systems], "0") & " / " & FORMAT([Total Systems], "0") & " (" & FORMAT([Readiness Percentage], "0.0%") & ")"
+
+	column readiness_scope
+		dataType: string
+		lineageTag: 616a2242-36d9-4778-8929-40c8c7bf7dea
+		sourceLineageTag: readiness_scope
+		summarizeBy: none
+		sourceColumn: readiness_scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_id
+		dataType: string
+		lineageTag: f0f031ab-9e70-4b03-8e9d-3758a08117e5
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_event_id
+		dataType: string
+		lineageTag: 0bf070cb-a4b9-4222-a34a-af8a0087f2f1
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		dataType: string
+		lineageTag: caa06684-cd4d-4274-ab3a-e23b92e9d42a
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 151daaf4-5480-4111-86ff-07e22b076da7
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column observed_readiness_state
+		dataType: string
+		lineageTag: f1835a47-85a6-4af1-ab41-a9f8602c65dc
+		sourceLineageTag: observed_readiness_state
+		summarizeBy: none
+		sourceColumn: observed_readiness_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column operations_poll_state
+		dataType: string
+		lineageTag: e1a544ad-bd9f-4695-92c4-11134585ead7
+		sourceLineageTag: operations_poll_state
+		summarizeBy: none
+		sourceColumn: operations_poll_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column observed_health_score
+		dataType: double
+		lineageTag: 3d6b51b2-ff4b-4856-8804-66d6391ae612
+		sourceLineageTag: observed_health_score
+		summarizeBy: sum
+		sourceColumn: observed_health_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column required_feed_id
+		dataType: string
+		lineageTag: 0e48da7d-04b5-47dc-ab34-5950d8653a0a
+		sourceLineageTag: required_feed_id
+		summarizeBy: none
+		sourceColumn: required_feed_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_feed_status
+		dataType: string
+		lineageTag: e3611af4-a6c4-4b65-ab31-f120dfcbfcf9
+		sourceLineageTag: required_feed_status
+		summarizeBy: none
+		sourceColumn: required_feed_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column integrated_readiness_status
+		dataType: string
+		lineageTag: b4abca99-4a1e-4e94-966e-14d1d7ffe250
+		sourceLineageTag: integrated_readiness_status
+		summarizeBy: none
+		sourceColumn: integrated_readiness_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column blocking_reason
+		dataType: string
+		lineageTag: 77f86ea1-209d-4bc2-b5cc-18d28c704cc6
+		sourceLineageTag: blocking_reason
+		summarizeBy: none
+		sourceColumn: blocking_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column participant
+		dataType: string
+		lineageTag: d8e2fa03-4f74-467a-8ee0-93d2da1ea54a
+		sourceLineageTag: participant
+		summarizeBy: none
+		sourceColumn: participant
+
+		annotation SummarizationSetBy = Automatic
+
+	column readiness
+		dataType: string
+		lineageTag: f25132cc-6a29-46df-a830-9d297295d17f
+		sourceLineageTag: readiness
+		summarizeBy: none
+		sourceColumn: readiness
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_integrated_readiness = entity
+		mode: directLake
+		source
+			entityName: gold_integrated_readiness
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

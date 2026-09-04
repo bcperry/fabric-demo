@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a1100000000000000007",
+  "position": {"x": 800, "y": 380, "z": 2, "height": 250, "width": 1080},
+  "visual": {
+    "visualType": "tableEx",
+    "query": {"queryState": {"Values": {"projections": [
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "site_name"}}, "queryRef": "gold_mirror_site_locations.site_name", "nativeQueryRef": "Site"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "city"}}, "queryRef": "gold_mirror_site_locations.city", "nativeQueryRef": "City"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "country_name"}}, "queryRef": "gold_mirror_site_locations.country_name", "nativeQueryRef": "Country"},
+      {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Site Risk Decision Order"}}, "queryRef": "gold_mirror_site_locations.Site Risk Decision Order", "nativeQueryRef": "Decision order"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "active_risk_count"}}, "queryRef": "gold_mirror_site_locations.active_risk_count", "nativeQueryRef": "Active risks"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "constrained_system_count"}}, "queryRef": "gold_mirror_site_locations.constrained_system_count", "nativeQueryRef": "Constrained"}
+    ]}}, "sortDefinition": {"sort": [
+      {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Site Risk Decision Order"}}, "direction": "Ascending"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "constrained_system_count"}}, "direction": "Descending"}
+    ]}},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Site readiness and risk'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

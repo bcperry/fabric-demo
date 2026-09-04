@@ -1,0 +1,2 @@
+maintenance_action_id,system_instance_id,work_order_id,action_type,status,reason_code,started_at_utc,completed_at_utc,updated_at_utc,classification
+maint-patriot-bravo-02-001,patriot-bravo-02,wo-synthetic-001,CLOCK_BUFFER_RECALIBRATION,COMPLETE,SYNTHETIC_COMPONENT_CONDITION,2026-11-03T15:01:15Z,2026-11-03T15:02:15Z,2026-11-03T15:02:15Z,SYNTHETIC_UNCLASS

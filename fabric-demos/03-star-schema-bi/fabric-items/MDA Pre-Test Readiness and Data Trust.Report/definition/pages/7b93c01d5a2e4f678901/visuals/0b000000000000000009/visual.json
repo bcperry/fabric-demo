@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json", "name": "0b000000000000000009", "position": {"x": 1290, "y": 700, "z": 1, "height": 240, "width": 590},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_dry_run_discrepancies"}}, "Property": "Dry-Run Discrepancies"}}, "queryRef": "gold_dry_run_discrepancies.Dry-Run Discrepancies"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Dry-run discrepancies'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

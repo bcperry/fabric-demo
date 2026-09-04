@@ -1,0 +1,3 @@
+dry_run_id,executed_time_utc,dry_run_name,status,objective_id,notes,classification
+dryrun-001,2026-11-05T13:18:00.000Z,Countdown rehearsal,PASS,obj-demo10-feed-reconciliation,Prestart control and marker sequence completed.,SYNTHETIC_UNCLASS
+dryrun-002,2026-11-05T13:28:00.000Z,Fallback mirror rehearsal,PASS_WITH_ACCEPTED_ISSUE,obj-demo10-network-recovery,Failover recovered but preserved an accepted evidence gap profile.,SYNTHETIC_UNCLASS

@@ -1,0 +1,36 @@
+let runId = 'run-demo07-integrated-001';
+
+// Live event health by source system for the deterministic rehearsal run.
+union SensorObservation, TargetTelemetry, InterceptorTelemetry, InstrumentationObservation,
+      GroundTruthObservation, EnvironmentObservation, SystemStatus, InstrumentationHealth,
+      NetworkHealth, CommandIntegration, ReadinessPoll, OperatorTestEvent, SafetyStatus,
+      SustainmentEvent
+| where simulation_run_id == runId
+| summarize Events=count(), LastPublished=max(ingest_time_utc) by source_system
+| order by source_system asc
+
+// Reconstruct the shared-track operational timeline.
+union
+    (SensorObservation | where simulation_run_id == runId | project event_time_utc, source='SensorObservation', detail=observation_type, status=tostring(quality.score)),
+    (CommandIntegration | where simulation_run_id == runId and track_id == 'track-synthetic-001' | project event_time_utc, source='CommandIntegration', detail=action, status=strcat(status, ' / ', tostring(processing_delay_ms), 'ms')),
+    (OperatorTestEvent | where simulation_run_id == runId | project event_time_utc, source='OperatorTestEvent', detail=marker, status=decision)
+| order by event_time_utc asc
+
+// Evidence chain for the scripted anomaly.
+union
+    (DelayedIntegrationEvents(runId) | project event_time_utc, source='CommandIntegration', detail=action, severity=tostring(processing_delay_ms)),
+    (InstrumentationHealth | where simulation_run_id == runId and status != 'HEALTHY' | project event_time_utc, source='InstrumentationHealth', detail=issue_profile, severity=tostring(observed_lag_ms)),
+    (NetworkHealth | where simulation_run_id == runId and status != 'AVAILABLE' | project event_time_utc, source='NetworkHealth', detail=event_scope, severity=tostring(latency_ms)),
+    (SafetyStatus | where simulation_run_id == runId | project event_time_utc, source='SafetyStatus', detail=condition, severity=recommended_action),
+    (ReadinessPoll | where simulation_run_id == runId and poll_id == 'poll-recovery-001' | project event_time_utc, source='ReadinessPoll', detail=participant_role, severity=response)
+| order by event_time_utc asc
+
+// Advisory safety evidence versus authoritative human decisions.
+union
+    (SafetyStatus | where simulation_run_id == runId | project event_time_utc, source='SafetyStatus', boundary=authority_scope, action=recommended_action),
+    (OperatorTestEvent | where simulation_run_id == runId | project event_time_utc, source='OperatorTestEvent', boundary=decision_authority, action=decision)
+| order by event_time_utc asc
+
+// Current readiness and degraded assets.
+LatestOperationalStatus(runId)
+| order by source_system asc, source_instance_id asc

@@ -1,0 +1,4 @@
+report_review_id,report_package_id,reviewer_role_id,review_state,review_notes,review_time_utc,classification
+review-demo10-001,report-demo10-quicklook-001,role-test-director,APPROVED,Quick-look release accepted with limitation note.,2026-11-05T15:15:00.000Z,SYNTHETIC_UNCLASS
+review-demo10-002,report-demo10-final-001,role-test-director,APPROVED,Final report captures outage limitation and decision timeline.,2026-11-05T15:15:00.000Z,SYNTHETIC_UNCLASS
+review-demo10-003,report-demo10-final-001,role-safety-liaison,APPROVED,Safety evidence remains explicitly advisory in the final package.,2026-11-05T15:15:00.000Z,SYNTHETIC_UNCLASS

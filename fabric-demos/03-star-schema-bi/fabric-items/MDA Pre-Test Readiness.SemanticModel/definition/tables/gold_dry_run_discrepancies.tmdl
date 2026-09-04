@@ -1,0 +1,133 @@
+table gold_dry_run_discrepancies
+	lineageTag: cd17f50d-00af-43fe-a009-2612ae4fddaf
+	sourceLineageTag: [dbo].[gold_dry_run_discrepancies]
+
+	measure 'Dry-Run Discrepancies' = COUNTROWS(gold_dry_run_discrepancies)
+		formatString: 0
+
+	column snapshot_record_id
+		dataType: string
+		lineageTag: 316b00c2-88ba-4952-b91d-834d39920d02
+		sourceLineageTag: snapshot_record_id
+		summarizeBy: none
+		sourceColumn: snapshot_record_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scenario_id
+		dataType: string
+		lineageTag: 70b6d578-4447-4cb1-bc91-288de4003db6
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_event_id
+		dataType: string
+		lineageTag: 608dc635-1707-4d52-bd6c-62f33125ef9a
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		dataType: string
+		lineageTag: 0fadb909-aae2-4da0-83d7-40b7e091251e
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 1b6ad15a-51f7-4175-a130-f48c84b79f7b
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective_id
+		dataType: string
+		lineageTag: a99a81e7-5314-41c5-8ced-f047bb4ebb27
+		sourceLineageTag: test_objective_id
+		summarizeBy: none
+		sourceColumn: test_objective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column reported_time_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e7cf439c-7206-4de6-9344-b0b1a9a27004
+		sourceLineageTag: reported_time_utc
+		summarizeBy: none
+		sourceColumn: reported_time_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	column reported_state
+		dataType: string
+		lineageTag: 4b701602-ca69-4805-ba86-86d7c434ad6c
+		sourceLineageTag: reported_state
+		summarizeBy: none
+		sourceColumn: reported_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_state
+		dataType: string
+		lineageTag: ae17b150-8abd-4b2c-ab1b-0fc345081209
+		sourceLineageTag: expected_state
+		summarizeBy: none
+		sourceColumn: expected_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column measure_name
+		dataType: string
+		lineageTag: 6bfa9ff1-d891-4601-94cf-8b50feb6177a
+		sourceLineageTag: measure_name
+		summarizeBy: none
+		sourceColumn: measure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column normalized_measure_value
+		dataType: double
+		lineageTag: 78c10a6b-75e8-4b90-9388-b580ffeaad7b
+		sourceLineageTag: normalized_measure_value
+		summarizeBy: sum
+		sourceColumn: normalized_measure_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column normalized_measure_unit
+		dataType: string
+		lineageTag: 99f1f54c-1b29-4fb1-a1fe-a87b35caa748
+		sourceLineageTag: normalized_measure_unit
+		summarizeBy: none
+		sourceColumn: normalized_measure_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column notes
+		dataType: string
+		lineageTag: 86572618-77ed-4f19-a12e-f23d4f312bb1
+		sourceLineageTag: notes
+		summarizeBy: none
+		sourceColumn: notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_dry_run_discrepancies = entity
+		mode: directLake
+		source
+			entityName: gold_dry_run_discrepancies
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'
+

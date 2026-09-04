@@ -1,0 +1,6 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a1100000000000000001",
+  "position": {"x": 40, "y": 30, "z": 1, "height": 120, "width": 1840},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "Director Recommendation"}}, "queryRef": "gold_mirror_casework.Director Recommendation"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Site Decision Banner"}}}}}]}, "drillFilterOtherVisuals": true}
+}

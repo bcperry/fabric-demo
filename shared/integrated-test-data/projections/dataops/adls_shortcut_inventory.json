@@ -1,0 +1,30 @@
+{
+  "shortcut_name": "sc_mda_baseline_integrated_defense",
+  "provisioning_mode": "operator_provided",
+  "scenario_id": "integrated-defense-001",
+  "simulation_run_id": "sim-integrated-defense-001-plan-01",
+  "storage_path": "abfss://baseline@demostorage.dfs.core.windows.net/scenario_id=integrated-defense-001/simulation_run_id=sim-integrated-defense-001-plan-01/",
+  "validation_note": "This manifest is the local fallback for shortcut validation when the live OneLake shortcut is not available.",
+  "files": [
+    {
+      "relative_path": "predicted_tracks/track-demo-001.parquet",
+      "format": "parquet",
+      "record_count": 2
+    },
+    {
+      "relative_path": "predicted_events/command-window.parquet",
+      "format": "parquet",
+      "record_count": 2
+    },
+    {
+      "relative_path": "predicted_measures/readiness_targets.delta",
+      "format": "delta",
+      "record_count": 4
+    },
+    {
+      "relative_path": "environmental_assumptions/weather_snapshot.parquet",
+      "format": "parquet",
+      "record_count": 1
+    }
+  ]
+}

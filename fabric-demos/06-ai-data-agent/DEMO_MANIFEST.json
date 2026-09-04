@@ -1,0 +1,12 @@
+{
+  "demo_id": "06-ai-data-agent",
+  "title": "AI Data Agent",
+  "release_id": "2026.11.03",
+  "data_product": "shared/integrated-test-data",
+  "authoritative_bindings": ["IntegratedTestLakehouse", "eh_mda_test"],
+  "notebooks": ["Validate MDA Test Ontology Bindings", "Create MDA Test Ontology from Package"],
+  "generates_substitute_data": false,
+  "leadership_hook": "Grounded answers across the complete test lifecycle",
+  "professional_hook": "Ontology, authoritative bindings, traceability, and evaluation",
+  "status": "implemented_requires_fabric_environment"
+}

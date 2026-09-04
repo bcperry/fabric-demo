@@ -1,0 +1,52 @@
+[
+  {
+    "batch_id": "ops-batch-001-required-feed",
+    "batch_sequence": 1,
+    "table_name": "postgres_required_feed_registry",
+    "source_file": "postgres_required_feed_registry_batch01.csv",
+    "watermark_column": "updated_at_utc",
+    "primary_key": [
+      "required_feed_id"
+    ]
+  },
+  {
+    "batch_id": "ops-batch-002-readiness-initial",
+    "batch_sequence": 2,
+    "table_name": "postgres_readiness_history",
+    "source_file": "postgres_readiness_history_batch01.csv",
+    "watermark_column": "updated_at_utc",
+    "primary_key": [
+      "readiness_change_id"
+    ]
+  },
+  {
+    "batch_id": "ops-batch-003-maintenance-initial",
+    "batch_sequence": 3,
+    "table_name": "postgres_maintenance_actions",
+    "source_file": "postgres_maintenance_actions_batch01.csv",
+    "watermark_column": "updated_at_utc",
+    "primary_key": [
+      "maintenance_action_id"
+    ]
+  },
+  {
+    "batch_id": "ops-batch-004-readiness-followup",
+    "batch_sequence": 4,
+    "table_name": "postgres_readiness_history",
+    "source_file": "postgres_readiness_history_batch02.csv",
+    "watermark_column": "updated_at_utc",
+    "primary_key": [
+      "readiness_change_id"
+    ]
+  },
+  {
+    "batch_id": "ops-batch-005-maintenance-followup",
+    "batch_sequence": 5,
+    "table_name": "postgres_maintenance_actions",
+    "source_file": "postgres_maintenance_actions_batch02.csv",
+    "watermark_column": "updated_at_utc",
+    "primary_key": [
+      "maintenance_action_id"
+    ]
+  }
+]

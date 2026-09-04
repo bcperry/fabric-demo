@@ -1,0 +1,53 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+    "name": "a1b2c3d4e5f607182930",
+    "position": {
+        "x": 965,
+        "y": 100,
+        "z": 3,
+        "height": 184,
+        "width": 915
+    },
+    "visual": {
+        "visualType": "textbox",
+        "objects": {
+            "general": [
+                {
+                    "properties": {
+                        "paragraphs": [
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "SYNTHETIC UNCLASS - DEMO DATA ONLY | DECISION AUTHORITY: TEST DIRECTOR | EVIDENCE: AUTHORITATIVE/COMPLETE AS OF 03 NOV 2026 1140Z | TREND: BASELINE REVIEW",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "12pt",
+                                            "fontWeight": "bold",
+                                            "color": "#605E5C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "HOLD - TEST EXECUTION NOT AUTHORIZED",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "18pt",
+                                            "fontWeight": "bold",
+                                            "color": "#A4262C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "drillFilterOtherVisuals": true
+    }
+}

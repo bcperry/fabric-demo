@@ -1,0 +1,6 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a1100000000000000003",
+  "position": {"x": 510, "y": 180, "z": 1, "height": 160, "width": 420},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Participant Readiness Brief"}}, "queryRef": "gold_mirror_site_locations.Participant Readiness Brief"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_site_locations"}}, "Property": "Participant Readiness Title"}}}}}]}, "drillFilterOtherVisuals": true}
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Demo 07 Helm Values",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["namespace", "image", "runtime", "workloadIdentity", "producers", "resources"],
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "minLength": 1
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "tag", "pullPolicy"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "tag": {"type": "string", "minLength": 1},
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transport",
+        "durationSeconds",
+        "realtime",
+        "scenarioPath",
+        "kafkaBootstrapServers",
+        "manifestOutputDir",
+        "startTimeUtc",
+        "runId"
+      ],
+      "properties": {
+        "transport": {
+          "type": "string",
+          "enum": ["stdout", "file", "kafka"]
+        },
+        "durationSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "realtime": {
+          "type": "boolean"
+        },
+        "scenarioPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kafkaBootstrapServers": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manifestOutputDir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startTimeUtc": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string"
+        }
+      }
+    },
+    "workloadIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "clientId", "serviceAccountName"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "clientId": {"type": "string", "minLength": 1},
+        "serviceAccountName": {"type": "string", "minLength": 1}
+      }
+    },
+    "producers": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "sourceSystems"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "sourceSystems": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "TPY2",
+                "PATRIOT",
+                "THAAD",
+                "BATTLE_MANAGEMENT",
+                "ARMY_INTEGRATION",
+                "TARGET_RANGE",
+                "INTERCEPTOR_RANGE",
+                "RANGE_RECEIVER",
+                "OPTICAL_TRACKER",
+                "GROUND_TRUTH",
+                "ENVIRONMENT",
+                "INSTRUMENTATION_MONITOR",
+                "NETWORK_MONITOR",
+                "READINESS_CONTROLLER",
+                "OPERATOR_CONTROL",
+                "SAFETY_MONITOR",
+                "SUSTAINMENT"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "object"
+    }
+  }
+}

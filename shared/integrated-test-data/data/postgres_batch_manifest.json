@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0.0",
+  "database_engine": "PostgreSQL",
+  "schema_name": "mda_ops",
+  "batches": [
+    {
+      "table_name": "test_event",
+      "path": "data/postgres_test_event_batch01.csv",
+      "load_order": 1,
+      "primary_key": "test_event_id",
+      "watermark_column": "planned_start_time_utc",
+      "row_count": 1,
+      "sha256": "fad1c9f177ad53471879fed54f598801c25495aad6b6be464014a465eb1f59e0"
+    },
+    {
+      "table_name": "test_objective",
+      "path": "data/postgres_test_objective_batch01.csv",
+      "load_order": 2,
+      "primary_key": "objective_id",
+      "watermark_column": "objective_name",
+      "row_count": 5,
+      "sha256": "fd7fc549a54a1dd62294b70ee7fd41797c15f433314bc84a29fd29ca6ee3d3d4"
+    },
+    {
+      "table_name": "required_feed",
+      "path": "data/postgres_required_feed_batch01.csv",
+      "load_order": 3,
+      "primary_key": "required_feed_id",
+      "watermark_column": "feed_name",
+      "row_count": 9,
+      "sha256": "8ee89f3c6580edb21ff83b22f65fb63047ac15524256b0d5b902d77cbeb2d5ae"
+    },
+    {
+      "table_name": "site",
+      "path": "data/postgres_site_batch01.csv",
+      "load_order": 4,
+      "primary_key": "site_id",
+      "watermark_column": "updated_at_utc",
+      "row_count": 3,
+      "sha256": "b6d0be07db6ac06b01a9da3ba4fdbcb7f0831b9ed4fdfd065bf8a644e4d866f7"
+    },
+    {
+      "table_name": "system_instance",
+      "path": "data/postgres_system_instance_batch01.csv",
+      "load_order": 5,
+      "primary_key": "system_instance_id",
+      "watermark_column": "updated_at_utc",
+      "row_count": 19,
+      "sha256": "42ed38720cebdefb3ac51fbee4a0955b1f026c98d28136f7cc7d41bf931f4cbb"
+    },
+    {
+      "table_name": "readiness_history_batch01",
+      "path": "data/postgres_readiness_history_batch01.csv",
+      "load_order": 6,
+      "primary_key": "readiness_event_id",
+      "watermark_column": "effective_at_utc",
+      "row_count": 19,
+      "sha256": "2c5d64ecc93d99c60380b01d2b181fd4d0f6b70bdb0e604e3dbee7c6178a8617"
+    },
+    {
+      "table_name": "readiness_history_batch02",
+      "path": "data/postgres_readiness_history_batch02.csv",
+      "load_order": 7,
+      "primary_key": "readiness_event_id",
+      "watermark_column": "effective_at_utc",
+      "row_count": 2,
+      "sha256": "695b57acc2233bd7b69b752821caebb71e2a8c15f95b0205b68f1a0d29ba08f0"
+    },
+    {
+      "table_name": "maintenance_action",
+      "path": "data/postgres_maintenance_action_batch01.csv",
+      "load_order": 8,
+      "primary_key": "maintenance_action_id",
+      "watermark_column": "updated_at_utc",
+      "row_count": 1,
+      "sha256": "fbf28b369274faad78c8f7b342a06a9d3e54bf67e0a3797a8a0a89f64d70a673"
+    },
+    {
+      "table_name": "inventory_position",
+      "path": "data/postgres_inventory_position_batch01.csv",
+      "load_order": 9,
+      "primary_key": "system_instance_id|inventory_category",
+      "watermark_column": "updated_at_utc",
+      "row_count": 3,
+      "sha256": "5fb1ba328cb48fb5a17708ff1a745868c513be842d45041301011f876a546d2a"
+    },
+    {
+      "table_name": "finding",
+      "path": "data/postgres_finding_batch01.csv",
+      "load_order": 10,
+      "primary_key": "finding_id",
+      "watermark_column": "identified_at_utc",
+      "row_count": 1,
+      "sha256": "ab54d33c6fb68f4aa9df9e3d8bf2f4e94e4a66437f6a6c7a20c5b026a6f0a9a9"
+    },
+    {
+      "table_name": "finding_evidence",
+      "path": "data/postgres_finding_evidence_batch01.csv",
+      "load_order": 11,
+      "primary_key": "finding_evidence_id",
+      "watermark_column": "recorded_at_utc",
+      "row_count": 6,
+      "sha256": "b96e3167c0efcc6acbc3f2861e7d6baa828318566666c658bb027758c5d65b33"
+    },
+    {
+      "table_name": "corrective_action",
+      "path": "data/postgres_corrective_action_batch01.csv",
+      "load_order": 12,
+      "primary_key": "corrective_action_id",
+      "watermark_column": "recorded_at_utc",
+      "row_count": 1,
+      "sha256": "41bc9bf2c99d2bab02354eefc40cb2f8a872a4955b6180b02b8c37c1a7a75f49"
+    },
+    {
+      "table_name": "report_review",
+      "path": "data/postgres_report_review_batch01.csv",
+      "load_order": 13,
+      "primary_key": "report_review_id",
+      "watermark_column": "review_time_utc",
+      "row_count": 2,
+      "sha256": "0b6471045abeb58f4cba5c961c3b394418d1ebc4b328e0e84a622f1853258db7"
+    }
+  ]
+}

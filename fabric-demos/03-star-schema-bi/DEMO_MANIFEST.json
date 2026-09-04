@@ -1,0 +1,15 @@
+{
+  "demo_id": "03-star-schema-bi",
+  "title": "Star Schema and BI",
+  "release_id": "2026.11.03",
+  "data_product": "shared/integrated-test-data",
+  "notebook_count": 7,
+  "dimension_count": 13,
+  "fact_count": 11,
+  "product_count": 11,
+  "upstream": ["IntegratedTestLakehouse", "MDA Operations Mirror"],
+  "fabric_items": ["IntegratedTestLakehouse", "MDA Pre-Test Readiness.SemanticModel", "MDA Pre-Test Readiness and Data Trust.Report"],
+  "leadership_hook": "Readiness, objectives, mirrored findings, evidence, corrective actions, and real Indo-Pacific site context",
+  "professional_hook": "Conformed dimensions, facts, mirror-backed Gold products, semantic model, and Direct Lake",
+  "status": "implemented"
+}

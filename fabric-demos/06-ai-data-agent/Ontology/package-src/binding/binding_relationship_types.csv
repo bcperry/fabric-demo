@@ -1,0 +1,9 @@
+RelationshipName,SourceEntityTypeName,TargetEntityTypeName,SourceKeyColumnNames,TargetKeyColumnNames,SourceTableName,WorkspaceId,ItemId,SourceSchema
+TestEventUsesScenario,TestEvent,Scenario,test_event_id,scenario_id,dim_test_event,,,
+SystemInstanceParticipatesInTestEvent,SystemInstance,TestEvent,system_instance_id,test_event_id,gold_readiness_summary,,,
+ObjectiveEvaluatedInTestEvent,TestObjective,TestEvent,test_objective_id,test_event_id,fact_objective_evaluation,,,
+FindingForTestEvent,Finding,TestEvent,finding_id,test_event_id,fact_finding,,,
+FindingImpactsObjective,Finding,TestObjective,finding_id,test_objective_id,fact_finding,,,
+CorrectiveActionAddressesFinding,CorrectiveAction,Finding,corrective_action_id,related_finding_id,fact_corrective_action,,,
+ObservationProducedBySystem,Observation,SystemInstance,observation_id,system_instance_id,SensorObservation,,,
+CommandEventIssuedBySystem,CommandEvent,SystemInstance,command_event_id,system_instance_id,CommandIntegration,,,

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mda-demo-emulators
+description: Synthetic UNCLASS event producers for the MDA Fabric demo
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

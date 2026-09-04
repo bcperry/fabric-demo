@@ -1,0 +1,2 @@
+approval_record_id,report_package_id,approved_by_role_id,approval_state,approval_scope,approval_time_utc,classification
+approval-demo10-001,report-demo10-quicklook-001,role-test-director,APPROVED,quicklook_release,2026-11-05T15:17:00.000Z,SYNTHETIC_UNCLASS

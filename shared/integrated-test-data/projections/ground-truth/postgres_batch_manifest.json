@@ -1,0 +1,34 @@
+[
+  {
+    "batch_id": "pg-range-001",
+    "batch_sequence": 1,
+    "table_name": "range_source_registry",
+    "source_file": "postgres_source_registry_batch01.csv",
+    "watermark_column": "registered_time_utc",
+    "row_count": 7
+  },
+  {
+    "batch_id": "pg-range-002",
+    "batch_sequence": 2,
+    "table_name": "range_objective_coverage",
+    "source_file": "postgres_objective_coverage_batch01.csv",
+    "watermark_column": "planned_time_utc",
+    "row_count": 7
+  },
+  {
+    "batch_id": "pg-range-003",
+    "batch_sequence": 3,
+    "table_name": "range_source_state_history",
+    "source_file": "postgres_source_state_batch01.csv",
+    "watermark_column": "effective_time_utc",
+    "row_count": 7
+  },
+  {
+    "batch_id": "pg-range-004",
+    "batch_sequence": 4,
+    "table_name": "range_source_state_history",
+    "source_file": "postgres_source_state_batch02.csv",
+    "watermark_column": "effective_time_utc",
+    "row_count": 2
+  }
+]

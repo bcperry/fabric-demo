@@ -1,0 +1,7 @@
+objective_id,objective_name,objective_phase,success_measure,planned_time_utc,classification
+obj-demo10-feed-reconciliation,Required feed reconciliation,Setup,observed publishers align to required feeds and readiness responses,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+obj-demo10-hmon-scale,Five replayable health-monitor pod identities,Setup|Running,five distinct instrumentation publishers are preserved,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+obj-demo10-network-recovery,Network outage and recovery traceability,Running,one seeded outage and one recovery remain visible,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+obj-demo10-report-lineage,Report limitation traceability,Post-Test Reporting,"outage limitation maps to findings, evidence, and corrective action",2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+obj-demo10-safety-boundary,Safety evidence remains advisory,Running|Post-Test Reporting,safety-status evidence never becomes an authoritative decision,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS
+obj-demo10-approval-gate,Final approval requires complete reviews,Post-Test Reporting,missing review records block final approval,2026-11-04T18:30:00.000Z,SYNTHETIC_UNCLASS

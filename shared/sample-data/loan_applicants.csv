@@ -1,6 +1,0 @@
-AccountID,CustomerName,CreditScore,AnnualIncome,LoanAmount,LoanPurpose,EmploymentYears,DebtToIncomeRatio
-ACC001,James Mitchell,720,85000,15000,Home Improvement,8,0.28
-ACC002,Sarah Johnson,580,42000,25000,Debt Consolidation,3,0.45
-ACC003,Robert Chen,810,120000,50000,Business,15,0.18
-ACC004,Emily Davis,650,67000,10000,Auto,5,0.35
-ACC005,Michael Brown,490,31000,8000,Personal,1,0.55

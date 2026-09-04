@@ -1,0 +1,63 @@
+table gold_readiness_drift_summary
+	lineageTag: 96e856ab-ed4e-4aed-af7c-b3a837668908
+	sourceLineageTag: [dbo].[gold_readiness_drift_summary]
+
+	measure 'Features Monitored' = COUNTROWS(gold_readiness_drift_summary)
+		formatString: 0
+
+	measure 'Features Requiring Review' = CALCULATE(COUNTROWS(gold_readiness_drift_summary), gold_readiness_drift_summary[demo_drift_band] = "demo-review")
+		formatString: 0
+
+	measure 'Features on Watch' = CALCULATE(COUNTROWS(gold_readiness_drift_summary), gold_readiness_drift_summary[demo_drift_band] = "demo-watch")
+		formatString: 0
+
+	measure 'Maximum PSI' = MAX(gold_readiness_drift_summary[psi])
+		formatString: 0.000
+
+	measure 'Drift Review Rate' = DIVIDE([Features Requiring Review], [Features Monitored])
+		formatString: 0.0%
+
+	column feature_name
+		dataType: string
+		lineageTag: 968a39cb-b7d0-5c76-bb8a-51698c7df1b7
+		sourceLineageTag: feature_name
+		summarizeBy: none
+		sourceColumn: feature_name
+
+	column reference_mean
+		dataType: double
+		lineageTag: 8a38a54d-5481-50f9-8f63-e43cf1239c57
+		sourceLineageTag: reference_mean
+		formatString: 0.000
+		summarizeBy: average
+		sourceColumn: reference_mean
+
+	column current_mean
+		dataType: double
+		lineageTag: 83702933-4e79-5acd-a0e3-70e264cb46e2
+		sourceLineageTag: current_mean
+		formatString: 0.000
+		summarizeBy: average
+		sourceColumn: current_mean
+
+	column psi
+		dataType: double
+		lineageTag: 1fe46fdc-84ed-5699-a7a6-ab775f58dc19
+		sourceLineageTag: psi
+		formatString: 0.000
+		summarizeBy: max
+		sourceColumn: psi
+
+	column demo_drift_band
+		dataType: string
+		lineageTag: 00522687-872d-55b7-9b7b-053e48d9adb3
+		sourceLineageTag: demo_drift_band
+		summarizeBy: none
+		sourceColumn: demo_drift_band
+
+	partition gold_readiness_drift_summary = entity
+		mode: directLake
+		source
+			entityName: gold_readiness_drift_summary
+			schemaName: dbo
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

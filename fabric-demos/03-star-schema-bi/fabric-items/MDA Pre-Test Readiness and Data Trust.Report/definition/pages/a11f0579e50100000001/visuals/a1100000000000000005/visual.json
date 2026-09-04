@@ -1,0 +1,6 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a1100000000000000005",
+  "position": {"x": 1450, "y": 180, "z": 1, "height": 160, "width": 430},
+  "visual": {"visualType": "card", "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "Recovery Actions Open"}}, "queryRef": "gold_mirror_casework.Recovery Actions Open"}]}}}, "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Recovery actions in progress'"}}}}}]}, "drillFilterOtherVisuals": true}
+}

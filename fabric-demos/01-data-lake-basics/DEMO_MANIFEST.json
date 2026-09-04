@@ -1,0 +1,13 @@
+{
+  "demo_id": "01-data-lake-basics",
+  "title": "Data Lake Basics",
+  "release_id": "2026.11.03",
+  "data_product": "shared/integrated-test-data",
+  "input_csv": "shared/integrated-test-data/projections/foundation/emulated_test_baseline.csv",
+  "input_rows": 12,
+  "fabric_items": ["IntegratedTestLakehouse", "01_load_mission_baseline.Notebook"],
+  "outputs": ["mission_emulated_baseline"],
+  "leadership_hook": "Planning coverage by objective and required feed",
+  "professional_hook": "CSV landing, schema validation, Delta, SQL, and provenance",
+  "status": "implemented"
+}

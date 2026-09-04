@@ -1,0 +1,3 @@
+report_review_id,test_event_id,report_stage,reviewer_role,review_status,review_time_utc,classification
+review-quicklook-001,test-integrated-defense-001,QUICKLOOK,role-test-director,APPROVED,2026-11-03T15:20:00Z,SYNTHETIC_UNCLASS
+review-final-001,test-integrated-defense-001,FINAL,role-independent-evaluator,PENDING,,SYNTHETIC_UNCLASS

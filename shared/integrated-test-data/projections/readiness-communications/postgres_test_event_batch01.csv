@@ -1,0 +1,2 @@
+test_event_id,scenario_id,run_manifest_id,event_name,lifecycle_focus,planned_start_time_utc,planned_end_time_utc,environment_label,authoritative_safety_boundary,classification
+test-demo10-integrated-20261105,scn-demo10-readiness-comms-001,run-demo10-readiness-001,Synthetic readiness and communications rehearsal,Setup|Running|Post-Test Reporting,2026-11-05T14:00:00.000Z,2026-11-05T14:00:12.000Z,local deterministic replay,Safety-status records are evidence only and never authoritative control.,SYNTHETIC_UNCLASS

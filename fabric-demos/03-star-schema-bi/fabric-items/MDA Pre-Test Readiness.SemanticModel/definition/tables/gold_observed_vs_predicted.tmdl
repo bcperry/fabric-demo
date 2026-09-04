@@ -1,0 +1,231 @@
+table gold_observed_vs_predicted
+	lineageTag: 35e0efa4-4f60-4618-8b19-22ed2061e327
+	sourceLineageTag: [dbo].[gold_observed_vs_predicted]
+
+	measure 'Planned Checks' = COUNTROWS(gold_observed_vs_predicted)
+		formatString: 0
+
+	measure 'On-Plan Checks' = CALCULATE(COUNTROWS(gold_observed_vs_predicted), gold_observed_vs_predicted[comparison_status] = "ON_PLAN")
+		formatString: 0
+
+	measure 'Partial Checks' = CALCULATE(COUNTROWS(gold_observed_vs_predicted), gold_observed_vs_predicted[comparison_status] = "PARTIAL")
+		formatString: 0
+
+	measure 'Not-Met Checks' = CALCULATE(COUNTROWS(gold_observed_vs_predicted), gold_observed_vs_predicted[comparison_status] = "NOT_MET")
+		formatString: 0
+
+	measure 'Late Evidence' = CALCULATE(COUNTROWS(gold_observed_vs_predicted), gold_observed_vs_predicted[is_late_record] = TRUE())
+		formatString: 0
+
+	column scenario_id
+		dataType: string
+		lineageTag: d984b566-2ee9-4caa-a37d-66b7690cce33
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_event_id
+		dataType: string
+		lineageTag: deb8362d-487e-420f-b1a9-b0ab0558f39b
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective_id
+		dataType: string
+		lineageTag: 4dc162db-6eca-4b96-89d4-da6edd5ac8e4
+		sourceLineageTag: test_objective_id
+		summarizeBy: none
+		sourceColumn: test_objective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_feed_id
+		dataType: string
+		lineageTag: 31f15855-a86c-4b59-897c-5b7ed7cddcb4
+		sourceLineageTag: required_feed_id
+		summarizeBy: none
+		sourceColumn: required_feed_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column planned_record_id
+		dataType: string
+		lineageTag: f7b9ded6-33b6-46bc-a6b1-ca8efceb5c45
+		sourceLineageTag: planned_record_id
+		summarizeBy: none
+		sourceColumn: planned_record_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column planned_event_type
+		dataType: string
+		lineageTag: c310eed2-0e3c-430e-81e5-b8b0cddb2b51
+		sourceLineageTag: planned_event_type
+		summarizeBy: none
+		sourceColumn: planned_event_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		dataType: string
+		lineageTag: 331a8556-e8aa-4089-9986-30c37313eef6
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 5844e40d-1a52-46c7-9905-164a58b69974
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column track_id
+		dataType: string
+		lineageTag: a02a015f-ad3f-4aa9-965c-b664f20da4c6
+		sourceLineageTag: track_id
+		summarizeBy: none
+		sourceColumn: track_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_state
+		dataType: string
+		lineageTag: 65360d39-0e90-4d1d-b143-e1713d29a02e
+		sourceLineageTag: expected_state
+		summarizeBy: none
+		sourceColumn: expected_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column normalized_predicted_value
+		dataType: double
+		lineageTag: 440cd465-a932-486f-b221-7a5675f41524
+		sourceLineageTag: normalized_predicted_value
+		summarizeBy: sum
+		sourceColumn: normalized_predicted_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column normalized_predicted_unit
+		dataType: string
+		lineageTag: 433ffbdb-c665-4c30-86dc-2d111b595481
+		sourceLineageTag: normalized_predicted_unit
+		summarizeBy: none
+		sourceColumn: normalized_predicted_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_record_id
+		dataType: string
+		lineageTag: 0f86f3ce-a689-4d5f-a47e-5237e896d660
+		sourceLineageTag: actual_record_id
+		summarizeBy: none
+		sourceColumn: actual_record_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_source_type
+		dataType: string
+		lineageTag: cf3af3d2-cca2-4dcf-b47e-d419f8b2a974
+		sourceLineageTag: actual_source_type
+		summarizeBy: none
+		sourceColumn: actual_source_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_state
+		dataType: string
+		lineageTag: d49531e1-f96b-4e34-9a82-49a85e3863ea
+		sourceLineageTag: actual_state
+		summarizeBy: none
+		sourceColumn: actual_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_value
+		dataType: double
+		lineageTag: 88f30d15-66ac-4df5-8348-ad30b378ec6c
+		sourceLineageTag: actual_value
+		summarizeBy: sum
+		sourceColumn: actual_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actual_unit
+		dataType: string
+		lineageTag: 0f5d1700-8a70-4015-9f35-cf05e5de57a5
+		sourceLineageTag: actual_unit
+		summarizeBy: none
+		sourceColumn: actual_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_variance_seconds
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f27c8a1-2848-4eb0-a00c-74662b8e9ca4
+		sourceLineageTag: time_variance_seconds
+		summarizeBy: sum
+		sourceColumn: time_variance_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+	column numeric_delta
+		dataType: double
+		lineageTag: fb3fee75-75ed-486c-b442-9de7662e5732
+		sourceLineageTag: numeric_delta
+		summarizeBy: sum
+		sourceColumn: numeric_delta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_late_record
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c6bb4647-e758-4a8c-a4fe-94f7ee1f1df5
+		sourceLineageTag: is_late_record
+		summarizeBy: none
+		sourceColumn: is_late_record
+
+		annotation SummarizationSetBy = Automatic
+
+	column comparison_status
+		dataType: string
+		lineageTag: 3f7a8366-b423-4c0e-8daa-cb1c6a5c8efd
+		sourceLineageTag: comparison_status
+		summarizeBy: none
+		sourceColumn: comparison_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_notes
+		dataType: string
+		lineageTag: c7666a5f-6254-4fcc-94fb-d9ce69123fbe
+		sourceLineageTag: actual_notes
+		summarizeBy: none
+		sourceColumn: actual_notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_observed_vs_predicted = entity
+		mode: directLake
+		source
+			entityName: gold_observed_vs_predicted
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'
+

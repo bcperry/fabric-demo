@@ -1,0 +1,78 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+    "name": "b1c2d3e4f50617283940",
+    "position": {
+        "x": 965,
+        "y": 672,
+        "z": 2,
+        "height": 368,
+        "width": 915
+    },
+    "visual": {
+        "visualType": "textbox",
+        "objects": {
+            "general": [
+                {
+                    "properties": {
+                        "paragraphs": [
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Decision required today",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "16pt",
+                                            "fontWeight": "bold",
+                                            "color": "#242424"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Maintain HOLD until both critical risks close and the repeat timing run passes.",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "13pt",
+                                            "color": "#A4262C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Test Director: confirm recovery teams retain priority through the 1430Z gate review.",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "13pt",
+                                            "color": "#A4262C"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            },
+                            {
+                                "textRuns": [
+                                    {
+                                        "value": "Escalate any missed due time immediately; do not carry critical risk into execution.",
+                                        "textStyle": {
+                                            "fontFamily": "Segoe UI",
+                                            "fontSize": "13pt",
+                                            "color": "#986F0B"
+                                        }
+                                    }
+                                ],
+                                "horizontalTextAlignment": "left"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "drillFilterOtherVisuals": true
+    }
+}

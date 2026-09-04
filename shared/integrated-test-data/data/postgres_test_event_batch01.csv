@@ -1,0 +1,2 @@
+test_event_id,scenario_id,observed_run_manifest_id,predicted_run_manifest_id,event_name,planned_start_time_utc,planned_end_time_utc,classification
+test-integrated-defense-001,integrated-defense-001,run-demo07-integrated-001,sim-demo07-integrated-001,Synthetic integrated defense lifecycle rehearsal,2026-11-03T15:00:00Z,2026-11-03T15:03:00Z,SYNTHETIC_UNCLASS

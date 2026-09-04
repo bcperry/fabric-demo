@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DirectLake - IntegratedTestLakehouse"]
+
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","TMDLView_Desktop"]
+
+ref table gold_finding_evidence
+ref table gold_test_objective_status
+ref table gold_dry_run_discrepancies
+ref table gold_data_source_readiness
+ref table gold_integrated_readiness
+ref table gold_observed_vs_predicted
+ref table silver_quarantine_records
+ref table gold_mirror_site_locations
+ref table gold_mirror_casework
+

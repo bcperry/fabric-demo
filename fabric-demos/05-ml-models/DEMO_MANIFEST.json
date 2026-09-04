@@ -1,0 +1,12 @@
+{
+  "demo_id": "05-ml-models",
+  "title": "ML Models",
+  "release_id": "2026.11.03",
+  "data_product": "shared/integrated-test-data",
+  "notebook_count": 6,
+  "report_pages": ["Attention Now", "Why This Ranking?", "Drift and Trust"],
+  "fabric_items": ["MLflow experiments", "MDA Readiness Model Governance.SemanticModel", "MDA Readiness Model Governance.Report"],
+  "leadership_hook": "Prioritized systems with explanations and trust indicators",
+  "professional_hook": "Features, experiments, model comparison, explainability, scoring, and drift",
+  "status": "implemented"
+}

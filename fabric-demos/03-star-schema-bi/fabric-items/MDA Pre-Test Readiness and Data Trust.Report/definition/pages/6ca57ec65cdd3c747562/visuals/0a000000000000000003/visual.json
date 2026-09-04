@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "0a000000000000000003",
+  "position": {"x": 730, "y": 100, "z": 3, "height": 184, "width": 210},
+  "visual": {
+    "visualType": "card",
+    "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "High Risks"}}, "queryRef": "gold_mirror_casework.High Risks"}]}}},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'High mission risks'"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

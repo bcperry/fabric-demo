@@ -1,0 +1,6 @@
+objective_id,objective_name,objective_phase,success_measure,classification
+obj-track-fusion,Shared track reaches both engagement lanes,Running,"One TPY-2 track produces shared-track, assignment, and THAAD participation events.",SYNTHETIC_UNCLASS
+obj-observed-vs-predicted,Observed chain is compared against deterministic prediction,Analysis,Exactly one delayed observed assignment acknowledgement differs from the predicted baseline.,SYNTHETIC_UNCLASS
+obj-range-evidence,Range instrumentation explains the deviation,Analysis,Instrumentation and ground-truth lanes isolate the timing issue to synthetic data alignment.,SYNTHETIC_UNCLASS
+obj-readiness-recovery,Readiness posture is recoverable for the next event,Post-Test Reporting,Recovery poll captures a limitation and corrective action without losing lineage.,SYNTHETIC_UNCLASS
+obj-safety-boundary,Safety evidence stays advisory,Running|Post-Test Reporting,Safety-status evidence recommends action but never becomes an authoritative operator decision.,SYNTHETIC_UNCLASS

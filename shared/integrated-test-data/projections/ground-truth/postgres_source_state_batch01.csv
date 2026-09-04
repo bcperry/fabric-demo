@@ -1,0 +1,8 @@
+state_event_id,effective_time_utc,source_instance_id,readiness_state,clock_health,calibration_status,coverage_expectation,notes,classification
+state-ready-target-vehicle-01,2026-11-03T14:55:00.000Z,target-vehicle-01,READY,LOCKED,VERIFIED,continuous_1hz,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-interceptor-vehicle-01,2026-11-03T14:55:00.000Z,interceptor-vehicle-01,READY,LOCKED,VERIFIED,continuous_1hz_after_launch,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-receiver-alpha-01,2026-11-03T14:55:00.000Z,receiver-alpha-01,READY,LOCKED,VERIFIED,continuous_1hz_multi_track,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-receiver-bravo-01,2026-11-03T14:55:00.000Z,receiver-bravo-01,READY,LOCKED,VERIFIED,continuous_1hz_target_only,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-optical-alpha-01,2026-11-03T14:55:00.000Z,optical-alpha-01,READY,LOCKED,VERIFIED,odd_second_target_endgame_interceptor,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-truth-cell-01,2026-11-03T14:55:00.000Z,truth-cell-01,READY,LOCKED,REFERENCE_LOCKED,continuous_1hz_multi_track,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS
+state-ready-environment-cell-01,2026-11-03T14:55:00.000Z,environment-cell-01,READY,LOCKED,MODEL_LOCKED,slow_rate_environment,Dry-run publication and identity checks passed.,SYNTHETIC_UNCLASS

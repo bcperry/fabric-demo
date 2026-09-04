@@ -1,0 +1,4 @@
+system_instance_id,inventory_category,quantity_available,quantity_required,updated_at_utc,classification
+patriot-bravo-01,PARTS_BUFFER,4,3,2026-11-03T15:00:00Z,SYNTHETIC_UNCLASS
+patriot-bravo-02,TIMING_MODULE,1,1,2026-11-03T15:00:00Z,SYNTHETIC_UNCLASS
+thaad-charlie-01,TEST_PARTICIPATION_KIT,2,1,2026-11-03T15:00:00Z,SYNTHETIC_UNCLASS

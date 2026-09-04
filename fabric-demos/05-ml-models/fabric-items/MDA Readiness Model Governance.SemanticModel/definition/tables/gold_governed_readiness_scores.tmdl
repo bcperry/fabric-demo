@@ -1,0 +1,218 @@
+table gold_governed_readiness_scores
+	lineageTag: 9d3887da-dcc2-424f-9729-b1a890e645e7
+	sourceLineageTag: [dbo].[gold_governed_readiness_scores]
+
+	measure 'Scored Observations' = COUNTROWS(gold_governed_readiness_scores)
+		formatString: 0
+
+	measure 'Systems Scored' = DISTINCTCOUNT(gold_governed_readiness_scores[system_instance_id])
+		formatString: 0
+
+	measure 'Priority Reviews' = CALCULATE(COUNTROWS(gold_governed_readiness_scores), gold_governed_readiness_scores[recommended_review_queue] = "priority-review")
+		formatString: 0
+
+	measure 'Priority Rate' = DIVIDE([Priority Reviews], [Scored Observations])
+		formatString: 0.0%
+
+	measure 'Pending Analyst Reviews' = CALCULATE(COUNTROWS(gold_governed_readiness_scores), gold_governed_readiness_scores[human_adjudication_status] = "pending-analyst-review")
+		formatString: 0
+
+	measure 'Average Priority Probability' = AVERAGE(gold_governed_readiness_scores[model_priority_probability])
+		formatString: 0.0%
+
+	measure 'Average Baseline Score' = AVERAGE(gold_governed_readiness_scores[deterministic_baseline_score])
+		formatString: 0.0%
+
+	measure 'Model Delta' = [Average Priority Probability] - [Average Baseline Score]
+		formatString: +0.0%;-0.0%;0.0%
+
+	measure 'Average Quality Rate' = AVERAGE(gold_governed_readiness_scores[quality_rate])
+		formatString: 0.0%
+
+	measure 'Average Freshness Minutes' = DIVIDE(AVERAGE(gold_governed_readiness_scores[track_freshness_seconds]), 60)
+		formatString: 0.0
+
+	measure 'Selected Model' = SELECTEDVALUE(gold_governed_readiness_scores[model_name], "Multiple models")
+
+	column scenario_id
+		dataType: string
+		lineageTag: 7aa86b4f-1faa-5fd3-8d85-580bb64b1f2f
+		sourceLineageTag: scenario_id
+		summarizeBy: none
+		sourceColumn: scenario_id
+
+	column simulation_run_id
+		dataType: string
+		lineageTag: 70278223-18d7-5745-9f64-82b39ca5c363
+		sourceLineageTag: simulation_run_id
+		summarizeBy: none
+		sourceColumn: simulation_run_id
+
+	column test_event_id
+		dataType: string
+		lineageTag: d54d91e1-24da-520e-9a21-8f847e0bb8c5
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+	column site_id
+		dataType: string
+		lineageTag: debfd8ed-2332-50ee-bb6b-81cd2d4f078d
+		sourceLineageTag: site_id
+		summarizeBy: none
+		sourceColumn: site_id
+
+	column system_instance_id
+		dataType: string
+		lineageTag: 08c4c6d5-0218-5cfb-b3ce-5288411ab240
+		sourceLineageTag: system_instance_id
+		summarizeBy: none
+		sourceColumn: system_instance_id
+
+	column system_family
+		dataType: string
+		lineageTag: 8f5f3167-fe90-557f-b772-8823af798582
+		sourceLineageTag: system_family
+		summarizeBy: none
+		sourceColumn: system_family
+
+	column feature_timestamp_utc
+		dataType: dateTime
+		lineageTag: f2e27fd8-c5dc-5eef-9dff-b7aaf6bfbc35
+		sourceLineageTag: feature_timestamp_utc
+		formatString: General Date
+		summarizeBy: none
+		sourceColumn: feature_timestamp_utc
+
+	column source_snapshot_id
+		dataType: string
+		lineageTag: 537d6da6-6cc9-5bf8-be9b-0caf065fdf38
+		sourceLineageTag: source_snapshot_id
+		summarizeBy: none
+		sourceColumn: source_snapshot_id
+
+	column feature_snapshot_id
+		dataType: string
+		lineageTag: c2b8fa04-afb2-554e-a2c7-a3d1d2c70f14
+		sourceLineageTag: feature_snapshot_id
+		summarizeBy: none
+		sourceColumn: feature_snapshot_id
+
+	column baseline_snapshot_id
+		dataType: string
+		lineageTag: d3953ba9-5b2b-5223-936a-ae9fbd85ddd5
+		sourceLineageTag: baseline_snapshot_id
+		summarizeBy: none
+		sourceColumn: baseline_snapshot_id
+
+	column finding_snapshot_id
+		dataType: string
+		lineageTag: ad78fba8-3f3b-599b-86df-e65008b73040
+		sourceLineageTag: finding_snapshot_id
+		summarizeBy: none
+		sourceColumn: finding_snapshot_id
+
+	column model_name
+		dataType: string
+		lineageTag: a4b0d879-32a1-58aa-9f36-03391468645d
+		sourceLineageTag: model_name
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column model_lineage_id
+		dataType: string
+		lineageTag: 8632e4c3-2620-5763-8e6b-9de9f7d8cd02
+		sourceLineageTag: model_lineage_id
+		summarizeBy: none
+		sourceColumn: model_lineage_id
+
+	column quality_rate
+		dataType: double
+		lineageTag: 071c1216-4184-574f-8b64-39f865c9da25
+		sourceLineageTag: quality_rate
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: quality_rate
+
+	column track_freshness_seconds
+		dataType: double
+		lineageTag: 34f2acf4-43b9-5cfd-944c-f02dfa25df0c
+		sourceLineageTag: track_freshness_seconds
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: track_freshness_seconds
+
+	column abstract_ack_lag_seconds
+		dataType: double
+		lineageTag: 3d40e39c-9ece-5cc8-a723-65067fd0e55a
+		sourceLineageTag: abstract_ack_lag_seconds
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: abstract_ack_lag_seconds
+
+	column health_trend_index
+		dataType: double
+		lineageTag: 02aa9002-c579-5234-9a54-56f40e7f094e
+		sourceLineageTag: health_trend_index
+		formatString: 0.000
+		summarizeBy: average
+		sourceColumn: health_trend_index
+
+	column baseline_deviation_index
+		dataType: double
+		lineageTag: 95764b6d-089a-56b7-b79f-a265e618b970
+		sourceLineageTag: baseline_deviation_index
+		formatString: 0.000
+		summarizeBy: average
+		sourceColumn: baseline_deviation_index
+
+	column deterministic_baseline_score
+		dataType: double
+		lineageTag: 876c1c5a-4eaf-5df4-b560-627c124a5c32
+		sourceLineageTag: deterministic_baseline_score
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: deterministic_baseline_score
+
+	column model_priority_probability
+		dataType: double
+		lineageTag: d252291f-1961-5b3d-a671-5142af5c7986
+		sourceLineageTag: model_priority_probability
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: model_priority_probability
+
+	column recommended_review_queue
+		dataType: string
+		lineageTag: a79ba1e3-1418-51a5-b942-7b59ea0bfbe7
+		sourceLineageTag: recommended_review_queue
+		summarizeBy: none
+		sourceColumn: recommended_review_queue
+
+	column synthetic_use_only
+		dataType: string
+		lineageTag: 2fabd8f5-a236-5589-9c4a-0323616f2fec
+		sourceLineageTag: synthetic_use_only
+		summarizeBy: none
+		sourceColumn: synthetic_use_only
+
+	column human_adjudication_status
+		dataType: string
+		lineageTag: 95f4574d-4756-55d3-8b93-28738cfcedbf
+		sourceLineageTag: human_adjudication_status
+		summarizeBy: none
+		sourceColumn: human_adjudication_status
+
+	column scored_at_utc
+		dataType: string
+		lineageTag: 5a290a97-1dec-53d4-9609-3a985fba47f5
+		sourceLineageTag: scored_at_utc
+		summarizeBy: none
+		sourceColumn: scored_at_utc
+
+	partition gold_governed_readiness_scores = entity
+		mode: directLake
+		source
+			entityName: gold_governed_readiness_scores
+			schemaName: dbo
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "scenario_id": "integrated-defense-001",
+  "simulation_run_id": "sim-demo07-integrated-001",
+  "model_version": "model-integrated-defense-v1",
+  "classification": "SYNTHETIC_UNCLASS",
+  "generated_time_utc": "2026-11-03T15:00:00Z",
+  "files": [
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_tracks.jsonl",
+      "row_count": 196,
+      "sha256": "ef5585e452c839f3da7b4db587b94b9a0f2871a440084e3f61f7266a3f19ca35"
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_events.jsonl",
+      "row_count": 6,
+      "sha256": "ca8f42ce3be39cfc80a7ca4fa70e7aa7dc311b8a21a3af9475073269ff1cd443"
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/predicted_measures.jsonl",
+      "row_count": 4,
+      "sha256": "3ef358a3ede3d07e712d52cfa65e84ebfe14accc9e3e0bd054f3cf902a3b5ee8"
+    },
+    {
+      "path": "data/baseline/scenario_id=integrated-defense-001/simulation_run_id=sim-demo07-integrated-001/environmental_assumptions.jsonl",
+      "row_count": 2,
+      "sha256": "0b0d48c900493ade9b05d24b8ad77830a07449b58dcc4b4bcddd897594cca5ce"
+    }
+  ]
+}

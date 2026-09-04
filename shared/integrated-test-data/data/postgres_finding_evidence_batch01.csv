@@ -1,0 +1,7 @@
+finding_evidence_id,finding_id,evidence_source,evidence_reference,evidence_type,recorded_at_utc,classification
+evidence-001,finding-clock-alignment-001,observed_eventstream,bf6d8fee-3224-590d-bebf-8a716fa13158,command.integration,2026-11-03T15:01:30Z,SYNTHETIC_UNCLASS
+evidence-002,finding-clock-alignment-001,observed_eventstream,96ff97e9-86ca-5f8b-a394-632a52a14eb1,instrumentation.health,2026-11-03T15:01:30Z,SYNTHETIC_UNCLASS
+evidence-003,finding-clock-alignment-001,observed_eventstream,3d106519-789a-59bb-aaa1-3fc1b7b5e4d5,network.health,2026-11-03T15:01:30Z,SYNTHETIC_UNCLASS
+evidence-004,finding-clock-alignment-001,observed_eventstream,129a3c66-e9c2-5a08-8844-0444b5102353,operator.test_event,2026-11-03T15:01:35Z,SYNTHETIC_UNCLASS
+evidence-005,finding-clock-alignment-001,observed_eventstream,0bc8ed60-e740-5939-86b3-7b57ddb581ae,safety.status,2026-11-03T15:01:32Z,SYNTHETIC_UNCLASS
+evidence-006,finding-clock-alignment-001,postgresql,ready-army-int-bravo-01-002,readiness_history,2026-11-03T15:01:35Z,SYNTHETIC_UNCLASS

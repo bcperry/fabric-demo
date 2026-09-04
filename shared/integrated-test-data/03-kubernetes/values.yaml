@@ -1,0 +1,43 @@
+namespace: mda-demo
+
+image:
+  repository: REPLACE_WITH_REGISTRY/mda-demo-emulators
+  tag: 0.1.0
+  pullPolicy: IfNotPresent
+
+runtime:
+  transport: stdout
+  durationSeconds: 86400
+  realtime: true
+  scenarioPath: /app/contracts/examples/scenario.integrated-defense.json
+  kafkaBootstrapServers: REPLACE_WITH_EVENT_HUBS_NAMESPACE.servicebus.windows.net:9093
+  manifestOutputDir: /var/run/mda-manifests
+  startTimeUtc: ""
+  runId: ""
+
+workloadIdentity:
+  enabled: false
+  clientId: REPLACE_WITH_MANAGED_IDENTITY_CLIENT_ID
+  serviceAccountName: mda-emulators
+
+producers:
+  - name: tpy2
+    sourceSystems: [TPY2]
+  - name: patriot
+    sourceSystems: [PATRIOT]
+  - name: thaad
+    sourceSystems: [THAAD]
+  - name: battle-management
+    sourceSystems: [BATTLE_MANAGEMENT]
+  - name: army-integration
+    sourceSystems: [ARMY_INTEGRATION]
+  - name: operations-support
+    sourceSystems: [TARGET_RANGE, INTERCEPTOR_RANGE, RANGE_RECEIVER, OPTICAL_TRACKER, GROUND_TRUTH, ENVIRONMENT, INSTRUMENTATION_MONITOR, NETWORK_MONITOR, READINESS_CONTROLLER, OPERATOR_CONTROL, SAFETY_MONITOR, SUSTAINMENT]
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi

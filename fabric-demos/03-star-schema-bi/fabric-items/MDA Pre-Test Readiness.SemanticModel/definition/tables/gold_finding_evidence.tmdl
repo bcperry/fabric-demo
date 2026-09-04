@@ -1,0 +1,84 @@
+table gold_finding_evidence
+	lineageTag: fe78d2e9-9547-40f7-b143-839b09844cf0
+	sourceLineageTag: [dbo].[gold_finding_evidence]
+
+	measure 'Open Findings' = ```
+			CALCULATE(
+			    DISTINCTCOUNT(gold_finding_evidence[finding_id]),
+			    gold_finding_evidence[finding_status] = "OPEN"
+			)
+			```
+		formatString: 0
+
+	measure 'Evidence Records' = COUNTROWS(gold_finding_evidence)
+		formatString: 0
+
+	column finding_id
+		dataType: string
+		lineageTag: 58cb5ab2-df1e-47a0-8f9e-ad4e2743d8e4
+		sourceLineageTag: finding_id
+		summarizeBy: none
+		sourceColumn: finding_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_title
+		dataType: string
+		lineageTag: f5876f3e-7681-43bf-a163-e9f76096d55e
+		sourceLineageTag: finding_title
+		summarizeBy: none
+		sourceColumn: finding_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_status
+		dataType: string
+		lineageTag: 740e9005-0cdf-40f5-a268-2063250f2a60
+		sourceLineageTag: finding_status
+		summarizeBy: none
+		sourceColumn: finding_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_objective_id
+		dataType: string
+		lineageTag: 892aa62c-d507-4550-8df1-4a687e16474d
+		sourceLineageTag: test_objective_id
+		summarizeBy: none
+		sourceColumn: test_objective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_source_table
+		dataType: string
+		lineageTag: bef00ad9-e5f8-42e3-b553-98d83c011035
+		sourceLineageTag: evidence_source_table
+		summarizeBy: none
+		sourceColumn: evidence_source_table
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_record_id
+		dataType: string
+		lineageTag: f4221d44-8a1d-4c7c-8a1c-a8d8c1943988
+		sourceLineageTag: evidence_record_id
+		summarizeBy: none
+		sourceColumn: evidence_record_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_summary
+		dataType: string
+		lineageTag: 6aee41f4-05fe-4e09-8245-3ee9654547d1
+		sourceLineageTag: evidence_summary
+		summarizeBy: none
+		sourceColumn: evidence_summary
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_finding_evidence = entity
+		mode: directLake
+		source
+			entityName: gold_finding_evidence
+			expressionSource: 'DirectLake - IntegratedTestLakehouse'
+

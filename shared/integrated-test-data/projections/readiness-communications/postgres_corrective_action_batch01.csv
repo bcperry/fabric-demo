@@ -1,0 +1,3 @@
+corrective_action_id,finding_id,owner_role_id,action_state,due_date_utc,action_summary,classification
+action-demo10-001,finding-demo10-001,role-data-control,OPEN,2026-11-20,Add mirrored outage counters to the fallback evidence dashboard.,SYNTHETIC_UNCLASS
+action-demo10-002,finding-demo10-002,role-test-director,CLOSED,2026-11-12,Confirm report templates describe safety-status evidence as non-authoritative.,SYNTHETIC_UNCLASS
