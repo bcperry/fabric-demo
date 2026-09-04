@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "5f6b7147022e4af5b8c4",
+  "position": {"x": 40, "y": 660, "z": 2, "height": 380, "width": 900},
+  "visual": {
+    "visualType": "tableEx",
+    "query": {"queryState": {"Values": {"projections": [
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_stream_finding_evidence"}}, "Property": "finding_code"}}, "queryRef": "gold_stream_finding_evidence.finding_code", "nativeQueryRef": "Finding type"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_stream_finding_evidence"}}, "Property": "source_system"}}, "queryRef": "gold_stream_finding_evidence.source_system", "nativeQueryRef": "Source"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_stream_finding_evidence"}}, "Property": "evidence_event_id"}}, "queryRef": "gold_stream_finding_evidence.evidence_event_id", "nativeQueryRef": "Evidence event"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_stream_finding_evidence"}}, "Property": "evidence_status"}}, "queryRef": "gold_stream_finding_evidence.evidence_status", "nativeQueryRef": "Status"}
+    ]}}},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Preserved evidence'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

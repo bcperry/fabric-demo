@@ -1,0 +1,33 @@
+{
+  "event_id": "444cc7d9-4030-5e03-aab8-625a75a5feab",
+  "event_type": "instrumentation.observation",
+  "schema_version": "1.0.0",
+  "scenario_id": "integrated-defense-001",
+  "simulation_run_id": "run-demo07-integrated-001",
+  "run_manifest_id": "run-demo07-integrated-001",
+  "test_event_id": "test-integrated-defense-001",
+  "site_id": "site-alpha",
+  "source_system": "RANGE_RECEIVER",
+  "source_instance_id": "range-receiver-alpha-01",
+  "ordering_key": "track-synthetic-001",
+  "sequence_number": 0,
+  "event_time_utc": "2026-11-03T15:00:12Z",
+  "ingest_time_utc": "2026-11-03T15:00:12Z",
+  "startup_seed": 20265613,
+  "correlation_id": "track-synthetic-001",
+  "causation_id": null,
+  "classification": "SYNTHETIC_UNCLASS",
+  "location_notice": "SYNTHETIC / NOT FOR NAVIGATION",
+  "synthetic": true,
+  "track_id": "track-synthetic-001",
+  "sensor_modality": "RANGE_RECEIVER",
+  "measurement_quality": 0.9433,
+  "position": {
+    "x": 481.2,
+    "y": 231.131,
+    "z": 99.4,
+    "coordinate_system": "FICTIONAL_LOCAL_GRID"
+  },
+  "clock_offset_ms": 42,
+  "sample_state": "NOMINAL"
+}

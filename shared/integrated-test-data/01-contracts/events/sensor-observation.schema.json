@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/sensor-observation.schema.json",
+  "title": "Synthetic Sensor Observation Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["track_id", "observation_type", "quality", "position"],
+      "properties": {
+        "event_type": {
+          "const": "sensor.observation"
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observation_type": {
+          "type": "string",
+          "enum": ["DETECTION", "TRACK_UPDATE", "TRACK_DROP", "TRACK_REACQUIRE"]
+        },
+        "quality": {
+          "type": "object",
+          "required": ["score", "freshness_ms", "continuity"],
+          "properties": {
+            "score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "freshness_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "continuity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "z", "coordinate_system"],
+          "properties": {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"},
+            "coordinate_system": {
+              "const": "FICTIONAL_LOCAL_GRID"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

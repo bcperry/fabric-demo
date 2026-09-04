@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/interceptor-telemetry.schema.json",
+  "title": "Synthetic Interceptor Telemetry Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "track_id",
+        "track_role",
+        "phase",
+        "position",
+        "update_receipt_state",
+        "source_clock_offset_ms"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "interceptor.telemetry"
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_role": {
+          "const": "INTERCEPTOR"
+        },
+        "phase": {
+          "type": "string",
+          "enum": ["BOOST", "MIDCOURSE"]
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "z", "coordinate_system"],
+          "properties": {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"},
+            "coordinate_system": {
+              "const": "FICTIONAL_LOCAL_GRID"
+            }
+          }
+        },
+        "update_receipt_state": {
+          "type": "string",
+          "enum": ["PENDING", "EXPECTED_RECEIVED"]
+        },
+        "source_clock_offset_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  ]
+}

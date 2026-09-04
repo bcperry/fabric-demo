@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/readiness-poll.schema.json",
+  "title": "Synthetic Readiness Poll Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "poll_id",
+        "participant_role",
+        "response",
+        "is_authoritative",
+        "limitation_note"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "readiness.poll"
+        },
+        "poll_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "participant_role": {
+          "type": "string",
+          "pattern": "^role-"
+        },
+        "response": {
+          "type": "string",
+          "enum": ["READY", "READY_WITH_LIMITATION", "NOT_READY"]
+        },
+        "is_authoritative": {
+          "type": "boolean"
+        },
+        "limitation_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  ]
+}

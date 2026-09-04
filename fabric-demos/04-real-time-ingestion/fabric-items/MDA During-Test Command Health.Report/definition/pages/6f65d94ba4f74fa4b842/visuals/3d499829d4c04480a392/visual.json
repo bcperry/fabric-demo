@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "3d499829d4c04480a392",
+  "position": {"x": 40, "y": 100, "z": 2, "height": 160, "width": 1840},
+  "visual": {
+    "visualType": "card",
+    "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "Evidence Coverage"}}, "queryRef": "gold_current_test_findings.Evidence Coverage"}]}}},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Selected findings with attached evidence'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

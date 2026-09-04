@@ -1,0 +1,184 @@
+table gold_execution_decision_summary
+	lineageTag: 5134e780-ce2d-47bb-9db2-c47a8efcb2d6
+	sourceLineageTag: [dbo].[gold_execution_decision_summary]
+
+	measure 'Execution Mode' = SELECTEDVALUE('gold_execution_decision_summary'[execution_mode], "MODE UNAVAILABLE")
+		lineageTag: 446048c6-6b3d-4d1a-afb2-10fd4bcb6594
+
+	measure 'Test Scope' = SELECTEDVALUE('gold_execution_decision_summary'[test_event_id], "TEST UNAVAILABLE") & " | " & SELECTEDVALUE('gold_execution_decision_summary'[sites], "SITES UNAVAILABLE")
+		lineageTag: e8dc4f1a-36f6-4a80-b151-c4de0ea8dfb4
+
+	measure 'Replay Window End' = MAX('gold_execution_decision_summary'[observation_window_end_utc])
+		formatString: yyyy-mm-dd hh:mm:ss
+		lineageTag: 57409ec2-2c4d-4d7f-9518-005b0da5fa8f
+
+	measure 'Replay Completeness' = FORMAT(MAX('gold_execution_decision_summary'[preserved_event_count]), "0") & " canonical / " & FORMAT(MAX('gold_execution_decision_summary'[raw_record_count]), "0") & " raw records"
+		lineageTag: 0393601b-c41b-4bb7-a38c-5654c02955b7
+
+	measure 'Acknowledgment State' = SWITCH(SELECTEDVALUE('gold_execution_decision_summary'[acknowledgment_status], "NOT APPLICABLE"), "UNDETERMINED", "UNDETERMINED | replay ended before deadline " & FORMAT(MAX('gold_execution_decision_summary'[acknowledgment_due_utc]), "yyyy-mm-dd hh:mm:ss"), "PENDING", "PENDING until " & FORMAT(MAX('gold_execution_decision_summary'[acknowledgment_due_utc]), "yyyy-mm-dd hh:mm:ss"), SELECTEDVALUE('gold_execution_decision_summary'[acknowledgment_status], "NOT APPLICABLE"))
+		lineageTag: 2aa26b4f-2650-41be-aa8a-3bec3081a498
+
+	measure 'Decision Recommendation' = SELECTEDVALUE('gold_execution_decision_summary'[decision_recommendation], "DECISION UNAVAILABLE")
+		lineageTag: 2ae3f5c8-849a-4e34-aacb-ed28fed0fd40
+
+	measure 'Decision Authority' = SELECTEDVALUE('gold_execution_decision_summary'[decision_authority], "AUTHORITY UNAVAILABLE")
+		lineageTag: 2734fb4c-d498-42d1-9023-d00cfe4a0dda
+
+	measure 'Visible Scope' = SELECTEDVALUE('gold_execution_decision_summary'[scope_note], "SCOPE UNAVAILABLE")
+		lineageTag: d61a774b-9bcb-489b-ac51-bfb4d8df40ae
+
+	column test_event_id
+		dataType: string
+		lineageTag: 87a17960-6ee2-4370-9cd8-49fdb8f6d326
+		sourceLineageTag: test_event_id
+		summarizeBy: none
+		sourceColumn: test_event_id
+
+	column sites
+		dataType: string
+		lineageTag: c7930cc2-8b19-4d49-b7d3-bf64749b43d8
+		sourceLineageTag: sites
+		summarizeBy: none
+		sourceColumn: sites
+
+	column raw_record_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f5fac07d-e85e-4ff6-86a1-93e30e13dd8e
+		sourceLineageTag: raw_record_count
+		summarizeBy: sum
+		sourceColumn: raw_record_count
+
+	column event_type_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 7345fcaa-6166-43e2-a999-3a68f9427eaf
+		sourceLineageTag: event_type_count
+		summarizeBy: sum
+		sourceColumn: event_type_count
+
+	column source_system_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 9eaa7cd3-80e8-4e39-9779-0c412445bf0f
+		sourceLineageTag: source_system_count
+		summarizeBy: sum
+		sourceColumn: source_system_count
+
+	column observation_window_end_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d4712bb7-02c9-45e3-9d1d-c86f1f0883b5
+		sourceLineageTag: observation_window_end_utc
+		summarizeBy: none
+		sourceColumn: observation_window_end_utc
+
+	column latest_ingest_time_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f5dd24fa-02ed-445b-b02d-d69af9755735
+		sourceLineageTag: latest_ingest_time_utc
+		summarizeBy: none
+		sourceColumn: latest_ingest_time_utc
+
+	column preserved_event_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c6676b4-ee7b-4e65-b596-eab9b3efea9c
+		sourceLineageTag: preserved_event_count
+		summarizeBy: sum
+		sourceColumn: preserved_event_count
+
+	column acknowledgment_status
+		dataType: string
+		lineageTag: 47dfd470-ed22-47a8-8f3b-c059399da894
+		sourceLineageTag: acknowledgment_status
+		summarizeBy: none
+		sourceColumn: acknowledgment_status
+
+	column acknowledgment_due_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b5cf7e82-f7ee-4b20-91d2-0521b5e20dac
+		sourceLineageTag: acknowledgment_due_utc
+		summarizeBy: none
+		sourceColumn: acknowledgment_due_utc
+
+	column acknowledgment_target
+		dataType: string
+		lineageTag: b50aa0cc-e91f-4707-8fb9-6424f123bb1c
+		sourceLineageTag: acknowledgment_target
+		summarizeBy: none
+		sourceColumn: acknowledgment_target
+
+	column open_finding_count
+		dataType: int64
+		formatString: 0
+		lineageTag: d025086b-e48b-4934-b79c-5adefe64f51d
+		sourceLineageTag: open_finding_count
+		summarizeBy: sum
+		sourceColumn: open_finding_count
+
+	column director_review_count
+		dataType: int64
+		formatString: 0
+		lineageTag: c2beb3c5-3c79-4458-b46c-4b9d73c84665
+		sourceLineageTag: director_review_count
+		summarizeBy: sum
+		sourceColumn: director_review_count
+
+	column watch_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c3b6f7f-a5ce-4751-b270-1c7e5c519549
+		sourceLineageTag: watch_count
+		summarizeBy: sum
+		sourceColumn: watch_count
+
+	column execution_mode
+		dataType: string
+		lineageTag: c20fb9f3-41ac-4553-8387-91637029b3fb
+		sourceLineageTag: execution_mode
+		summarizeBy: none
+		sourceColumn: execution_mode
+
+	column classification_label
+		dataType: string
+		lineageTag: f9974c1c-e1cc-447e-b6e8-9bc92e60cafe
+		sourceLineageTag: classification_label
+		summarizeBy: none
+		sourceColumn: classification_label
+
+	column test_phase
+		dataType: string
+		lineageTag: 07ab6306-b099-41b8-86b5-f70bba0ce4c6
+		sourceLineageTag: test_phase
+		summarizeBy: none
+		sourceColumn: test_phase
+
+	column decision_recommendation
+		dataType: string
+		lineageTag: 746ddad6-d014-434d-b01c-0fce3be3b4a6
+		sourceLineageTag: decision_recommendation
+		summarizeBy: none
+		sourceColumn: decision_recommendation
+
+	column decision_authority
+		dataType: string
+		lineageTag: cfa52d8f-735a-4381-bd04-2a7a524f48a1
+		sourceLineageTag: decision_authority
+		summarizeBy: none
+		sourceColumn: decision_authority
+
+	column scope_note
+		dataType: string
+		lineageTag: d6ec2f21-5982-4471-bfef-0169a1b07416
+		sourceLineageTag: scope_note
+		summarizeBy: none
+		sourceColumn: scope_note
+
+	partition gold_execution_decision_summary = entity
+		mode: directLake
+		source
+			entityName: gold_execution_decision_summary
+			expressionSource: 'DirectLake - StreamingFindingsLakehouse'

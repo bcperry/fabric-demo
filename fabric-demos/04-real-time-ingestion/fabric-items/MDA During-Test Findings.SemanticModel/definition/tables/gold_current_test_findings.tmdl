@@ -1,0 +1,319 @@
+table gold_current_test_findings
+	lineageTag: 0daa28df-20f9-4a4a-a240-8e4d0a461707
+	sourceLineageTag: [dbo].[gold_current_test_findings]
+
+	measure 'Open Findings' = COUNTROWS('gold_current_test_findings')
+		formatString: 0
+		lineageTag: e158851c-1beb-4e78-bfc3-5c24b068c8ad
+
+	measure 'High Findings' = CALCULATE([Open Findings], 'gold_current_test_findings'[severity] = "high")
+		formatString: 0
+		lineageTag: bdf7d56a-dc5a-4370-bbf3-58e231ab37a3
+
+	measure 'Affected Sources' = DISTINCTCOUNT('gold_stream_finding_evidence'[source_system])
+		formatString: 0
+		lineageTag: 9dd57657-d98e-487d-b63a-628352267d8a
+
+	measure 'Evidence Coverage' = DIVIDE(DISTINCTCOUNT('gold_stream_finding_evidence'[finding_id]), [Open Findings])
+		formatString: 0%
+		lineageTag: 96ec228d-bbc6-4fe5-897d-f89042163107
+
+	measure 'Director Review Items' = CALCULATE([Open Findings], 'gold_current_test_findings'[decision_class] = "DIRECTOR REVIEW")
+		formatString: 0
+		lineageTag: 44f08773-81e1-42b6-84e9-2088ddd27317
+
+	measure 'Watch Items' = CALCULATE([Open Findings], 'gold_current_test_findings'[decision_class] = "WATCH")
+		formatString: 0
+		lineageTag: 085aa292-07a3-45a9-8722-7d74ec07644c
+
+	measure 'Findings With Attached Records' = FORMAT(DISTINCTCOUNT('gold_stream_finding_evidence'[finding_id]), "0") & "/" & FORMAT([Open Findings], "0")
+		lineageTag: 8a3027c4-f411-4d6e-87f4-11a6266cfbbd
+
+	column finding_id
+		dataType: string
+		lineageTag: 163e28c4-c04b-408f-9eaf-241714590aaa
+		sourceLineageTag: finding_id
+		summarizeBy: none
+		sourceColumn: finding_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_version
+		dataType: string
+		lineageTag: 4458b3e0-51db-49c4-be86-4b69af5dfaaf
+		sourceLineageTag: finding_version
+		summarizeBy: none
+		sourceColumn: finding_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_status
+		dataType: string
+		lineageTag: 61e40a9d-2f34-457d-bac3-336e00ffd1f3
+		sourceLineageTag: finding_status
+		summarizeBy: none
+		sourceColumn: finding_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column ruleset_id
+		dataType: string
+		lineageTag: d86a92bf-937a-42c3-abf7-946394986395
+		sourceLineageTag: ruleset_id
+		summarizeBy: none
+		sourceColumn: ruleset_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ruleset_version
+		dataType: string
+		lineageTag: 84ad0a5b-8083-47e6-b9ad-ea7af3077e22
+		sourceLineageTag: ruleset_version
+		summarizeBy: none
+		sourceColumn: ruleset_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column rule_id
+		dataType: string
+		lineageTag: bf63f3b1-a879-465d-9bd6-5ea4f26ad756
+		sourceLineageTag: rule_id
+		summarizeBy: none
+		sourceColumn: rule_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column rule_version
+		dataType: string
+		lineageTag: 426c3283-0411-452b-8681-c00bcde176eb
+		sourceLineageTag: rule_version
+		summarizeBy: none
+		sourceColumn: rule_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_code
+		dataType: string
+		lineageTag: f10d12be-270a-4176-8f5f-eebc04c12fce
+		sourceLineageTag: finding_code
+		summarizeBy: none
+		sourceColumn: finding_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_category
+		dataType: string
+		lineageTag: ce291097-a504-48e4-8489-39f5d085afd3
+		sourceLineageTag: finding_category
+		summarizeBy: none
+		sourceColumn: finding_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		lineageTag: 76ac9073-ebf2-4da1-ae0b-06e1a03d7126
+		sourceLineageTag: severity
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column decision_class
+		dataType: string
+		lineageTag: 588adf21-c99a-435c-a552-b8ff2ae9a0f6
+		sourceLineageTag: decision_class
+		summarizeBy: none
+		sourceColumn: decision_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_title
+		dataType: string
+		lineageTag: e206e8fc-a0b6-4e00-8ecc-cf7741611fbb
+		sourceLineageTag: finding_title
+		summarizeBy: none
+		sourceColumn: finding_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_summary
+		dataType: string
+		lineageTag: 398bcb5a-606a-4ccf-990e-8f75057a2da6
+		sourceLineageTag: finding_summary
+		summarizeBy: none
+		sourceColumn: finding_summary
+
+		annotation SummarizationSetBy = Automatic
+
+	column recovery_owner
+		dataType: string
+		lineageTag: 7bc2db0f-cae1-4218-9394-e6bf99258f0b
+		sourceLineageTag: recovery_owner
+		summarizeBy: none
+		sourceColumn: recovery_owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column required_action
+		dataType: string
+		lineageTag: 071a7b33-baa6-44b8-b444-1c730d3b6a89
+		sourceLineageTag: required_action
+		summarizeBy: none
+		sourceColumn: required_action
+
+		annotation SummarizationSetBy = Automatic
+
+	column action_due
+		dataType: string
+		lineageTag: 07e167d4-a6da-40bb-bccc-e01bdd5ea4be
+		sourceLineageTag: action_due
+		summarizeBy: none
+		sourceColumn: action_due
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_table
+		dataType: string
+		lineageTag: 315ee49a-7bb2-4311-8590-f6105e76b946
+		sourceLineageTag: source_table
+		summarizeBy: none
+		sourceColumn: source_table
+
+		annotation SummarizationSetBy = Automatic
+
+	column measure_name
+		dataType: string
+		lineageTag: e75c632a-c53b-441c-855a-b5734c948163
+		sourceLineageTag: measure_name
+		summarizeBy: none
+		sourceColumn: measure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column measured_value_text
+		dataType: string
+		lineageTag: f7a732b3-fdf8-4769-9f1c-46645b05ecd2
+		sourceLineageTag: measured_value_text
+		summarizeBy: none
+		sourceColumn: measured_value_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column threshold_text
+		dataType: string
+		lineageTag: eabd8e44-18da-4573-9f53-eb727c1f6c9b
+		sourceLineageTag: threshold_text
+		summarizeBy: none
+		sourceColumn: threshold_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_key
+		dataType: string
+		lineageTag: 1cbe4c4e-49e8-4675-8be5-78898ce2dcad
+		sourceLineageTag: evidence_key
+		summarizeBy: none
+		sourceColumn: evidence_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column affected_ordering_key
+		dataType: string
+		lineageTag: 9182ad19-1a40-4211-b790-71abe8fac11c
+		sourceLineageTag: affected_ordering_key
+		summarizeBy: none
+		sourceColumn: affected_ordering_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_run_key
+		dataType: string
+		lineageTag: c1c106d1-dcbe-40f8-9167-b532faf8d29e
+		sourceLineageTag: finding_run_key
+		summarizeBy: none
+		sourceColumn: finding_run_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_detected_at_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6d7c1115-e686-4612-9748-d1048e7d5d5f
+		sourceLineageTag: first_detected_at_utc
+		summarizeBy: none
+		sourceColumn: first_detected_at_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	column published_at_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 04a304ae-f8c0-4037-a62d-cd99e09b0270
+		sourceLineageTag: published_at_utc
+		summarizeBy: none
+		sourceColumn: published_at_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	column replay_manifest_id
+		dataType: string
+		lineageTag: d548e73f-bacf-4dc0-a5e8-4058d58267fd
+		sourceLineageTag: replay_manifest_id
+		summarizeBy: none
+		sourceColumn: replay_manifest_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column replay_digest
+		dataType: string
+		lineageTag: 9a170e06-1648-45a6-846e-3cc4bfda257f
+		sourceLineageTag: replay_digest
+		summarizeBy: none
+		sourceColumn: replay_digest
+
+		annotation SummarizationSetBy = Automatic
+
+	column observed_row_count
+		dataType: int64
+		formatString: 0
+		lineageTag: ed1374ef-2a38-443d-935e-d60f7918c76f
+		sourceLineageTag: observed_row_count
+		summarizeBy: sum
+		sourceColumn: observed_row_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column preserved_event_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 6759746b-3162-4e31-bdfa-0e2280d95317
+		sourceLineageTag: preserved_event_count
+		summarizeBy: sum
+		sourceColumn: preserved_event_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_type_counts_json
+		dataType: string
+		lineageTag: d2320970-5808-411d-a361-249e74fc4e55
+		sourceLineageTag: event_type_counts_json
+		summarizeBy: none
+		sourceColumn: event_type_counts_json
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_json
+		dataType: string
+		lineageTag: 6896e767-816a-4855-91c0-76eb5c633d83
+		sourceLineageTag: evidence_json
+		summarizeBy: none
+		sourceColumn: evidence_json
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_current_test_findings = entity
+		mode: directLake
+		source
+			entityName: gold_current_test_findings
+			expressionSource: 'DirectLake - StreamingFindingsLakehouse'

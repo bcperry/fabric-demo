@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/instrumentation-health.schema.json",
+  "title": "Synthetic Instrumentation Health Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["component_id", "status", "observed_lag_ms", "issue_profile"],
+      "properties": {
+        "event_type": {
+          "const": "instrumentation.health"
+        },
+        "component_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["HEALTHY", "DEGRADED", "RECOVERED"]
+        },
+        "observed_lag_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issue_profile": {
+          "type": "string",
+          "enum": [
+            "nominal",
+            "clock_alignment_delay_window",
+            "post_correction_validation"
+          ]
+        }
+      }
+    }
+  ]
+}

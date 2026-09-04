@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/network-health.schema.json",
+  "title": "Synthetic Network Health Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "circuit_id",
+        "status",
+        "availability_pct",
+        "packet_loss_pct",
+        "latency_ms",
+        "event_scope"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "network.health"
+        },
+        "circuit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["AVAILABLE", "DEGRADED", "RECOVERING"]
+        },
+        "availability_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "packet_loss_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "latency_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_scope": {
+          "type": "string",
+          "enum": ["NOMINAL", "BACKHAUL_OUTAGE_WINDOW", "BACKHAUL_RECOVERY"]
+        }
+      }
+    }
+  ]
+}

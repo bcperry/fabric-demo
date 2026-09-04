@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/safety-status.schema.json",
+  "title": "Synthetic Safety Status Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["condition", "authority_scope", "advisory_state", "recommended_action"],
+      "properties": {
+        "event_type": {
+          "const": "safety.status"
+        },
+        "condition": {
+          "type": "string",
+          "enum": [
+            "NOMINAL",
+            "TIMING_EVIDENCE_REVIEW",
+            "POST_REVIEW_CLEAR",
+            "QUICKLOOK_EVIDENCE_LOCKED"
+          ]
+        },
+        "authority_scope": {
+          "const": "EVIDENCE_ONLY"
+        },
+        "advisory_state": {
+          "type": "string",
+          "enum": ["GREEN", "AMBER", "RED"]
+        },
+        "recommended_action": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "PAUSE_RECOMMENDED_NOT_AUTHORITATIVE",
+            "RESUME_RECOMMENDED_NOT_AUTHORITATIVE"
+          ]
+        }
+      }
+    }
+  ]
+}

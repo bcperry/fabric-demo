@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/system-status.schema.json",
+  "title": "Synthetic System Status Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["operating_state", "readiness_state", "health_score", "metrics"],
+      "properties": {
+        "event_type": {
+          "const": "system.status"
+        },
+        "operating_state": {
+          "type": "string",
+          "enum": ["OFFLINE", "STANDBY", "ACTIVE", "DEGRADED", "RECOVERING"]
+        },
+        "readiness_state": {
+          "type": "string",
+          "enum": ["READY", "LIMITED", "NOT_READY", "MAINTENANCE"]
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "contributing_conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+.create-merge table RawIntegratedTestEvents (topic:string, key:string, event:dynamic)
+
+.create-merge table SensorObservation (observation_id:string, track_id:string, system_instance_id:string, observation_type:string, observation_time_utc:datetime, quality_score:real)
+
+.create-merge table CommandIntegration (command_event_id:string, track_id:string, system_instance_id:string, action_name:string, action_status:string, event_time_utc:datetime, processing_delay_ms:long)
+
+.create-merge table SystemStatus (status_event_id:string, system_instance_id:string, source_system:string, operating_state:string, readiness_state:string, health_score:real, event_time_utc:datetime, sequence_number:long)
+
+.create-merge table TestMarker (marker_event_id:string, test_event_id:string, marker_name:string, decision:string, decision_authority:string, related_feed:string, event_time_utc:datetime)
+
+.create-merge table EventValidationIssue (detected_time_utc:datetime, topic:string, key:string, event_id:string, event_type:string, source_system:string, reason_code:string, reason_detail:string, raw_event:dynamic)
+
+.create-or-alter function with (docstring='Projects sensor observations from the canonical Kafka envelope', folder='Ingestion') ExpandSensorObservation() {
+    RawIntegratedTestEvents
+    | where tostring(event.event_type) == 'sensor.observation'
+    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and isnotnull(todatetime(event.event_time_utc))
+    | project observation_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), observation_type=tostring(event.observation_type), observation_time_utc=todatetime(event.event_time_utc), quality_score=toreal(event.quality.score)
+}
+
+.create-or-alter function with (docstring='Projects command integration events from the canonical Kafka envelope', folder='Ingestion') ExpandCommandIntegration() {
+    RawIntegratedTestEvents
+    | where tostring(event.event_type) == 'command.integration'
+    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and isnotnull(todatetime(event.event_time_utc))
+    | project command_event_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), action_name=tostring(event.action), action_status=tostring(event.status), event_time_utc=todatetime(event.event_time_utc), processing_delay_ms=tolong(event.processing_delay_ms)
+}
+
+.create-or-alter function with (docstring='Projects system status events from the canonical Kafka envelope', folder='Ingestion') ExpandSystemStatus() {
+    RawIntegratedTestEvents
+    | where tostring(event.event_type) == 'system.status'
+    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and tostring(event.event_time_utc) matches regex @"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$"
+    | project status_event_id=tostring(event.event_id), system_instance_id=tostring(event.source_instance_id), source_system=tostring(event.source_system), operating_state=tostring(event.operating_state), readiness_state=tostring(event.readiness_state), health_score=toreal(event.health_score), event_time_utc=todatetime(event.event_time_utc), sequence_number=tolong(event.sequence_number)
+}
+
+.create-or-alter function with (docstring='Projects operator test markers from the canonical Kafka envelope', folder='Ingestion') ExpandTestMarker() {
+    RawIntegratedTestEvents
+    | where tostring(event.event_type) in ('test.marker', 'preservation.marker')
+    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotnull(todatetime(event.event_time_utc))
+    | project marker_event_id=tostring(event.event_id), test_event_id=tostring(event.test_event_id), marker_name=tostring(event.marker_name), decision=tostring(event.marker_status), decision_authority=tostring(event.source_system), related_feed=tostring(event.preservation_target), event_time_utc=todatetime(event.event_time_utc)
+}
+
+.create-or-alter function with (docstring='Quarantines malformed or unsupported canonical-envelope events', folder='Ingestion') ValidateIntegratedTestEvents() {
+    RawIntegratedTestEvents
+    | extend event_id=tostring(event.event_id), event_type=tostring(event.event_type), site_id=tostring(event.site_id), source_system=tostring(event.source_system), source_instance_id=tostring(event.source_instance_id), event_time_utc=tostring(event.event_time_utc)
+    | extend reason_code=case(
+        isempty(event_id), 'MISSING_EVENT_ID',
+        isempty(event_type), 'MISSING_EVENT_TYPE',
+        isempty(site_id), 'MISSING_SITE_ID',
+        isempty(source_system), 'MISSING_SOURCE_SYSTEM',
+        isempty(source_instance_id), 'MISSING_SOURCE_INSTANCE_ID',
+        not(event_time_utc matches regex @"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$"), 'INVALID_EVENT_TIME',
+        not(event_type in ('sensor.observation', 'command.integration', 'system.status', 'test.marker', 'preservation.marker')), 'UNSUPPORTED_EVENT_TYPE',
+        '')
+    | where isnotempty(reason_code)
+    | extend reason_detail=case(
+        reason_code == 'MISSING_EVENT_ID', 'event.event_id is required',
+        reason_code == 'MISSING_EVENT_TYPE', 'event.event_type is required',
+        reason_code == 'MISSING_SITE_ID', 'event.site_id is required',
+        reason_code == 'MISSING_SOURCE_SYSTEM', 'event.source_system is required',
+        reason_code == 'MISSING_SOURCE_INSTANCE_ID', 'event.source_instance_id is required',
+        reason_code == 'INVALID_EVENT_TIME', 'event.event_time_utc must be an ISO 8601 UTC timestamp',
+        'event.event_type is not supported by this ingestion contract')
+    | project detected_time_utc=now(), topic, key, event_id, event_type, source_system, reason_code, reason_detail, raw_event=event
+}
+
+    .create-or-alter function with (docstring='Returns alert-ready malformed-event health for the last five minutes', folder='Monitoring') EventValidationHealth() {
+        EventValidationIssue
+        | where detected_time_utc > ago(5m)
+        | summarize issue_count=count(), latest_issue_utc=max(detected_time_utc), affected_sources=dcount(source_system)
+        | extend alert_state=iff(issue_count > 0, 'ALERT', 'HEALTHY')
+        | where alert_state == 'ALERT'
+    }
+
+.alter table SensorObservation policy update @'[{"IsEnabled":true,"Source":"RawIntegratedTestEvents","Query":"ExpandSensorObservation()","IsTransactional":true,"PropagateIngestionProperties":true}]'
+
+.alter table CommandIntegration policy update @'[{"IsEnabled":true,"Source":"RawIntegratedTestEvents","Query":"ExpandCommandIntegration()","IsTransactional":true,"PropagateIngestionProperties":true}]'
+
+.alter table SystemStatus policy update @'[{"IsEnabled":true,"Source":"RawIntegratedTestEvents","Query":"ExpandSystemStatus()","IsTransactional":true,"PropagateIngestionProperties":true}]'
+
+.alter table TestMarker policy update @'[{"IsEnabled":true,"Source":"RawIntegratedTestEvents","Query":"ExpandTestMarker()","IsTransactional":true,"PropagateIngestionProperties":true}]'
+
+.alter table EventValidationIssue policy update @'[{"IsEnabled":true,"Source":"RawIntegratedTestEvents","Query":"ValidateIntegratedTestEvents()","IsTransactional":false,"PropagateIngestionProperties":true}]'

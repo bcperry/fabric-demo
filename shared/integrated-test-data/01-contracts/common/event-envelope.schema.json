@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/common/event-envelope.schema.json",
+  "title": "Synthetic MDA Demo Event Envelope",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "schema_version",
+    "scenario_id",
+    "site_id",
+    "source_system",
+    "source_instance_id",
+    "ordering_key",
+    "sequence_number",
+    "event_time_utc",
+    "ingest_time_utc",
+    "classification",
+    "synthetic"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "event_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "simulation_run_id": {
+      "type": ["string", "null"]
+    },
+    "run_manifest_id": {
+      "type": ["string", "null"]
+    },
+    "test_event_id": {
+      "type": ["string", "null"]
+    },
+    "site_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_system": {
+      "type": "string",
+      "enum": [
+        "TPY2",
+        "PATRIOT",
+        "THAAD",
+        "BATTLE_MANAGEMENT",
+        "ARMY_INTEGRATION",
+        "TARGET_RANGE",
+        "INTERCEPTOR_RANGE",
+        "RANGE_RECEIVER",
+        "OPTICAL_TRACKER",
+        "GROUND_TRUTH",
+        "ENVIRONMENT",
+        "INSTRUMENTATION_MONITOR",
+        "NETWORK_MONITOR",
+        "READINESS_CONTROLLER",
+        "OPERATOR_CONTROL",
+        "SAFETY_MONITOR",
+        "SUSTAINMENT",
+        "SCENARIO_CONTROLLER"
+      ]
+    },
+    "source_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ordering_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sequence_number": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event_time_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingest_time_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "startup_seed": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "correlation_id": {
+      "type": ["string", "null"]
+    },
+    "causation_id": {
+      "type": ["string", "null"]
+    },
+    "classification": {
+      "const": "SYNTHETIC_UNCLASS"
+    },
+    "location_notice": {
+      "const": "SYNTHETIC / NOT FOR NAVIGATION"
+    },
+    "synthetic": {
+      "const": true
+    }
+  }
+}

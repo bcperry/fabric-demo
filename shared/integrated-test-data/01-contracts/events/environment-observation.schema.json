@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/environment-observation.schema.json",
+  "title": "Synthetic Environment Observation Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "condition_id",
+        "condition_summary",
+        "wind_factor",
+        "visibility_state",
+        "scenario_effect"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "environment.observation"
+        },
+        "condition_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "condition_summary": {
+          "type": "string",
+          "enum": ["NOMINAL", "TIMING_JITTER_WINDOW"]
+        },
+        "wind_factor": {
+          "type": "number"
+        },
+        "visibility_state": {
+          "type": "string",
+          "enum": ["CLEAR", "LIMITED"]
+        },
+        "scenario_effect": {
+          "type": "string",
+          "enum": ["NONE", "TIMING_JITTER_REVIEW"]
+        }
+      }
+    }
+  ]
+}

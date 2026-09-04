@@ -1,0 +1,16 @@
+{
+  "demo_id": "04-real-time-ingestion",
+  "title": "Real-Time Ingestion",
+  "release_id": "2026.11.03",
+  "data_product": "shared/integrated-test-data",
+  "modes": ["deterministic_replay", "configured_live_stream"],
+  "raw_replay_record_count": 15,
+  "canonical_replay_event_count": 13,
+  "event_type_count": 5,
+  "source_system_count": 6,
+  "fabric_items": ["eh_mda_test.Eventhouse", "kqldb_mda_test.KQLDatabase", "mda_test_events.Eventstream", "MDA During-Test Findings.SemanticModel", "MDA During-Test Decision Brief.Report"],
+  "eventhouse_tables": ["RawIntegratedTestEvents", "SensorObservation", "CommandIntegration", "SystemStatus", "TestMarker"],
+  "leadership_hook": "Decision posture, data-feed status, and governed findings",
+  "professional_hook": "Event contracts, ordering, KQL, replay, and stream quality",
+  "status": "replay_and_fabric_destination_implemented_live_source_requires_configuration"
+}

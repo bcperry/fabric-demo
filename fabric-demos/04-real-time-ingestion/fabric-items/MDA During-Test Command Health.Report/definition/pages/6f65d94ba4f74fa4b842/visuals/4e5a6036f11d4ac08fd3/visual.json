@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4e5a6036f11d4ac08fd3",
+  "position": {"x": 40, "y": 290, "z": 2, "height": 340, "width": 1840},
+  "visual": {
+    "visualType": "tableEx",
+    "query": {"queryState": {"Values": {"projections": [
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "severity"}}, "queryRef": "gold_current_test_findings.severity", "nativeQueryRef": "Severity"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "finding_code"}}, "queryRef": "gold_current_test_findings.finding_code", "nativeQueryRef": "Finding type"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "finding_title"}}, "queryRef": "gold_current_test_findings.finding_title", "nativeQueryRef": "Finding"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "affected_ordering_key"}}, "queryRef": "gold_current_test_findings.affected_ordering_key", "nativeQueryRef": "Affected stream"}
+    ]}}},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Current finding register'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

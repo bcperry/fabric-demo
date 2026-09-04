@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0.0",
+  "scenario_id": "integrated-defense-001",
+  "display_name": "Fictional Integrated Defense Test 001",
+  "seed": 20261103,
+  "time_scale": 10,
+  "classification": "SYNTHETIC_UNCLASS",
+  "location_notice": "SYNTHETIC / NOT FOR NAVIGATION",
+  "location_bounds": {
+    "min_latitude": 10,
+    "max_latitude": 16,
+    "min_longitude": -49,
+    "max_longitude": -42,
+    "minimum_separation_degrees": 0.75
+  },
+  "sites": [
+    {
+      "site_id": "site-alpha",
+      "display_name": "Site Alpha",
+      "systems": [
+        {
+          "system_family": "TPY2",
+          "instance_id": "tpy2-alpha-01",
+          "role": "SYNTHETIC_SENSOR",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        },
+        {
+          "system_family": "BATTLE_MANAGEMENT",
+          "instance_id": "bm-alpha-01",
+          "role": "SHARED_TRACK_INTEGRATION",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        }
+      ]
+    },
+    {
+      "site_id": "site-bravo",
+      "display_name": "Site Bravo",
+      "systems": [
+        {
+          "system_family": "ARMY_INTEGRATION",
+          "instance_id": "army-int-bravo-01",
+          "role": "LOWER_TIER_INTEGRATION",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        },
+        {
+          "system_family": "PATRIOT",
+          "instance_id": "patriot-bravo-01",
+          "role": "LOWER_TIER_PARTICIPANT",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        },
+        {
+          "system_family": "PATRIOT",
+          "instance_id": "patriot-bravo-02",
+          "role": "LOWER_TIER_PARTICIPANT",
+          "event_profile": "DEGRADED",
+          "sustainment_profile": "LIMITED"
+        }
+      ]
+    },
+    {
+      "site_id": "site-charlie",
+      "display_name": "Site Charlie",
+      "systems": [
+        {
+          "system_family": "THAAD",
+          "instance_id": "thaad-charlie-01",
+          "role": "UPPER_TIER_PARTICIPANT",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        },
+        {
+          "system_family": "PATRIOT",
+          "instance_id": "patriot-charlie-01",
+          "role": "LOWER_TIER_PARTICIPANT",
+          "event_profile": "NORMAL",
+          "sustainment_profile": "READY"
+        }
+      ]
+    }
+  ],
+  "supporting_sources": [
+    {
+      "source_system": "TARGET_RANGE",
+      "source_instance_id": "target-range-alpha-01",
+      "site_id": "site-alpha",
+      "role": "TARGET_TELEMETRY",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "RANGE_RECEIVER",
+      "source_instance_id": "range-receiver-alpha-01",
+      "site_id": "site-alpha",
+      "role": "INSTRUMENTATION_RECEIVER",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "INSTRUMENTATION_MONITOR",
+      "source_instance_id": "instrumentation-monitor-bravo-01",
+      "site_id": "site-bravo",
+      "role": "TIMING_AND_HEALTH_MONITOR",
+      "event_profile": "DEGRADED"
+    },
+    {
+      "source_system": "NETWORK_MONITOR",
+      "source_instance_id": "network-monitor-bravo-01",
+      "site_id": "site-bravo",
+      "role": "ABSTRACT_NETWORK_MONITOR",
+      "event_profile": "DEGRADED"
+    },
+    {
+      "source_system": "READINESS_CONTROLLER",
+      "source_instance_id": "readiness-controller-bravo-01",
+      "site_id": "site-bravo",
+      "role": "AUTHORITATIVE_READINESS_COLLECTOR",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "OPERATOR_CONTROL",
+      "source_instance_id": "operator-control-bravo-01",
+      "site_id": "site-bravo",
+      "role": "HUMAN_DECISION_TRACKER",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "SAFETY_MONITOR",
+      "source_instance_id": "safety-monitor-bravo-01",
+      "site_id": "site-bravo",
+      "role": "ADVISORY_SAFETY_EVIDENCE",
+      "event_profile": "ADVISORY"
+    },
+    {
+      "source_system": "INTERCEPTOR_RANGE",
+      "source_instance_id": "interceptor-range-charlie-01",
+      "site_id": "site-charlie",
+      "role": "INTERCEPTOR_TELEMETRY",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "OPTICAL_TRACKER",
+      "source_instance_id": "optical-tracker-charlie-01",
+      "site_id": "site-charlie",
+      "role": "OPTICAL_CONFIRMATION",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "GROUND_TRUTH",
+      "source_instance_id": "truth-cell-charlie-01",
+      "site_id": "site-charlie",
+      "role": "INDEPENDENT_REFERENCE_TRACK",
+      "event_profile": "NORMAL"
+    },
+    {
+      "source_system": "ENVIRONMENT",
+      "source_instance_id": "environment-cell-charlie-01",
+      "site_id": "site-charlie",
+      "role": "ENVIRONMENT_CONTEXT",
+      "event_profile": "NORMAL"
+    }
+  ],
+  "anomalies": [
+    {
+      "anomaly_id": "anomaly-clock-001",
+      "type": "CLOCK_ALIGNMENT_DELAY",
+      "target_instance_id": "army-int-bravo-01",
+      "start_offset_seconds": 90,
+      "duration_seconds": 30
+    }
+  ]
+}

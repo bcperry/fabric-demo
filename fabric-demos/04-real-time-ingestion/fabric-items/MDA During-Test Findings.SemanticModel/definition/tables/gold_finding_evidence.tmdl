@@ -1,0 +1,154 @@
+table gold_stream_finding_evidence
+	lineageTag: d3359c29-f75d-49ff-a89f-9de94e487389
+	sourceLineageTag: [dbo].[gold_stream_finding_evidence]
+
+	column finding_id
+		dataType: string
+		lineageTag: 62ae27ae-4d7d-4782-8bb0-bec0076b0f63
+		sourceLineageTag: finding_id
+		summarizeBy: none
+		sourceColumn: finding_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_code
+		dataType: string
+		lineageTag: 1b1d2ec4-e374-4979-88cf-b566f6ddc71f
+		sourceLineageTag: finding_code
+		summarizeBy: none
+		sourceColumn: finding_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column rule_id
+		dataType: string
+		lineageTag: 4becbe01-edc9-4002-93f9-e6ca6d347ccf
+		sourceLineageTag: rule_id
+		summarizeBy: none
+		sourceColumn: rule_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column finding_version
+		dataType: string
+		lineageTag: 33d0b78b-60e1-465a-b2c0-e4499ebc72be
+		sourceLineageTag: finding_version
+		summarizeBy: none
+		sourceColumn: finding_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_table
+		dataType: string
+		lineageTag: 3cec6639-c44d-49d5-9702-7f79bae31f1c
+		sourceLineageTag: source_table
+		summarizeBy: none
+		sourceColumn: source_table
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_key
+		dataType: string
+		lineageTag: 0b6509f2-a4a5-469e-8247-b1f077a14eed
+		sourceLineageTag: evidence_key
+		summarizeBy: none
+		sourceColumn: evidence_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_event_id
+		dataType: string
+		lineageTag: a2ab4aaf-71af-43d4-a68e-e9ac53a913a3
+		sourceLineageTag: evidence_event_id
+		summarizeBy: none
+		sourceColumn: evidence_event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_id
+		dataType: string
+		lineageTag: f7824804-1519-4643-b897-936127895366
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_type
+		dataType: string
+		lineageTag: 9ae5c381-cb6a-4ccb-8e12-8915ac11a07e
+		sourceLineageTag: event_type
+		summarizeBy: none
+		sourceColumn: event_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_system
+		dataType: string
+		lineageTag: dd442e42-e798-4e50-a76c-45460644bd4e
+		sourceLineageTag: source_system
+		summarizeBy: none
+		sourceColumn: source_system
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_instance_id
+		dataType: string
+		lineageTag: d6275186-cfbb-4036-898d-aa88f55ff8af
+		sourceLineageTag: source_instance_id
+		summarizeBy: none
+		sourceColumn: source_instance_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordering_key
+		dataType: string
+		lineageTag: d946aeed-0cdc-42f8-9b30-5e82332c0683
+		sourceLineageTag: ordering_key
+		summarizeBy: none
+		sourceColumn: ordering_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_time_utc
+		dataType: string
+		lineageTag: cc7f0728-fc6f-4dad-bf3f-ac9fe67a41ee
+		sourceLineageTag: event_time_utc
+		summarizeBy: none
+		sourceColumn: event_time_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingest_time_utc
+		dataType: string
+		lineageTag: 31e1b8c2-5216-4b12-afc9-4c3592b82c24
+		sourceLineageTag: ingest_time_utc
+		summarizeBy: none
+		sourceColumn: ingest_time_utc
+
+		annotation SummarizationSetBy = Automatic
+
+	column bronze_record_sha256
+		dataType: string
+		lineageTag: 4706e24b-7cf1-4ae5-9580-19ab4a3ce120
+		sourceLineageTag: bronze_record_sha256
+		summarizeBy: none
+		sourceColumn: bronze_record_sha256
+
+		annotation SummarizationSetBy = Automatic
+
+	column evidence_status
+		dataType: string
+		lineageTag: 40e25360-6af2-4a3a-bd20-5c6707597eef
+		sourceLineageTag: evidence_status
+		summarizeBy: none
+		sourceColumn: evidence_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_stream_finding_evidence = entity
+		mode: directLake
+		source
+			entityName: gold_stream_finding_evidence
+			expressionSource: 'DirectLake - StreamingFindingsLakehouse'
+

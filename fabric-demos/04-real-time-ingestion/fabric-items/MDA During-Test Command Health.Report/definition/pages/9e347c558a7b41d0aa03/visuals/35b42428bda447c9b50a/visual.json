@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "35b42428bda447c9b50a",
+  "position": {"x": 980, "y": 110, "z": 2, "height": 170, "width": 430},
+  "visual": {
+    "visualType": "card",
+    "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_current_test_findings"}}, "Property": "Findings With Attached Records"}}, "queryRef": "gold_current_test_findings.Findings With Attached Records"}]}}},
+    "visualContainerObjects": {
+      "title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Findings with attached records'"}}}}}],
+      "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}],
+      "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "color": {"solid": {"color": {"expr": {"Literal": {"Value": "'#107C10'"}}}}}}}]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

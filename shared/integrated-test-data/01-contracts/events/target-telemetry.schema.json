@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/target-telemetry.schema.json",
+  "title": "Synthetic Target Telemetry Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "track_id",
+        "track_role",
+        "phase",
+        "position",
+        "velocity",
+        "source_clock_offset_ms"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "target.telemetry"
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_role": {
+          "const": "TARGET"
+        },
+        "phase": {
+          "type": "string",
+          "enum": ["INGRESS", "TERMINAL"]
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "z", "coordinate_system"],
+          "properties": {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"},
+            "coordinate_system": {
+              "const": "FICTIONAL_LOCAL_GRID"
+            }
+          }
+        },
+        "velocity": {
+          "type": "object",
+          "required": ["x_mps", "y_mps", "z_mps"],
+          "properties": {
+            "x_mps": {"type": "number"},
+            "y_mps": {"type": "number"},
+            "z_mps": {"type": "number"}
+          }
+        },
+        "source_clock_offset_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/sustainment.schema.json",
+  "title": "Synthetic Sustainment Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["asset_id", "action", "status"],
+      "properties": {
+        "event_type": {
+          "const": "sustainment.event"
+        },
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "INSPECTION",
+            "FAULT_RECORDED",
+            "WORK_ORDER_OPENED",
+            "WORK_ORDER_COMPLETED",
+            "PART_REQUESTED",
+            "PART_RECEIVED",
+            "CONFIGURATION_CHANGED",
+            "QUALIFICATION_UPDATED",
+            "READINESS_CHANGED"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["OPEN", "IN_PROGRESS", "COMPLETE", "DEFERRED"]
+        },
+        "readiness_before": {
+          "type": ["string", "null"],
+          "enum": ["READY", "LIMITED", "NOT_READY", "MAINTENANCE", null]
+        },
+        "readiness_after": {
+          "type": ["string", "null"],
+          "enum": ["READY", "LIMITED", "NOT_READY", "MAINTENANCE", null]
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  ]
+}

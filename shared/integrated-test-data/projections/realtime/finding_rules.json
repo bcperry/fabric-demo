@@ -1,0 +1,84 @@
+{
+    "ruleset_id": "streaming-findings-rules",
+    "ruleset_version": "2026.09.01.1",
+    "demo_notice": "Synthetic replay rules only. All thresholds and labels are invented for the Fabric lesson.",
+    "classification_required": "SYNTHETIC_UNCLASS",
+    "freshness_lag_seconds": 90,
+    "continuity_gap_seconds": 120,
+    "max_sequence_gap": 0,
+    "command_processing_delay_ms": 90000,
+    "assignment_ack_due_seconds": 180,
+    "expected_markers": [
+        {
+            "marker_name": "READINESS_POLL_COMPLETED",
+            "must_precede": "TEST_WINDOW_STARTED"
+        },
+        {
+            "marker_name": "TEST_WINDOW_COMPLETED",
+            "must_follow": "TEST_WINDOW_STARTED"
+        },
+        {
+            "marker_name": "RAW_STREAM_PRESERVED",
+            "must_follow": "TEST_WINDOW_COMPLETED"
+        }
+    ],
+    "expected_follow_on_events": [
+        {
+            "rule_key": "assignment_ack_required",
+            "trigger_event_type": "command.integration",
+            "trigger_action": "ABSTRACT_ASSIGNMENT",
+            "expected_event_type": "command.integration",
+            "expected_action": "ASSIGNMENT_ACKNOWLEDGED",
+            "correlation_mode": "same_correlation_id",
+            "target_mode": "same_target_instance_id",
+            "due_in_seconds": 180
+        }
+    ],
+    "finding_rules": [
+        {
+            "rule_id": "RULE-DEMO-DUPLICATE-001",
+            "rule_version": "2026.09.01.1",
+            "finding_code": "duplicate_event",
+            "finding_category": "STREAM_CONTRACT",
+            "severity": "medium",
+            "condition": "duplicate_event_id",
+            "description": "Flag repeated event identifiers while keeping the canonical record stable."
+        },
+        {
+            "rule_id": "RULE-DEMO-SCHEMA-001",
+            "rule_version": "2026.09.01.1",
+            "finding_code": "schema_violation",
+            "finding_category": "STREAM_CONTRACT",
+            "severity": "high",
+            "condition": "invalid_event_id_or_time_or_site",
+            "description": "Flag syntactically valid JSON lines that violate the demo event contract."
+        },
+        {
+            "rule_id": "RULE-DEMO-LATE-001",
+            "rule_version": "2026.09.01.1",
+            "finding_code": "late_event",
+            "finding_category": "TIMING_HEALTH",
+            "severity": "medium",
+            "condition": "ingest_lag_or_command_delay_exceeded",
+            "description": "Flag events that arrive after the invented replay freshness budget."
+        },
+        {
+            "rule_id": "RULE-DEMO-DROPOUT-001",
+            "rule_version": "2026.09.01.1",
+            "finding_code": "source_dropout",
+            "finding_category": "DATA_CONTINUITY",
+            "severity": "high",
+            "condition": "sequence_gap_or_continuity_gap",
+            "description": "Flag sequence gaps or prolonged observation silence within the same ordering key."
+        },
+        {
+            "rule_id": "RULE-DEMO-MISSING-001",
+            "rule_version": "2026.09.01.1",
+            "finding_code": "missing_expected_event",
+            "finding_category": "EVENT_COMPLETENESS",
+            "severity": "high",
+            "condition": "missing_assignment_acknowledgement",
+            "description": "Flag a missing follow-on acknowledgement after an abstract assignment."
+        }
+    ]
+}

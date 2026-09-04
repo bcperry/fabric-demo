@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "8f0c940dab404155ae09",
+  "position": {"x": 1260, "y": 20, "z": 2, "height": 55, "width": 620},
+  "visual": {
+    "visualType": "textbox",
+    "objects": {"general": [{"properties": {"paragraphs": [{"textRuns": [{"value": "SYNTHETIC UNCLASS | DETERMINISTIC REPLAY | test-streaming-findings-001 | sites Alpha, Bravo, Charlie", "textStyle": {"fontFamily": "Segoe UI", "fontSize": "11pt", "fontWeight": "bold", "color": "#605E5C"}}], "horizontalTextAlignment": "right"}]}}]},
+    "drillFilterOtherVisuals": true
+  }
+}

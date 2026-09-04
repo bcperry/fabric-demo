@@ -1,0 +1,7 @@
+relationship Findings_Evidence
+	fromColumn: gold_stream_finding_evidence.finding_id
+	toColumn: gold_current_test_findings.finding_id
+
+relationship SourceHealth_Evidence
+	fromColumn: gold_stream_finding_evidence.source_system
+	toColumn: gold_stream_health_summary.source_system

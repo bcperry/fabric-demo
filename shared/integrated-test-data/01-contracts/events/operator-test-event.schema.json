@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/operator-test-event.schema.json",
+  "title": "Synthetic Operator Test Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["marker", "decision", "decision_authority", "related_feed"],
+      "properties": {
+        "event_type": {
+          "const": "operator.test_event"
+        },
+        "marker": {
+          "type": "string",
+          "enum": [
+            "COUNTDOWN_STARTED",
+            "TRACK_OBSERVED",
+            "HOLD_ISSUED",
+            "RESUME_AUTHORIZED",
+            "QUICKLOOK_RELEASED"
+          ]
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "PROCEED",
+            "PAUSE_FOR_REVIEW",
+            "PROCEED_WITH_LIMITATION",
+            "EVIDENCE_PUBLISHED"
+          ]
+        },
+        "decision_authority": {
+          "const": "HUMAN_AUTHORITY"
+        },
+        "related_feed": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  ]
+}

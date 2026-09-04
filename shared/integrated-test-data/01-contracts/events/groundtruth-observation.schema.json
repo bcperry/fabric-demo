@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fabric-demo.local/contracts/events/groundtruth-observation.schema.json",
+  "title": "Synthetic Ground Truth Observation Event",
+  "allOf": [
+    {
+      "$ref": "../common/event-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "required": ["track_id", "truth_role", "position", "reference_state"],
+      "properties": {
+        "event_type": {
+          "const": "groundtruth.observation"
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "truth_role": {
+          "const": "REFERENCE_TRACK"
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "z", "coordinate_system"],
+          "properties": {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"},
+            "coordinate_system": {
+              "const": "FICTIONAL_LOCAL_GRID"
+            }
+          }
+        },
+        "reference_state": {
+          "type": "string",
+          "enum": ["ALIGNED_TO_RANGE_CLOCK"]
+        }
+      }
+    }
+  ]
+}

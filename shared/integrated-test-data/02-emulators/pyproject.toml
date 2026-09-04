@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mda-demo-emulators"
+version = "0.1.0"
+description = "Synthetic UNCLASS event producers for the Fabric MDA demo"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+kafka = [
+  "azure-identity>=1.17,<2",
+  "confluent-kafka>=2.5,<3"
+]
+validation = [
+  "jsonschema>=4.23,<5"
+]
+dev = [
+  "jsonschema>=4.23,<5"
+]
+
+[project.scripts]
+mda-emulator = "mda_emulators.cli:main"
+mda-replay-producer = "mda_emulators.replay_cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

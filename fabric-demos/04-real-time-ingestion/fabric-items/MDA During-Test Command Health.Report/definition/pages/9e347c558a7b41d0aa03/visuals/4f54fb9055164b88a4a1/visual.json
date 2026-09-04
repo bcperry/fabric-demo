@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4f54fb9055164b88a4a1",
+  "position": {"x": 1450, "y": 110, "z": 2, "height": 170, "width": 430},
+  "visual": {
+    "visualType": "card",
+    "query": {"queryState": {"Values": {"projections": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_execution_decision_summary"}}, "Property": "Acknowledgment State"}}, "queryRef": "gold_execution_decision_summary.Acknowledgment State"}]}}},
+    "visualContainerObjects": {
+      "title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Assignment acknowledgment'"}}}}}],
+      "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}],
+      "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "color": {"solid": {"color": {"expr": {"Literal": {"Value": "'#0078D4'"}}}}}}}]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

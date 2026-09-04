@@ -1,0 +1,329 @@
+{
+    "schema_version": 82,
+    "changeDetection": {
+        "kind": "liveUpdates",
+        "fallbackRefreshRate": "5m",
+        "minRefreshRate": "30s"
+    },
+    "tiles": [
+        {
+            "id": "80fb600d-05d5-4292-96af-a3cec94adffd",
+            "title": "Raw events received",
+            "description": "Canonical Kafka envelopes retained in Eventhouse",
+            "visualType": "kpi",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 4
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "313cc8c0-26a5-4c62-87f4-0c69b138b100"
+            },
+            "visualOptions": {
+                "kpi__valueColumn": null,
+                "kpi__visualType": "number",
+                "kpi__minValue": 0,
+                "kpi__maxValue": 100,
+                "kpi__showMinMaxLabels": true,
+                "kpi__conditionalFormattingEnabled": true,
+                "kpi__valueFormat": {
+                    "format": "full",
+                    "maxDecimalPlaces": 0,
+                    "showUnitLabel": false,
+                    "unit": "%"
+                },
+                "kpi__conditionalFormatting": {
+                    "showBadges": false,
+                    "showZoneMarks": true,
+                    "zone1": {
+                        "range": [
+                            0,
+                            33
+                        ],
+                        "indicator": {
+                            "icon": "recommended",
+                            "label": "OK"
+                        }
+                    },
+                    "zone2": {
+                        "range": [
+                            33,
+                            67
+                        ],
+                        "indicator": {
+                            "icon": "recommended",
+                            "label": "Warning"
+                        }
+                    },
+                    "zone3": {
+                        "range": [
+                            67,
+                            100
+                        ],
+                        "indicator": {
+                            "icon": "recommended",
+                            "label": "Danger"
+                        }
+                    }
+                },
+                "kpi__referenceLines": {
+                    "showLabels": false,
+                    "lines": []
+                },
+                "kpi__styling": {
+                    "arcAngle": 220,
+                    "arcThickness": 0.3,
+                    "capStyle": "rounded",
+                    "gradientFill": false
+                }
+            }
+        },
+        {
+            "id": "36025c9a-420b-4275-873f-e48fc80d6ccd",
+            "title": "Mission header",
+            "visualType": "markdownCard",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 4,
+                "y": 0,
+                "width": 9,
+                "height": 7
+            },
+            "markdownText": "# MDA LIVE TEST CONTROL\n\n**TEST-FLOOR MONITOR**  |  SYNTHETIC_UNCLASS  |  LIVE EVENTHOUSE\nFast triage for source continuity, event timing, command flow, and malformed records.",
+            "visualOptions": {}
+        },
+        {
+            "id": "2a0d1523-3dcd-47cc-b5ad-7b9f9247288e",
+            "title": "Source readiness matrix",
+            "description": "Latest readiness, health, event time, and sequence by source instance",
+            "visualType": "table",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 13,
+                "y": 0,
+                "width": 9,
+                "height": 7
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "ef52c83d-9127-4803-a3fe-8390a11770e9"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilter": [],
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "882d428a-9d46-4000-80fd-3871bc42885b",
+            "title": "Mission event timeline",
+            "description": "Health, sensor quality, and command latency over mission time",
+            "visualType": "timechart",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 0,
+                "y": 7,
+                "width": 9,
+                "height": 7
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "23f6a93a-0ccc-499d-9361-2fa40e6c4048"
+            },
+            "visualOptions": {
+                "multipleYAxes": {
+                    "base": {
+                        "id": "-1",
+                        "label": "",
+                        "columns": [],
+                        "yAxisMaximumValue": null,
+                        "yAxisMinimumValue": null,
+                        "yAxisScale": "linear",
+                        "horizontalLines": []
+                    },
+                    "additional": [],
+                    "showMultiplePanels": false
+                },
+                "seriesColors": {},
+                "hideLegend": false,
+                "legendLocation": "bottom",
+                "xColumnTitle": "",
+                "xColumn": null,
+                "yColumns": null,
+                "seriesColumns": null,
+                "xAxisScale": "linear",
+                "verticalLine": "",
+                "crossFilter": [],
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "forceAxisTicks": false,
+                "drillthrough": []
+            }
+        },
+        {
+            "id": "a46d2f2b-04f1-450e-b793-277676498479",
+            "title": "Command flow latency",
+            "description": "Maximum processing delay by integration action",
+            "visualType": "bar",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 9,
+                "y": 7,
+                "width": 14,
+                "height": 7
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "e8bf8bdd-e684-470d-8abc-60eccea4be44"
+            },
+            "visualOptions": {
+                "multipleYAxes": {
+                    "base": {
+                        "id": "-1",
+                        "label": "",
+                        "columns": [],
+                        "yAxisMaximumValue": null,
+                        "yAxisMinimumValue": null,
+                        "yAxisScale": "linear",
+                        "horizontalLines": []
+                    },
+                    "additional": [],
+                    "showMultiplePanels": false
+                },
+                "seriesColors": {},
+                "hideLegend": false,
+                "legendLocation": "bottom",
+                "xColumnTitle": "",
+                "xColumn": null,
+                "yColumns": null,
+                "seriesColumns": null,
+                "xAxisScale": "linear",
+                "verticalLine": "",
+                "crossFilter": [],
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "forceAxisTicks": false,
+                "drillthrough": []
+            }
+        },
+        {
+            "id": "2f7ae875-b903-4b32-b74d-6089bc2f0f77",
+            "title": "Malformed event queue",
+            "description": "Quarantined records retained for operator triage",
+            "visualType": "table",
+            "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
+            "layout": {
+                "x": 0,
+                "y": 14,
+                "width": 21,
+                "height": 3
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "5261f73b-050d-43fb-ac67-979605146245"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilter": [],
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        }
+    ],
+    "baseQueries": [],
+    "parameters": [
+        {
+            "kind": "duration",
+            "id": "2df801c2-e7cd-43aa-9351-134ad0fd744d",
+            "displayName": "Time range",
+            "description": "",
+            "beginVariableName": "_startTime",
+            "endVariableName": "_endTime",
+            "defaultValue": {
+                "kind": "dynamic",
+                "count": 1,
+                "unit": "hours"
+            },
+            "showOnPages": {
+                "kind": "all"
+            }
+        }
+    ],
+    "dataSources": [
+        {
+            "kind": "kusto-trident",
+            "clusterUri": "https://trd-a9m8t1hz02fkh7c6k4.z9.kusto.fabric.microsoft.com",
+            "name": "kqldb_mda_test",
+            "databaseArtifactId": "210c14b4-028c-4db9-91f2-e617cd21a2dc",
+            "database": "210c14b4-028c-4db9-91f2-e617cd21a2dc",
+            "workspace": "00000000-0000-0000-0000-000000000000",
+            "id": "543b0f63-3aea-47b7-aabc-77337123f857"
+        }
+    ],
+    "pages": [
+        {
+            "name": "Page 1",
+            "id": "161a57d8-551c-4abb-9da6-9a98426acc0e"
+        }
+    ],
+    "queries": [
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
+            },
+            "text": "RawIntegratedTestEvents\r\n| summarize Events = count()",
+            "id": "313cc8c0-26a5-4c62-87f4-0c69b138b100",
+            "usedVariables": []
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
+            },
+            "text": "SystemStatus\r\n| summarize arg_max(event_time_utc, *) by system_instance_id\r\n| project Source=source_system, Instance=system_instance_id, Readiness=readiness_state, Health=round(health_score * 100, 0), LastEvent=event_time_utc, Sequence=sequence_number\r\n| order by Health asc",
+            "id": "ef52c83d-9127-4803-a3fe-8390a11770e9",
+            "usedVariables": []
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
+            },
+            "text": "union (SensorObservation | project EventTime=observation_time_utc, Series='Sensor quality', Value=quality_score * 100.0), (CommandIntegration | project EventTime=event_time_utc, Series='Command latency (sec)', Value=toreal(processing_delay_ms) / 1000.0), (SystemStatus | project EventTime=event_time_utc, Series=source_system, Value=health_score * 100.0) | where EventTime >= datetime(2026-01-01) | order by EventTime asc",
+            "id": "23f6a93a-0ccc-499d-9361-2fa40e6c4048",
+            "usedVariables": []
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
+            },
+            "text": "CommandIntegration\r\n| summarize DelaySeconds=max(processing_delay_ms) / 1000.0 by action_name\r\n| order by DelaySeconds desc",
+            "id": "e8bf8bdd-e684-470d-8abc-60eccea4be44",
+            "usedVariables": []
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
+            },
+            "text": "EventValidationIssue | project Detected=detected_time_utc, Source=source_system, EventType=event_type, Reason=reason_code, Detail=reason_detail, EventId=event_id | order by Detected desc",
+            "id": "5261f73b-050d-43fb-ac67-979605146245",
+            "usedVariables": []
+        }
+    ],
+    "embeddedApps": []
+}
