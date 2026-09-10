@@ -1,0 +1,816 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "210c14b4-028c-4db9-91f2-e617cd21a2dc",
+  "workspaceId": "10327698-2b0d-446f-9b1b-beabe18a4bda",
+  "dataSourceInstructions": "Query EvidenceReviewContext, the selected read-only comparison table. Start with EvidenceReviewContext | take 10 to inspect available scope and provenance. No joins are needed or supported by the evidence. TestEventId identifies the STREAMING package only, not the administrative SQL reference. For Kadena or test-integrated-defense-001 questions, retrieve the context row without filtering TestEventId to that administrative identity; inspect ReferenceContent, ReferenceDocumentId, ReferenceSourcePath, ReferenceLimitations and ContextLimitations alongside PackageId, TestEventId and SourcePath. Co-location is not linkage. Top-level Counts, Review, RecordedClock, FollowOnObservations, SyntheticRuleNotice, Source and Limitations are verified projections of Package; RawRecords preserves source lines and Rules contains the complete rule document. Return source values, not invented fields. For timing compute datetime_diff('second', todatetime(FollowOnObservations[0].due_utc), todatetime(RecordedClock.last_recorded_event_utc)) and report the gap explicitly. All thresholds are synthetic. Retrieve the full row when explaining evidence boundaries; the result is one small recorded fixture, not historical replay counts.",
+  "displayName": "kqldb_mda_test",
+  "type": "kusto",
+  "userDescription": "EvidenceReviewContext provides a join-free, read-only comparison of the recorded test-streaming-findings-001 evidence package and the separate checked-in administrative SQL seed describing test-integrated-defense-001 and Kadena. It contains the full package, source-line raw records, rules, and independently identified reference document. The table's TestEventId belongs only to the streaming package. Administrative reference questions require reading the same row without filtering that field to the administrative event. The separate source IDs and limitations explicitly establish no event linkage, current closure, approval or execution authorization.",
+  "metadata": null,
+  "elements": [
+    {
+      "id": "91ae5a3d-b323-4adc-8971-463680581ab6",
+      "is_selected": false,
+      "display_name": "Tables",
+      "type": "table_grouping",
+      "description": null,
+      "children": [
+        {
+          "id": "2019c2fc-4b33-4058-9e94-652db266e4ac",
+          "is_selected": true,
+          "display_name": "EvidenceReviewContext",
+          "type": "kusto.table",
+          "description": "Read the full row for either event scope. Separate package and reference provenance; no join or event relationship is implied.",
+          "children": [
+            {"id":"PackageId","is_selected":true,"display_name":"PackageId","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"TestEventId","is_selected":true,"display_name":"TestEventId","type":"kusto.column","data_type":"System.String","description":"Streaming package identity only; not the administrative reference event.","children":[]},
+            {"id":"SourcePath","is_selected":true,"display_name":"SourcePath","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"Package","is_selected":true,"display_name":"Package","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"RawRecords","is_selected":true,"display_name":"RawRecords","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"Rules","is_selected":true,"display_name":"Rules","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"ReferenceDocumentId","is_selected":true,"display_name":"ReferenceDocumentId","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"ReferenceSourcePath","is_selected":true,"display_name":"ReferenceSourcePath","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"ReferenceContentSha256","is_selected":true,"display_name":"ReferenceContentSha256","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"ReferenceContent","is_selected":true,"display_name":"ReferenceContent","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"ReferenceLimitations","is_selected":true,"display_name":"ReferenceLimitations","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"ContextLimitations","is_selected":true,"display_name":"ContextLimitations","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"Review","is_selected":true,"display_name":"Review","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"Limitations","is_selected":true,"display_name":"Limitations","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"RecordedClock","is_selected":true,"display_name":"RecordedClock","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"FollowOnObservations","is_selected":true,"display_name":"FollowOnObservations","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"SyntheticRuleNotice","is_selected":true,"display_name":"SyntheticRuleNotice","type":"kusto.column","data_type":"System.String","children":[]},
+            {"id":"Counts","is_selected":true,"display_name":"Counts","type":"kusto.column","data_type":"System.Object","children":[]},
+            {"id":"Source","is_selected":true,"display_name":"Source","type":"kusto.column","data_type":"System.Object","children":[]}
+          ]
+        },
+        {
+          "id": "da71a2b2-969b-44d1-9213-8a3f5b1d8974",
+          "is_selected": false,
+          "display_name": "EvidenceReferenceDocuments",
+          "type": "kusto.table",
+          "description": "Checked-in source documents with explicit evidence limitations; not current deployed status.",
+          "children": [
+            {"id": "DocumentId", "is_selected": true, "display_name": "DocumentId", "type": "kusto.column", "data_type": "System.String", "description": null, "children": []},
+            {"id": "SourcePath", "is_selected": true, "display_name": "SourcePath", "type": "kusto.column", "data_type": "System.String", "description": null, "children": []},
+            {"id": "ContentSha256", "is_selected": true, "display_name": "ContentSha256", "type": "kusto.column", "data_type": "System.String", "description": null, "children": []},
+            {"id": "Content", "is_selected": true, "display_name": "Content", "type": "kusto.column", "data_type": "System.String", "description": null, "children": []},
+            {"id": "Limitations", "is_selected": true, "display_name": "Limitations", "type": "kusto.column", "data_type": "System.String", "description": null, "children": []}
+          ]
+        },
+        {
+          "id": "1ae46813-5bfb-4c0a-9848-a5db30fe6218",
+          "is_selected": false,
+          "display_name": "RawIntegratedTestEvents",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "topic",
+              "is_selected": true,
+              "display_name": "topic",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "key",
+              "is_selected": true,
+              "display_name": "key",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event",
+              "is_selected": true,
+              "display_name": "event",
+              "type": "kusto.column",
+              "data_type": "System.Object",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "75c4172a-68b5-4704-94dc-d1ac8fa6b822",
+          "is_selected": false,
+          "display_name": "SensorObservation",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "observation_id",
+              "is_selected": true,
+              "display_name": "observation_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "track_id",
+              "is_selected": true,
+              "display_name": "track_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "system_instance_id",
+              "is_selected": true,
+              "display_name": "system_instance_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "observation_type",
+              "is_selected": true,
+              "display_name": "observation_type",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "observation_time_utc",
+              "is_selected": true,
+              "display_name": "observation_time_utc",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "quality_score",
+              "is_selected": true,
+              "display_name": "quality_score",
+              "type": "kusto.column",
+              "data_type": "System.Double",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "a97ce4fb-170c-4341-b40f-8b8cbb50ec19",
+          "is_selected": false,
+          "display_name": "CommandIntegration",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "command_event_id",
+              "is_selected": true,
+              "display_name": "command_event_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "track_id",
+              "is_selected": true,
+              "display_name": "track_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "system_instance_id",
+              "is_selected": true,
+              "display_name": "system_instance_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "action_name",
+              "is_selected": true,
+              "display_name": "action_name",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "action_status",
+              "is_selected": true,
+              "display_name": "action_status",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event_time_utc",
+              "is_selected": true,
+              "display_name": "event_time_utc",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "processing_delay_ms",
+              "is_selected": true,
+              "display_name": "processing_delay_ms",
+              "type": "kusto.column",
+              "data_type": "System.Int64",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "a48a437d-56b7-4df5-85f6-e97c77b146b0",
+          "is_selected": false,
+          "display_name": "SystemStatus",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "status_event_id",
+              "is_selected": true,
+              "display_name": "status_event_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "system_instance_id",
+              "is_selected": true,
+              "display_name": "system_instance_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "source_system",
+              "is_selected": true,
+              "display_name": "source_system",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "operating_state",
+              "is_selected": true,
+              "display_name": "operating_state",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "readiness_state",
+              "is_selected": true,
+              "display_name": "readiness_state",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "health_score",
+              "is_selected": true,
+              "display_name": "health_score",
+              "type": "kusto.column",
+              "data_type": "System.Double",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event_time_utc",
+              "is_selected": true,
+              "display_name": "event_time_utc",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "sequence_number",
+              "is_selected": true,
+              "display_name": "sequence_number",
+              "type": "kusto.column",
+              "data_type": "System.Int64",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "b52e22ef-d5af-4957-bd85-46a9d9d39a16",
+          "is_selected": false,
+          "display_name": "TestMarker",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "marker_event_id",
+              "is_selected": true,
+              "display_name": "marker_event_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "test_event_id",
+              "is_selected": true,
+              "display_name": "test_event_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "marker_name",
+              "is_selected": true,
+              "display_name": "marker_name",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "decision",
+              "is_selected": true,
+              "display_name": "decision",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "decision_authority",
+              "is_selected": true,
+              "display_name": "decision_authority",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "related_feed",
+              "is_selected": true,
+              "display_name": "related_feed",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event_time_utc",
+              "is_selected": true,
+              "display_name": "event_time_utc",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "31501d5b-55e0-4421-960b-e95d7d24dccd",
+          "is_selected": false,
+          "display_name": "EventValidationIssue",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "detected_time_utc",
+              "is_selected": true,
+              "display_name": "detected_time_utc",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "topic",
+              "is_selected": true,
+              "display_name": "topic",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "key",
+              "is_selected": true,
+              "display_name": "key",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event_id",
+              "is_selected": true,
+              "display_name": "event_id",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "event_type",
+              "is_selected": true,
+              "display_name": "event_type",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "source_system",
+              "is_selected": true,
+              "display_name": "source_system",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "reason_code",
+              "is_selected": true,
+              "display_name": "reason_code",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "reason_detail",
+              "is_selected": true,
+              "display_name": "reason_detail",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "raw_event",
+              "is_selected": true,
+              "display_name": "raw_event",
+              "type": "kusto.column",
+              "data_type": "System.Object",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "8818a4db-2c73-4778-9f49-2c740588897f",
+          "is_selected": false,
+          "display_name": "EvidenceReviewPackages",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "PackageId",
+              "is_selected": true,
+              "display_name": "PackageId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "TestEventId",
+              "is_selected": true,
+              "display_name": "TestEventId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "SourcePath",
+              "is_selected": true,
+              "display_name": "SourcePath",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Package",
+              "is_selected": true,
+              "display_name": "Package",
+              "type": "kusto.column",
+              "data_type": "System.Object",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "RawRecords",
+              "is_selected": true,
+              "display_name": "RawRecords",
+              "type": "kusto.column",
+              "data_type": "System.Object",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Rules",
+              "is_selected": true,
+              "display_name": "Rules",
+              "type": "kusto.column",
+              "data_type": "System.Object",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "67a6d298-4277-4a12-bf54-ee5a53b4d2e9",
+          "is_selected": false,
+          "display_name": "EvidenceReviewJournal",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "ReviewId",
+              "is_selected": true,
+              "display_name": "ReviewId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "PackageId",
+              "is_selected": true,
+              "display_name": "PackageId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Decision",
+              "is_selected": true,
+              "display_name": "Decision",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Actor",
+              "is_selected": true,
+              "display_name": "Actor",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "TenantId",
+              "is_selected": true,
+              "display_name": "TenantId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "RecordedAt",
+              "is_selected": true,
+              "display_name": "RecordedAt",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Rationale",
+              "is_selected": true,
+              "display_name": "Rationale",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "HumanReviewedSourceBytes",
+              "is_selected": true,
+              "display_name": "HumanReviewedSourceBytes",
+              "type": "kusto.column",
+              "data_type": "System.SByte",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ExecutionAuthorization",
+              "is_selected": true,
+              "display_name": "ExecutionAuthorization",
+              "type": "kusto.column",
+              "data_type": "System.SByte",
+              "description": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "9948845f-4379-497e-a181-408ac445d8cb",
+          "is_selected": false,
+          "display_name": "EvidenceReplayLineage",
+          "type": "kusto.table",
+          "description": null,
+          "children": [
+            {
+              "id": "PackageId",
+              "is_selected": true,
+              "display_name": "PackageId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "RunId",
+              "is_selected": true,
+              "display_name": "RunId",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Relationship",
+              "is_selected": true,
+              "display_name": "Relationship",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "VerifiedAt",
+              "is_selected": true,
+              "display_name": "VerifiedAt",
+              "type": "kusto.column",
+              "data_type": "System.DateTime",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "RawRecords",
+              "is_selected": true,
+              "display_name": "RawRecords",
+              "type": "kusto.column",
+              "data_type": "System.Int64",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "CanonicalEvents",
+              "is_selected": true,
+              "display_name": "CanonicalEvents",
+              "type": "kusto.column",
+              "data_type": "System.Int64",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "Verification",
+              "is_selected": true,
+              "display_name": "Verification",
+              "type": "kusto.column",
+              "data_type": "System.String",
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "AdministrativeClosureEstablished",
+              "is_selected": true,
+              "display_name": "AdministrativeClosureEstablished",
+              "type": "kusto.column",
+              "data_type": "System.SByte",
+              "description": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "47e87b16-8a04-4dc2-897b-1b131acc0132",
+      "is_selected": false,
+      "display_name": "Functions",
+      "type": "function_grouping",
+      "description": null,
+      "children": [
+        {
+          "id": "c15f36f2-dc3a-47a6-b4a2-2c9d07e31b1b",
+          "is_selected": false,
+          "display_name": "ExpandSensorObservation",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "92e60543-94ec-4cef-afef-7908cde13f0f",
+          "is_selected": false,
+          "display_name": "ExpandCommandIntegration",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f3264337-2ea5-4ebb-841a-78cd06e445d4",
+          "is_selected": false,
+          "display_name": "ExpandSystemStatus",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "52d2bd76-c08d-42c6-8ec9-d01af255ba47",
+          "is_selected": false,
+          "display_name": "ExpandTestMarker",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b166b76d-859d-434c-a3e0-f5fcf9b1c532",
+          "is_selected": false,
+          "display_name": "ValidateIntegratedTestEvents",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "28931c1f-65bc-4d82-942f-4adf42c56bef",
+          "is_selected": false,
+          "display_name": "EventValidationHealth",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "95fbca6a-52a1-47e4-b39c-aa40220d8815",
+          "is_selected": false,
+          "display_name": "ClassifyIntegratedTestEvents",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e09e0446-6e73-4f57-aa59-63999e30ac5f",
+          "is_selected": false,
+          "display_name": "AcceptedIntegratedTestEvents",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7931a87d-559f-44af-9a39-77e918a530ea",
+          "is_selected": false,
+          "display_name": "CanonicalIntegratedTestEvents",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f95a63c3-0ea7-47f5-8625-da6679f4c24a",
+          "is_selected": false,
+          "display_name": "TestSourceCoverage",
+          "type": "kusto.function",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "8f02d4b7-85e2-4a84-8825-e8f69bd56695",
+      "is_selected": false,
+      "display_name": "Shortcuts",
+      "type": "shortcut_grouping",
+      "description": null,
+      "children": []
+    },
+    {
+      "id": "a1481c6c-de16-43c3-b6fe-9c0cea8b62c8",
+      "is_selected": false,
+      "display_name": "Materialized Views",
+      "type": "materialized_view_grouping",
+      "description": null,
+      "children": []
+    }
+  ]
+}

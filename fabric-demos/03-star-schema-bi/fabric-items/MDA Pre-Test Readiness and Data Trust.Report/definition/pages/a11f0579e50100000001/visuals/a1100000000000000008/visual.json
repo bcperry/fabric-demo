@@ -1,24 +1,37 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "a1100000000000000008",
-  "position": {"x": 800, "y": 670, "z": 2, "height": 330, "width": 1080},
+  "position": {"x": 40, "y": 670, "z": 2, "height": 370, "width": 1840},
   "visual": {
     "visualType": "tableEx",
+    "objects": {
+      "columnWidth": [
+        {"selector": {"metadata": "gold_mirror_casework.Risk Decision Order"}, "properties": {"value": {"expr": {"Literal": {"Value": "120D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.affected_site"}, "properties": {"value": {"expr": {"Literal": {"Value": "160D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.finding_title"}, "properties": {"value": {"expr": {"Literal": {"Value": "290D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.next_action"}, "properties": {"value": {"expr": {"Literal": {"Value": "300D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.next_action_status"}, "properties": {"value": {"expr": {"Literal": {"Value": "150D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.next_action_owner"}, "properties": {"value": {"expr": {"Literal": {"Value": "220D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.next_action_due_utc"}, "properties": {"value": {"expr": {"Literal": {"Value": "200D"}}}}},
+        {"selector": {"metadata": "gold_mirror_casework.representative_evidence_reference"}, "properties": {"value": {"expr": {"Literal": {"Value": "330D"}}}}}
+      ],
+      "columnHeaders": [{"properties": {"fontSize": {"expr": {"Literal": {"Value": "16D"}}}, "wordWrap": {"expr": {"Literal": {"Value": "true"}}}}}],
+      "values": [{"properties": {"fontSize": {"expr": {"Literal": {"Value": "16D"}}}, "wordWrap": {"expr": {"Literal": {"Value": "true"}}}}}]
+    },
     "query": {"queryState": {"Values": {"projections": [
       {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "Risk Decision Order"}}, "queryRef": "gold_mirror_casework.Risk Decision Order", "nativeQueryRef": "Decision order"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "affected_site"}}, "queryRef": "gold_mirror_casework.affected_site", "nativeQueryRef": "Affected site"},
-      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "affected_objective"}}, "queryRef": "gold_mirror_casework.affected_objective", "nativeQueryRef": "Objective at risk"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "finding_title"}}, "queryRef": "gold_mirror_casework.finding_title", "nativeQueryRef": "Finding"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action"}}, "queryRef": "gold_mirror_casework.next_action", "nativeQueryRef": "Corrective action"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action_status"}}, "queryRef": "gold_mirror_casework.next_action_status", "nativeQueryRef": "Action status"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action_owner"}}, "queryRef": "gold_mirror_casework.next_action_owner", "nativeQueryRef": "Accountable organization"},
-      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action_due_utc"}}, "queryRef": "gold_mirror_casework.next_action_due_utc", "nativeQueryRef": "Due before gate"},
-      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "representative_evidence_reference"}}, "queryRef": "gold_mirror_casework.representative_evidence_reference", "nativeQueryRef": "Latest closure evidence"}
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action_due_utc"}}, "queryRef": "gold_mirror_casework.next_action_due_utc", "nativeQueryRef": "Next open action due (UTC)"},
+      {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "representative_evidence_reference"}}, "queryRef": "gold_mirror_casework.representative_evidence_reference", "nativeQueryRef": "Attached evidence reference"}
     ]}}, "sortDefinition": {"sort": [
       {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "Risk Decision Order"}}, "direction": "Ascending"},
       {"field": {"Column": {"Expression": {"SourceRef": {"Entity": "gold_mirror_casework"}}, "Property": "next_action_due_utc"}}, "direction": "Ascending"}
     ]}},
-    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Recovery actions due before execution'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
+    "visualContainerObjects": {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}, "text": {"expr": {"Literal": {"Value": "'Open recovery actions and attached evidence'"}}}}}], "background": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}], "border": [{"properties": {"show": {"expr": {"Literal": {"Value": "true"}}}}}]},
     "drillFilterOtherVisuals": true
   }
 }

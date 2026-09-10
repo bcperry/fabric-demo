@@ -130,9 +130,15 @@ class ScenarioEngineTests(unittest.TestCase):
         _, event = next(ScenarioEngine(scenario).generate(1))
         stream = StringIO()
         transport = JsonLinesTransport(stream)
+        before = datetime.now(timezone.utc)
         transport.publish("system-status", event)
+        after = datetime.now(timezone.utc)
         published = json.loads(stream.getvalue())["event"]
-        self.assertNotEqual(published["ingest_time_utc"], event["event_time_utc"])
+        self.assertEqual(published["ingest_time_utc"], event["ingest_time_utc"])
+        published_time = datetime.fromisoformat(published["published_time_utc"].replace("Z", "+00:00"))
+        self.assertLessEqual(before, published_time)
+        self.assertLessEqual(published_time, after)
+        self.assertNotIn("published_time_utc", event)
 
     def test_runs_have_unique_ids_unless_shared_explicitly(self):
         scenario = load_scenario(SCENARIO)

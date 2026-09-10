@@ -214,5 +214,4 @@ table gold_governed_readiness_scores
 		mode: directLake
 		source
 			entityName: gold_governed_readiness_scores
-			schemaName: dbo
 			expressionSource: 'DirectLake - IntegratedTestLakehouse'

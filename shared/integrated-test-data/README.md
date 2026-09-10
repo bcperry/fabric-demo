@@ -28,3 +28,20 @@ Fabric deployment uploads this directory once to
 `Files/shared/integrated-test-data`. Demo notebooks read from that location and
 publish derived Delta tables, models, reports, Eventhouse tables, or ontology
 bindings.
+
+## Recorded Evidence Review
+
+The small streaming fixture has a separate identity from the canonical
+405-event release. Its [quick-look](projections/realtime/QUICK_LOOK.md) and
+[review package](projections/realtime/review_package.json) are deterministic
+derived artifacts, not replacement raw evidence or human approval.
+
+```bash
+env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run python shared/integrated-test-data/scripts/build_review_package.py write
+env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run python shared/integrated-test-data/scripts/build_review_package.py check
+```
+
+The package checks actual raw-file bytes, reconciles envelope admission and
+duplicates, preserves uncertainty, and binds its identity to both evidence and
+rules. The canonical release validator does not validate this projection; run
+the package check separately.

@@ -20,9 +20,9 @@ table gold_mirror_casework
 	measure 'Risk Priority' = SWITCH(SELECTEDVALUE(gold_mirror_casework[severity]), "CRITICAL", 4, "HIGH", 3, "MEDIUM", 2, "LOW", 1, 0)
 		formatString: 0
 
-	measure 'Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_casework[severity]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", "5 | CLEAR")
+	measure 'Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_casework[severity]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", BLANK())
 
-	measure 'Critical Risks' = CALCULATE(DISTINCTCOUNT(gold_mirror_casework[finding_id]), gold_mirror_casework[severity] = "CRITICAL")
+	measure 'Critical Risks' = COALESCE(CALCULATE(DISTINCTCOUNT(gold_mirror_casework[finding_id]), gold_mirror_casework[severity] = "CRITICAL"), 0)
 		formatString: 0
 
 	measure 'High Risks' = CALCULATE(DISTINCTCOUNT(gold_mirror_casework[finding_id]), gold_mirror_casework[severity] = "HIGH")
@@ -30,26 +30,25 @@ table gold_mirror_casework
 
 	measure 'Director Recommendation' = ```
 			IF(
-			    [Critical Risks] > 0 || [Missing Feeds] > 0 || [Constrained Systems] > 0,
-			    "HOLD - TEST EXECUTION NOT AUTHORIZED | Recovery activity authorized through 1430Z gate review",
-			    "PROCEED - approved thresholds satisfied"
+			    COALESCE([Mirrored Active Findings], 0) > 0,
+			    "REVIEW REQUIRED - unresolved findings in selected casework",
+			    "NO ACTIVE FINDINGS IN VIEW - approval and completeness not established"
 			)
 			```
 
 	measure 'Decision Scope Banner' = ```
-			"Decision scope | PRE-TEST GATE | " &
+			"Administrative casework | " &
 			IF(
-			    ISCROSSFILTERED(gold_mirror_casework[severity]) ||
-			    ISCROSSFILTERED(gold_test_objective_status[objective_result]) ||
-			    ISCROSSFILTERED(gold_data_source_readiness[data_feed]),
-			    "SELECTED VIEW - reset selections to restore full mission scope",
-			    "ALL SITES"
+			    ISCROSSFILTERED(gold_mirror_casework),
+			    "FILTERED VIEW",
+			    "LEAD EVENT"
 			)
+			& " | Analytical readiness has separate scope"
 			```
 
 	measure 'Lead Event Window' = SELECTEDVALUE(gold_mirror_casework[event_name], "Integrated defense rehearsal 001") & " | " & FORMAT(MIN(gold_mirror_casework[planned_start_time_utc]), "dd mmm yyyy HHmm") & "-" & FORMAT(MIN(gold_mirror_casework[planned_end_time_utc]), "HHmm") & "Z"
 
-	measure 'Evidence Current As Of' = "Evidence current as of " & FORMAT(MAX(gold_mirror_casework[source_as_of_utc]), "dd mmm yyyy HH:mm") & "Z"
+	measure 'Evidence Current As Of' = IF(ISBLANK(MAX(gold_mirror_casework[source_as_of_utc])), "No casework timestamp in view", "Latest casework record: " & FORMAT(MAX(gold_mirror_casework[source_as_of_utc]), "dd mmm yyyy HH:mm") & "Z | Not a completeness check")
 
 	column scenario_id
 		dataType: string

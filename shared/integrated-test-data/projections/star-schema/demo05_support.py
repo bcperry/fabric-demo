@@ -1668,6 +1668,12 @@ def build_products(
             how="left",
         )
         .merge(open_actions, on="system_instance_id", how="left")
+        .merge(
+            dimensions["dim_system_instance"][["system_instance_id", "system_family"]],
+            on="system_instance_id",
+            how="left",
+            validate="many_to_one",
+        )
         .fillna({"open_maintenance_actions": 0})
     )
     gold_readiness_summary["governed_readiness_ratio"] = readiness_measure.iloc[0]["governed_readiness_ratio"]
@@ -1680,6 +1686,7 @@ def build_products(
             "asset_id",
             "system_instance_id",
             "participation_status",
+            "system_family",
             "latest_readiness_state",
             "operating_state",
             "readiness_state",

@@ -1,0 +1,3 @@
+name: mda-ontology-dependencies
+dependencies:
+  - rdflib==7.1.4

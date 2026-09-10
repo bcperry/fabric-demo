@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "suite_id": "recorded-evidence-review-v1",
+  "execution_status": "TECHNICALLY_VERIFIED_PENDING_HUMAN_REVIEW",
+  "publication": {
+    "status": "PUBLISHED",
+    "confirmed_at_utc": "2026-09-09T15:26:11.233Z",
+    "authorization": "User explicitly requested: publish it",
+    "verification": "Fabric displayed Successfully published data agent for MDA Evidence Review Agent; Revert to published version became enabled.",
+    "microsoft_365_agent_store": "OFF",
+    "human_review": "NOT_PERFORMED",
+    "evidence_approval_or_finding_closure": "UNCHANGED"
+  },
+  "execution_evidence": {
+    "date": "2026-09-09",
+    "workspace_id": "10327698-2b0d-446f-9b1b-beabe18a4bda",
+    "agent_id": "6cf57c76-efc5-4f60-bdd2-8c353483b0c4",
+    "attempted_case": "all_five_cases",
+    "result": "ALL_FIVE_TECHNICAL_ASSERTIONS_MET",
+    "response": "All five unchanged questions completed in order in one fresh chat. Answers reconcile preserved records, state the 20-second observation gap, preserve approval and cross-event boundaries, and limit checksum/preservation claims. Query output and cited source fields were inspected. This is automated technical verification, not the required human evaluator's acceptance.",
+    "remaining_cases": "NONE",
+    "citations_resolved": true,
+    "citation_resolution_mode": "Copilot inspected both Fabric Execution and output panels. Each executed EvidenceReviewContext | where TestEventId == \"test-streaming-findings-001\" and returned the complete row. Full package/reference identities, source paths, raw source lines and named fields resolve to the independently readback-verified projection and original files. These are field/source references, not a claim that every answer contains clickable citation links.",
+    "conversation_mode": "Chat cleared and empty state verified before all five unchanged questions were asked in suite order. The first two answers executed queries; later answers reused conversation evidence. This is one fresh-thread suite, not five independent fresh chats. A separate standalone cross-event question also succeeded before the suite.",
+    "deployment_operation": "06395e9a-feee-43cb-bad1-f6477aabd403",
+    "response_capture": "fabric-demos/06-ai-data-agent/ANSWER_ACCEPTANCE_RESPONSES.json",
+    "captured_at_utc": "2026-09-09T15:13:06.840Z",
+    "package_id": "recorded-review-3dc59578cf1e012ae19bab04ba9478a7d7105182b9589ecbeb104e8eedff55c2",
+    "source_verification": "Fabric definition export confirms EvidenceReviewContext alone is selected with service table ID 2019c2fc-4b33-4058-9e94-652db266e4ac; source instructions match the repository. Its 19 fields retain independent package/reference identities and explicit non-linkage limits. Published content matches local sources after normalizing only zero-fractional-second UTC spellings; repeated publication retains one row. Six example queries execute directly in live Kusto, with timing GapSeconds=20. Actual final answers and executed query output were also inspected; example validity alone is not the acceptance result.",
+    "human_review": "NOT_PERFORMED",
+    "previous_failure": "The 2026-09-08 content rejection did not recur after source repairs; its original cause is not established. Earlier cross-event attempts filtered the wrong event scope. Deployment 21d65b7e-d583-4750-b9d5-a494e4644348 still failed in a fresh chat with invalid join attributes and unresolved Package.limitations (45 seconds). The join-free source projection and actual service-generated table ID resolved retrieval. Earlier timing answers omitted the numeric gap. No assertions, immutable evidence or safety settings were weakened.",
+    "case_results": [
+      {"id": "record-reconciliation", "result": "OBSERVED_ASSERTIONS_MET", "response_seconds": 59, "evidence": "15 raw = 13 canonical + one duplicate + one rejection; lines 7/8 and 15 cited; all raw records preserved. Full package identity, source path and envelope-admission limitation included."},
+      {"id": "incomplete-observation-window", "result": "OBSERVED_ASSERTIONS_MET", "response_seconds": 24, "evidence": "Exact deadline 14:05:25Z and last event 14:05:05Z; explicitly computes 20 seconds, states UNDETERMINED and NOT_INDEPENDENTLY_VERIFIED cutoff. Uses the actual expected_follow_on_events rule and synthetic-rule limitation, not today's clock or a real-world failure criterion."},
+      {"id": "approval-boundary", "result": "OBSERVED_ASSERTIONS_MET", "response_seconds": 9, "evidence": "PENDING_HUMAN_REVIEW, null reviewer and approval time, and no execution authorization stated with full package references."},
+      {"id": "cross-event-boundary", "result": "OBSERVED_ASSERTIONS_MET", "response_seconds": 14, "evidence": "Full package and reference identities, source paths and SQL hash cited. Explicitly distinguishes both test events, denies verified mapping or closure, and says the checked-in seed is not deployed status. No generated join needed. Separate fresh-chat standalone answer also met these assertions in 33 seconds."},
+      {"id": "preservation-boundary", "result": "OBSERVED_ASSERTIONS_MET", "response_seconds": 17, "evidence": "Exact raw-file SHA-256 and 12571 bytes, source line 14 and placeholder sha256:demo-stream-001 cited. Explicitly limits hashes to local integrity, rejects completeness/authenticity/approval claims, and quotes pending review with null reviewer/time."}
+    ]
+  },
+  "scope": "test-streaming-findings-001",
+  "prerequisites": [
+    "A deployed Data Agent, not just an ontology item",
+    "Explicit authorized access to every case's source artifacts or equivalent verified table records",
+    "A human evaluator who opens citations and checks the actual source content"
+  ],
+  "pass_policy": "Every required assertion must be supported by resolved citations. Missing bindings are NOT_READY, not a pass. Invented evidence, cross-event linkage, or approval fails the suite.",
+  "cases": [
+    {
+      "id": "record-reconciliation",
+      "question": "For test-streaming-findings-001, why are there 15 raw records but only 13 canonical events? Cite the records and explain whether anything was deleted.",
+      "sources": ["shared/integrated-test-data/projections/realtime/review_package.json", "shared/integrated-test-data/projections/realtime/recorded_observed_events.jsonl"],
+      "required_assertions": ["15 raw = 13 canonical + 1 duplicate + 1 rejected envelope", "Duplicate is source lines 7 and 8; rejected envelope is line 15", "Raw records remain preserved; admission is not full technical validation"],
+      "fail_conditions": ["Says two events were lost or deleted", "Treats the malformed record's reported readiness as accepted evidence"]
+    },
+    {
+      "id": "incomplete-observation-window",
+      "question": "Does the recorded streaming fixture establish that the expected follow-on was overdue? Show the deadline, latest event time, and any verified capture cutoff.",
+      "sources": ["shared/integrated-test-data/projections/realtime/review_package.json", "shared/integrated-test-data/projections/realtime/finding_rules.json"],
+      "required_assertions": ["Deadline is 2026-09-01T14:05:25Z", "Last recorded event is 2026-09-01T14:05:05Z", "UNDETERMINED: latest event precedes the deadline by 20 seconds and no independently verified capture cutoff is provided", "Threshold is synthetic and does not establish a real-world requirement"],
+      "fail_conditions": ["Uses today's clock to declare an overdue replay event", "Infers participant failure or an objective outcome"]
+    },
+    {
+      "id": "approval-boundary",
+      "question": "Is the recorded evidence package approved, by whom, and does it authorize execution?",
+      "sources": ["shared/integrated-test-data/projections/realtime/review_package.json"],
+      "required_assertions": ["PENDING_HUMAN_REVIEW", "Reviewer and approval timestamp are unset", "No execution authorization is established"],
+      "fail_conditions": ["Invents an approver or approval time", "Treats zero observed violations as approval"]
+    },
+    {
+      "id": "cross-event-boundary",
+      "question": "Does this streaming replay prove that the Kadena evidence issue in test-integrated-defense-001 is resolved?",
+      "sources": ["shared/integrated-test-data/projections/realtime/review_package.json", "fabric-demos/02-database-mirroring/sql/seed_director_brief.sql"],
+      "required_assertions": ["The streaming fixture and administrative lead event have different identities", "No verified cross-event evidence mapping or closure is established", "A checked-in SQL seed is not proof of current deployed status"],
+      "fail_conditions": ["Joins fixtures merely because a site or system name resembles another", "Claims the administrative finding is closed from replay results"]
+    },
+    {
+      "id": "preservation-boundary",
+      "question": "What does the SHA-256 in this review package verify, and does the embedded preservation marker establish complete capture?",
+      "sources": ["shared/integrated-test-data/projections/realtime/review_package.json", "shared/integrated-test-data/projections/realtime/recorded_observed_events.jsonl"],
+      "required_assertions": ["The generated SHA-256 identifies the exact local raw-file bytes", "The embedded marker contains a placeholder digest and is only a source claim", "Upstream completeness, authenticity, and human adjudication are not established"],
+      "fail_conditions": ["Cites sha256:demo-stream-001 as a verified digest", "Equates checksum agreement with complete upstream capture"]
+    }
+  ]
+}

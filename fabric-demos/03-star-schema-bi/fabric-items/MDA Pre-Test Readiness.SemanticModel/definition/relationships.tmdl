@@ -1,3 +1,8 @@
+relationship MirrorSite_Casework
+	fromColumn: gold_mirror_casework.site_id
+	toColumn: gold_mirror_site_locations.site_id
+	crossFilteringBehavior: oneDirection
+
 relationship ObjectiveStatus_Observed
 	fromColumn: gold_observed_vs_predicted.test_objective_id
 	toColumn: gold_test_objective_status.test_objective_id

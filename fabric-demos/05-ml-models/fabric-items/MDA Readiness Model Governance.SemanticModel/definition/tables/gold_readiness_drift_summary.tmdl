@@ -59,5 +59,4 @@ table gold_readiness_drift_summary
 		mode: directLake
 		source
 			entityName: gold_readiness_drift_summary
-			schemaName: dbo
 			expressionSource: 'DirectLake - IntegratedTestLakehouse'

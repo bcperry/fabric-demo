@@ -1,9 +1,13 @@
 # Microsoft Fabric Integrated Test Demo
 
-This is one progressive Microsoft Fabric story built from one deterministic,
-fully simulated test release. Start with CSV files and a Lakehouse, then add an
-external operational database, dimensional analytics, streaming, machine
-learning, and grounded AI.
+This repository demonstrates how Microsoft Fabric turns synthetic test records
+into traceable analytical evidence. Start the audience experience with
+[From Data Discrepancy to Reviewable Evidence](DEMO_WALKTHROUGH.md). Use the six
+technical modules below as supporting deep dives.
+
+The [implementation plan](DEMO_BUILD_PLAN.md) separates local checks from the
+Fabric deployment gates. The [recorded quick-look](shared/integrated-test-data/projections/realtime/QUICK_LOOK.md)
+is a reproducible evidence package, not a human approval or live operational view.
 
 ## Simulated Data
 
@@ -16,8 +20,10 @@ Yes, the repository contains the required demo data. Release `2026.11.03` is
 - one intentional delayed command event for investigation
 - manifests, checksums, schemas, seeds, and stable cross-source identifiers
 
-The source of truth is [shared/integrated-test-data](./shared/integrated-test-data/README.md).
-Regenerating it produces the same release.
+The canonical source is [shared/integrated-test-data](./shared/integrated-test-data/README.md).
+Regenerating it produces the same 405-event release. The focused streaming lesson
+uses a separate 15-record fixture with a different event identity; do not present
+it as evidence that closes an administrative lead-event finding.
 
 ## Progressive Demo
 
@@ -32,8 +38,8 @@ Regenerating it produces the same release.
 
 The sequence covers planning, setup, execution, analysis, and post-test reporting
 from [MDA_test_lifecycle.md](./MDA_test_lifecycle.md). Each stage leaves a usable
-Fabric artifact and builds on the same scenario rather than introducing another
-data universe.
+Fabric artifact. Cross-source identity must be verified before relating findings
+across modules; shared storage alone does not prove that relationship.
 
 Start with [PREREQUISITES.md](./PREREQUISITES.md) and the
 [Fabric CLI workflow](./shared/setup-scripts/FABRIC_CLI.md).

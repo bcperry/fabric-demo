@@ -8,8 +8,8 @@
     "tiles": [
         {
             "id": "80fb600d-05d5-4292-96af-a3cec94adffd",
-            "title": "Raw events received",
-            "description": "Canonical Kafka envelopes retained in Eventhouse",
+            "title": "Raw envelopes | receipt window",
+            "description": "Includes duplicates and rejected records; scoped by Eventhouse receipt time (UTC)",
             "visualType": "kpi",
             "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
             "layout": {
@@ -27,13 +27,13 @@
                 "kpi__visualType": "number",
                 "kpi__minValue": 0,
                 "kpi__maxValue": 100,
-                "kpi__showMinMaxLabels": true,
-                "kpi__conditionalFormattingEnabled": true,
+                "kpi__showMinMaxLabels": false,
+                "kpi__conditionalFormattingEnabled": false,
                 "kpi__valueFormat": {
                     "format": "full",
                     "maxDecimalPlaces": 0,
                     "showUnitLabel": false,
-                    "unit": "%"
+                    "unit": ""
                 },
                 "kpi__conditionalFormatting": {
                     "showBadges": false,
@@ -92,13 +92,13 @@
                 "width": 9,
                 "height": 7
             },
-            "markdownText": "# MDA LIVE TEST CONTROL\n\n**TEST-FLOOR MONITOR**  |  SYNTHETIC_UNCLASS  |  LIVE EVENTHOUSE\nFast triage for source continuity, event timing, command flow, and malformed records.",
+            "markdownText": "# MDA DATA EVIDENCE REVIEW\n\nSYNTHETIC_UNCLASS | MODE NOT VERIFIED\n\nCoverage, timeline, and processing duration: event time (UTC). Raw and rejected envelopes: Eventhouse receipt time (UTC).\n\nDeclared families do not establish instance completeness or participant readiness.",
             "visualOptions": {}
         },
         {
             "id": "2a0d1523-3dcd-47cc-b5ad-7b9f9247288e",
-            "title": "Source readiness matrix",
-            "description": "Latest readiness, health, event time, and sequence by source instance",
+            "title": "Declared source-family coverage",
+            "description": "Expected families versus admitted events in the event-time window, grouped by scenario, run, and test; absent declarations do not establish completeness",
             "visualType": "table",
             "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
             "layout": {
@@ -124,8 +124,8 @@
         },
         {
             "id": "882d428a-9d46-4000-80fd-3871bc42885b",
-            "title": "Mission event timeline",
-            "description": "Health, sensor quality, and command latency over mission time",
+            "title": "Admitted event timeline",
+            "description": "Deduplicated events per ten seconds of event time, separated by run and source",
             "visualType": "timechart",
             "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
             "layout": {
@@ -170,8 +170,8 @@
         },
         {
             "id": "a46d2f2b-04f1-450e-b793-277676498479",
-            "title": "Command flow latency",
-            "description": "Maximum processing delay by integration action",
+            "title": "Reported processing duration (seconds)",
+            "description": "Synthetic payload measurement by run, source, and action; not receiver or transport latency",
             "visualType": "bar",
             "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
             "layout": {
@@ -216,8 +216,8 @@
         },
         {
             "id": "2f7ae875-b903-4b32-b74d-6089bc2f0f77",
-            "title": "Malformed event queue",
-            "description": "Quarantined records retained for operator triage",
+            "title": "Rejected envelopes | receipt window",
+            "description": "Current admission-rule rejection, scoped by Eventhouse receipt time because event timestamps may be malformed",
             "visualType": "table",
             "pageId": "161a57d8-551c-4abb-9da6-9a98426acc0e",
             "layout": {
@@ -247,8 +247,8 @@
         {
             "kind": "duration",
             "id": "2df801c2-e7cd-43aa-9351-134ad0fd744d",
-            "displayName": "Time range",
-            "description": "",
+            "displayName": "UTC window",
+            "description": "Half-open UTC window. Each tile names its event-time or receipt-time basis.",
             "beginVariableName": "_startTime",
             "endVariableName": "_endTime",
             "defaultValue": {
@@ -274,7 +274,7 @@
     ],
     "pages": [
         {
-            "name": "Page 1",
+            "name": "Evidence Review",
             "id": "161a57d8-551c-4abb-9da6-9a98426acc0e"
         }
     ],
@@ -284,45 +284,45 @@
                 "kind": "inline",
                 "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
             },
-            "text": "RawIntegratedTestEvents\r\n| summarize Events = count()",
+            "text": "RawIntegratedTestEvents\r\n| where ingestion_time() >= _startTime and ingestion_time() < _endTime\r\n| summarize RawEnvelopes = count()",
             "id": "313cc8c0-26a5-4c62-87f4-0c69b138b100",
-            "usedVariables": []
+            "usedVariables": ["_startTime", "_endTime"]
         },
         {
             "dataSource": {
                 "kind": "inline",
                 "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
             },
-            "text": "SystemStatus\r\n| summarize arg_max(event_time_utc, *) by system_instance_id\r\n| project Source=source_system, Instance=system_instance_id, Readiness=readiness_state, Health=round(health_score * 100, 0), LastEvent=event_time_utc, Sequence=sequence_number\r\n| order by Health asc",
+            "text": "TestSourceCoverage(_startTime, _endTime)",
             "id": "ef52c83d-9127-4803-a3fe-8390a11770e9",
-            "usedVariables": []
+            "usedVariables": ["_startTime", "_endTime"]
         },
         {
             "dataSource": {
                 "kind": "inline",
                 "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
             },
-            "text": "union (SensorObservation | project EventTime=observation_time_utc, Series='Sensor quality', Value=quality_score * 100.0), (CommandIntegration | project EventTime=event_time_utc, Series='Command latency (sec)', Value=toreal(processing_delay_ms) / 1000.0), (SystemStatus | project EventTime=event_time_utc, Series=source_system, Value=health_score * 100.0) | where EventTime >= datetime(2026-01-01) | order by EventTime asc",
+            "text": "CanonicalIntegratedTestEvents(_startTime, _endTime)\r\n| summarize Events=count() by EventTime=bin(EventTime, 10s), Series=strcat(Scenario, ' / ', Run, ' / ', source_system)\r\n| order by EventTime asc",
             "id": "23f6a93a-0ccc-499d-9361-2fa40e6c4048",
-            "usedVariables": []
+            "usedVariables": ["_startTime", "_endTime"]
         },
         {
             "dataSource": {
                 "kind": "inline",
                 "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
             },
-            "text": "CommandIntegration\r\n| summarize DelaySeconds=max(processing_delay_ms) / 1000.0 by action_name\r\n| order by DelaySeconds desc",
+            "text": "CanonicalIntegratedTestEvents(_startTime, _endTime)\r\n| where event_type == 'command.integration'\r\n| summarize ReportedSeconds=max(toreal(event.processing_delay_ms)) / 1000.0 by Series=strcat(Scenario, ' / ', Run, ' / ', source_system, ' / ', tostring(event.action))\r\n| order by ReportedSeconds desc",
             "id": "e8bf8bdd-e684-470d-8abc-60eccea4be44",
-            "usedVariables": []
+            "usedVariables": ["_startTime", "_endTime"]
         },
         {
             "dataSource": {
                 "kind": "inline",
                 "dataSourceId": "543b0f63-3aea-47b7-aabc-77337123f857"
             },
-            "text": "EventValidationIssue | project Detected=detected_time_utc, Source=source_system, EventType=event_type, Reason=reason_code, Detail=reason_detail, EventId=event_id | order by Detected desc",
+            "text": "ClassifyIntegratedTestEvents(RawIntegratedTestEvents)\r\n| extend ReceivedAt=ingestion_time()\r\n| where ReceivedAt >= _startTime and ReceivedAt < _endTime\r\n| where isnotempty(reason_code)\r\n| project ReceivedAt, Scenario=tostring(event.scenario_id), Run=tostring(event.simulation_run_id), Source=source_system, EventType=event_type, Reason=reason_code, EventId=event_id, RawEventTime=event_time_utc\r\n| order by ReceivedAt desc",
             "id": "5261f73b-050d-43fb-ac67-979605146245",
-            "usedVariables": []
+            "usedVariables": ["_startTime", "_endTime"]
         }
     ],
     "embeddedApps": []

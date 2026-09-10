@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/fewShots/1.0.0/schema.json",
+  "fewShots": [
+    {
+      "id": "a56e54bc-d688-4536-a02c-bf1efb92dcf5",
+      "question": "Does this streaming replay prove that the Kadena evidence issue in test-integrated-defense-001 is resolved?",
+      "query": "EvidenceReviewContext | take 10"
+    },
+    {
+      "id": "421b8596-24e1-4487-b639-cc0b1b71c694",
+      "question": "What does the SHA-256 in this review package verify, and does the embedded preservation marker establish complete capture?",
+      "query": "EvidenceReviewContext | take 10"
+    },
+    {
+      "id": "94069613-720b-4df1-8f23-3c8ee3f94060",
+      "question": "Does the recorded streaming fixture establish that the expected follow-on was overdue? Show the deadline, latest event time, and any verified capture cutoff.",
+      "query": "EvidenceReviewContext | extend GapSeconds = datetime_diff('second', todatetime(FollowOnObservations[0].due_utc), todatetime(RecordedClock.last_recorded_event_utc)) | take 10"
+    },
+    {
+      "id": "6d06b67e-a6ac-4145-a0f2-cce5252d9935",
+      "question": "Retrieve the recorded package and original source records for test-streaming-findings-001, including counts, provenance, review status and preservation limitations.",
+      "query": "EvidenceReviewContext | take 10"
+    },
+    {
+      "id": "09e41d84-eb0f-4859-a2cd-7312966c0ab7",
+      "question": "For test-streaming-findings-001, why are there 15 raw records but only 13 canonical events? Cite the records and explain whether anything was deleted.",
+      "query": "EvidenceReviewContext | where TestEventId == 'test-streaming-findings-001' | take 10"
+    },
+    {
+      "id": "fa73d8db-b091-495e-8e1c-4de51161084d",
+      "question": "Is the recorded evidence package approved, by whom, and does it authorize execution?",
+      "query": "EvidenceReviewContext | take 10"
+    }
+  ]
+}

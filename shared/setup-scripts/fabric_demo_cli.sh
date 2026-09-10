@@ -51,6 +51,8 @@ Commands:
       Create the shared Integrated Test Lakehouse when absent.
   provision-realtime
       Deploy the Stage 04 Eventhouse, KQL schema, Eventstream, and live dashboard.
+  refresh-demo-04-monitoring
+      Update the Stage 04 KQL schema and dashboard without importing Eventstream.
   push-reporting-items
       Deploy the Stage 03-05 semantic models and their dynamically bound reports.
   push-data
@@ -87,10 +89,16 @@ Commands:
       Deploy ML notebooks, semantic model, and report.
   run-demo-05 [timeout-seconds]
       Run the six Stage 05 notebooks in dependency order.
+  refresh-demo-05-items
+      Refresh SQL metadata and rebind the ML model and report after Gold changes.
   push-demo-06
       Deploy ontology notebooks and package assets.
   run-demo-06 [timeout-seconds]
       Validate bindings and create the ontology in dependency order.
+  provision-demo-06-agent
+      Publish review evidence and deploy the source-bound Data Agent draft.
+  provision-demo-06-ontology
+      Generate and deploy the ontology using the bundled accelerator.
   push-all
       Upload the shared release and import every notebook, model, and report.
     pull-demo-03 [output-directory]
@@ -343,6 +351,7 @@ push_notebook() {
     local import_status=0
     local notebook_lakehouse_id
     local notebook_lakehouse_name
+    local notebook_environment_id=""
 
     if [[ ! -f "${file}" ]]; then
         echo "Notebook not found: ${file}" >&2
@@ -357,6 +366,13 @@ push_notebook() {
     resolve_workspace_id
     notebook_lakehouse_name="$(notebook_lakehouse_for_file "${file}")"
     notebook_lakehouse_id="$(resolve_lakehouse_id "${notebook_lakehouse_name}")"
+    if [[ "${file}" == "${DEMO_06_DIR}/Notebook/Create MDA Test Ontology from Package.ipynb" ]]; then
+        notebook_environment_id="$(resolve_item_id "${WORKSPACE_PATH}/MDA Ontology Dependencies.Environment")"
+        if [[ -z "${notebook_environment_id}" || "${notebook_environment_id}" == "null" ]]; then
+            echo "Provision and publish MDA Ontology Dependencies before importing the creation notebook." >&2
+            return 1
+        fi
+    fi
     mkdir -p "${REPO_ROOT}/.fabric-export"
     definition_directory="$(
         mktemp -d "${REPO_ROOT}/.fabric-export/notebook-import.XXXXXX.Notebook"
@@ -365,6 +381,7 @@ push_notebook() {
         --arg lakehouse_id "${notebook_lakehouse_id}" \
         --arg lakehouse_name "${notebook_lakehouse_name}" \
         --arg workspace_id "${WORKSPACE_ID}" \
+        --arg environment_id "${notebook_environment_id}" \
         '
         .metadata.kernel_info.name = "synapse_pyspark"
         | .metadata.dependencies.lakehouse = {
@@ -373,6 +390,12 @@ push_notebook() {
             "default_lakehouse_workspace_id": $workspace_id,
             "known_lakehouses": []
         }
+                | if $environment_id != "" then
+                        .metadata.dependencies.environment = {
+                                "environmentId": $environment_id,
+                                "workspaceId": $workspace_id
+                        }
+                    else . end
         ' "${file}" > "${definition_directory}/notebook-content.ipynb"
     printf '%s\n' \
         '{' \
@@ -607,6 +630,7 @@ refresh_demo_04_items() {
 }
 
 push_demo_04_realtime_items() {
+    local include_eventstream="${1:-true}"
     local folder_path="${WORKSPACE_PATH}/04-real-time-ingestion.Folder"
     local eventhouse_path="${folder_path}/${EVENTHOUSE}.Eventhouse"
     local kql_database_path="${folder_path}/${KQL_DATABASE}.KQLDatabase"
@@ -652,10 +676,12 @@ push_demo_04_realtime_items() {
         "${FABRIC_CLI_BIN}" rm "${default_kql_database_path}" --hard --force
     fi
 
-    push_fabric_item \
-        "${DEMO_04_DIR}/fabric-items/${EVENTSTREAM}.Eventstream" \
-        "${EVENTSTREAM}" \
-        "Eventstream"
+    if [[ "${include_eventstream}" == true ]]; then
+        push_fabric_item \
+            "${DEMO_04_DIR}/fabric-items/${EVENTSTREAM}.Eventstream" \
+            "${EVENTSTREAM}" \
+            "Eventstream"
+    fi
     push_bound_kql_dashboard \
         "${DEMO_04_DIR}/fabric-items/MDA Live Test Control.KQLDashboard" \
         "MDA Live Test Control" \
@@ -941,6 +967,10 @@ case "${command}" in
         require_fab
         refresh_demo_04_items
         ;;
+    refresh-demo-04-monitoring)
+        require_fab
+        push_demo_04_realtime_items false
+        ;;
     push-demo-05)
         require_fab
         provision_lakehouses
@@ -973,8 +1003,13 @@ case "${command}" in
                 --timeout "${timeout}" \
                 --polling_interval 15
         done
-        request_semantic_model_refresh \
-            "${WORKSPACE_PATH}/05-ml-models.Folder/MDA Readiness Model Governance.SemanticModel"
+        refresh_lakehouse_sql_metadata
+        push_demo_05_items
+        ;;
+    refresh-demo-05-items)
+        require_fab
+        refresh_lakehouse_sql_metadata
+        push_demo_05_items
         ;;
     push-demo-06)
         require_fab
@@ -990,6 +1025,17 @@ case "${command}" in
             "${DEMO_06_DIR}/Notebook/Create MDA Test Ontology from Package.ipynb"; do
             push_notebook "${file}"
         done
+        ;;
+    provision-demo-06-agent)
+        env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run python "${DEMO_06_DIR}/publish_review_source.py" --publish
+        env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run python "${DEMO_06_DIR}/deploy_items.py" agent
+        ;;
+    provision-demo-06-ontology)
+        env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run --with pyodbc \
+            python "${DEMO_06_DIR}/publish_ontology_history.py" --publish
+        env -u UV_DEFAULT_INDEX -u PIP_INDEX_URL uv run \
+            --with "${DEMO_06_DIR}/Ontology/fabriciq_ontology_accelerator-0.1.0-py3-none-any.whl" \
+            --with requests --with pandas python "${DEMO_06_DIR}/deploy_items.py" ontology
         ;;
     run-demo-06)
         require_fab

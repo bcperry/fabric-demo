@@ -18,7 +18,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "SYNTHETIC UNCLASS - DEMO DATA ONLY | DECISION AUTHORITY: TEST DIRECTOR | EVIDENCE: AUTHORITATIVE/COMPLETE AS OF 03 NOV 2026 1140Z | TREND: BASELINE REVIEW",
+                                        "value": "SYNTHETIC UNCLASS | BASELINE SNAPSHOT | EVIDENCE COMPLETENESS AND HUMAN APPROVAL NOT ESTABLISHED | NO PRIOR-REVIEW COMPARISON",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "12pt",
@@ -32,7 +32,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "HOLD - TEST EXECUTION NOT AUTHORIZED",
+                                        "value": "ANALYTICAL REVIEW - NOT AN EXECUTION DECISION",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "18pt",

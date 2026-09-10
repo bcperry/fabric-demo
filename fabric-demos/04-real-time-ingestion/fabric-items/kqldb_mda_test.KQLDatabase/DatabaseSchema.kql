@@ -10,36 +10,8 @@
 
 .create-merge table EventValidationIssue (detected_time_utc:datetime, topic:string, key:string, event_id:string, event_type:string, source_system:string, reason_code:string, reason_detail:string, raw_event:dynamic)
 
-.create-or-alter function with (docstring='Projects sensor observations from the canonical Kafka envelope', folder='Ingestion') ExpandSensorObservation() {
-    RawIntegratedTestEvents
-    | where tostring(event.event_type) == 'sensor.observation'
-    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and isnotnull(todatetime(event.event_time_utc))
-    | project observation_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), observation_type=tostring(event.observation_type), observation_time_utc=todatetime(event.event_time_utc), quality_score=toreal(event.quality.score)
-}
-
-.create-or-alter function with (docstring='Projects command integration events from the canonical Kafka envelope', folder='Ingestion') ExpandCommandIntegration() {
-    RawIntegratedTestEvents
-    | where tostring(event.event_type) == 'command.integration'
-    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and isnotnull(todatetime(event.event_time_utc))
-    | project command_event_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), action_name=tostring(event.action), action_status=tostring(event.status), event_time_utc=todatetime(event.event_time_utc), processing_delay_ms=tolong(event.processing_delay_ms)
-}
-
-.create-or-alter function with (docstring='Projects system status events from the canonical Kafka envelope', folder='Ingestion') ExpandSystemStatus() {
-    RawIntegratedTestEvents
-    | where tostring(event.event_type) == 'system.status'
-    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotempty(tostring(event.source_instance_id)) and tostring(event.event_time_utc) matches regex @"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$"
-    | project status_event_id=tostring(event.event_id), system_instance_id=tostring(event.source_instance_id), source_system=tostring(event.source_system), operating_state=tostring(event.operating_state), readiness_state=tostring(event.readiness_state), health_score=toreal(event.health_score), event_time_utc=todatetime(event.event_time_utc), sequence_number=tolong(event.sequence_number)
-}
-
-.create-or-alter function with (docstring='Projects operator test markers from the canonical Kafka envelope', folder='Ingestion') ExpandTestMarker() {
-    RawIntegratedTestEvents
-    | where tostring(event.event_type) in ('test.marker', 'preservation.marker')
-    | where isnotempty(tostring(event.event_id)) and isnotempty(tostring(event.site_id)) and isnotnull(todatetime(event.event_time_utc))
-    | project marker_event_id=tostring(event.event_id), test_event_id=tostring(event.test_event_id), marker_name=tostring(event.marker_name), decision=tostring(event.marker_status), decision_authority=tostring(event.source_system), related_feed=tostring(event.preservation_target), event_time_utc=todatetime(event.event_time_utc)
-}
-
-.create-or-alter function with (docstring='Quarantines malformed or unsupported canonical-envelope events', folder='Ingestion') ValidateIntegratedTestEvents() {
-    RawIntegratedTestEvents
+.create-or-alter function with (docstring='Classifies envelopes once for admission and rejection without receiver-clock dependencies', folder='Ingestion') ClassifyIntegratedTestEvents(rows:(topic:string, key:string, event:dynamic)) {
+    rows
     | extend event_id=tostring(event.event_id), event_type=tostring(event.event_type), site_id=tostring(event.site_id), source_system=tostring(event.source_system), source_instance_id=tostring(event.source_instance_id), event_time_utc=tostring(event.event_time_utc)
     | extend reason_code=case(
         isempty(event_id), 'MISSING_EVENT_ID',
@@ -47,9 +19,71 @@
         isempty(site_id), 'MISSING_SITE_ID',
         isempty(source_system), 'MISSING_SOURCE_SYSTEM',
         isempty(source_instance_id), 'MISSING_SOURCE_INSTANCE_ID',
-        not(event_time_utc matches regex @"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$"), 'INVALID_EVENT_TIME',
+        not(event_time_utc matches regex @"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$") or isnull(todatetime(event_time_utc)), 'INVALID_EVENT_TIME',
         not(event_type in ('sensor.observation', 'command.integration', 'system.status', 'test.marker', 'preservation.marker')), 'UNSUPPORTED_EVENT_TYPE',
         '')
+}
+
+.create-or-alter function with (docstring='Accepted envelopes; raw evidence is never deleted', folder='Ingestion') AcceptedIntegratedTestEvents() {
+    ClassifyIntegratedTestEvents(RawIntegratedTestEvents)
+    | where isempty(reason_code)
+}
+
+.create-or-alter function with (docstring='One admitted event per scenario/run/event ID within a half-open event-time window', folder='Monitoring') CanonicalIntegratedTestEvents(startTime:datetime, endTime:datetime) {
+    AcceptedIntegratedTestEvents()
+    | extend ReceivedAt=ingestion_time(), EventTime=todatetime(event.event_time_utc), Scenario=tostring(event.scenario_id), Run=tostring(event.simulation_run_id), Test=tostring(event.test_event_id)
+    | where EventTime >= startTime and EventTime < endTime
+    | summarize arg_min(ReceivedAt, *) by Scenario, Run, event_id
+}
+
+.create-or-alter function with (docstring='Declared source-family coverage, not instance completeness or participant readiness', folder='Monitoring') TestSourceCoverage(startTime:datetime, endTime:datetime) {
+    let runWindows = AcceptedIntegratedTestEvents()
+        | extend EventTime=todatetime(event_time_utc), Scenario=tostring(event.scenario_id), Run=tostring(event.simulation_run_id), Test=tostring(event.test_event_id)
+        | summarize FirstRecordedEvent=min(EventTime), LastRecordedEvent=max(EventTime) by Scenario, Run, Test
+        | where FirstRecordedEvent < endTime and LastRecordedEvent >= startTime;
+    let expected = AcceptedIntegratedTestEvents()
+        | where event_type == 'test.marker' and array_length(event.expected_sources) > 0
+        | extend EventTime=todatetime(event_time_utc), Scenario=tostring(event.scenario_id), Run=tostring(event.simulation_run_id), Test=tostring(event.test_event_id)
+        | where EventTime < endTime
+        | summarize arg_max(EventTime, *) by Scenario, Run, Test
+        | join kind=inner runWindows on Scenario, Run, Test
+        | mv-expand Source=event.expected_sources to typeof(string)
+        | project Scenario, Run, Test, Source, Declared=true, FirstRecordedEvent, LastRecordedEvent;
+    let observed = CanonicalIntegratedTestEvents(startTime, endTime)
+        | summarize ReceivedEvents=count(), Instances=make_set(source_instance_id), LastEvent=max(EventTime), LastReceipt=max(ReceivedAt) by Scenario, Run, Test, Source=source_system;
+    expected
+    | join kind=fullouter observed on Scenario, Run, Test, Source
+    | project Scenario=coalesce(Scenario, Scenario1), Run=coalesce(Run, Run1), Test=coalesce(Test, Test1), Source=coalesce(Source, Source1), Declared=coalesce(Declared, false), ReceivedEvents=coalesce(ReceivedEvents, long(0)), Instances, LastEvent, LastReceipt, FirstRecordedEvent, LastRecordedEvent
+    | extend FeedObservation=case(not(Declared), 'UNDECLARED_SOURCE', ReceivedEvents == 0, 'NOT_OBSERVED_IN_WINDOW', 'RECEIVED')
+    | order by ReceivedEvents asc, Source asc
+}
+
+.create-or-alter function with (docstring='Projects sensor observations from the canonical Kafka envelope', folder='Ingestion') ExpandSensorObservation() {
+    AcceptedIntegratedTestEvents()
+    | where tostring(event.event_type) == 'sensor.observation'
+    | project observation_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), observation_type=tostring(event.observation_type), observation_time_utc=todatetime(event.event_time_utc), quality_score=toreal(event.quality.score)
+}
+
+.create-or-alter function with (docstring='Projects command integration events from the canonical Kafka envelope', folder='Ingestion') ExpandCommandIntegration() {
+    AcceptedIntegratedTestEvents()
+    | where tostring(event.event_type) == 'command.integration'
+    | project command_event_id=tostring(event.event_id), track_id=tostring(event.track_id), system_instance_id=tostring(event.source_instance_id), action_name=tostring(event.action), action_status=tostring(event.status), event_time_utc=todatetime(event.event_time_utc), processing_delay_ms=tolong(event.processing_delay_ms)
+}
+
+.create-or-alter function with (docstring='Projects system status events from the canonical Kafka envelope', folder='Ingestion') ExpandSystemStatus() {
+    AcceptedIntegratedTestEvents()
+    | where tostring(event.event_type) == 'system.status'
+    | project status_event_id=tostring(event.event_id), system_instance_id=tostring(event.source_instance_id), source_system=tostring(event.source_system), operating_state=tostring(event.operating_state), readiness_state=tostring(event.readiness_state), health_score=toreal(event.health_score), event_time_utc=todatetime(event.event_time_utc), sequence_number=tolong(event.sequence_number)
+}
+
+.create-or-alter function with (docstring='Projects operator test markers from the canonical Kafka envelope', folder='Ingestion') ExpandTestMarker() {
+    AcceptedIntegratedTestEvents()
+    | where tostring(event.event_type) in ('test.marker', 'preservation.marker')
+    | project marker_event_id=tostring(event.event_id), test_event_id=tostring(event.test_event_id), marker_name=tostring(event.marker_name), decision=tostring(event.marker_status), decision_authority=tostring(event.source_system), related_feed=tostring(event.preservation_target), event_time_utc=todatetime(event.event_time_utc)
+}
+
+.create-or-alter function with (docstring='Quarantines malformed or unsupported canonical-envelope events', folder='Ingestion') ValidateIntegratedTestEvents() {
+    ClassifyIntegratedTestEvents(RawIntegratedTestEvents)
     | where isnotempty(reason_code)
     | extend reason_detail=case(
         reason_code == 'MISSING_EVENT_ID', 'event.event_id is required',

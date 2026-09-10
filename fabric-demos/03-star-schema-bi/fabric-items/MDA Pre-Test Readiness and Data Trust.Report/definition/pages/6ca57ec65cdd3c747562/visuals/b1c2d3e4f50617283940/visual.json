@@ -18,7 +18,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "Decision required today",
+                                        "value": "Questions for the evidence review",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "16pt",
@@ -32,7 +32,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "Maintain HOLD until both critical risks close and the repeat timing run passes.",
+                                        "value": "Which unresolved findings have current evidence and an accountable owner?",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "13pt",
@@ -45,7 +45,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "Test Director: confirm recovery teams retain priority through the 1430Z gate review.",
+                                        "value": "What changed since the previous review, and what still needs independent validation?",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "13pt",
@@ -58,7 +58,7 @@
                             {
                                 "textRuns": [
                                     {
-                                        "value": "Escalate any missed due time immediately; do not carry critical risk into execution.",
+                                        "value": "Human disposition and evidence acceptance are not established by this analytical view.",
                                         "textStyle": {
                                             "fontFamily": "Segoe UI",
                                             "fontSize": "13pt",

@@ -41,11 +41,13 @@ def rebase_event_times(
         shifted = dict(record)
         for field in (
             "event_time_utc",
+            "ingest_time_utc",
             "preserved_window_start_utc",
             "preserved_window_end_utc",
         ):
             value = parse_rfc3339(record.get(field))
             if value is not None:
+                shifted[f"recorded_{field}"] = record[field]
                 shifted[field] = format_utc(start_time + (value - source_start))
         rebased.append(shifted)
     return rebased
@@ -63,7 +65,7 @@ def paced_records(
         if event_time is not None and previous_time is not None:
             delay = max(0.0, (event_time - previous_time).total_seconds() / speed)
         if event_time is not None:
-            previous_time = event_time
+            previous_time = max(previous_time, event_time) if previous_time else event_time
         yield delay, record
 
 

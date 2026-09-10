@@ -21,27 +21,28 @@ table gold_mirror_site_locations
 			VAR TotalSystems = [Participant Systems]
 			VAR ConstrainedSystems = SUM(gold_mirror_site_locations[constrained_system_count])
 			VAR ReadySystems = TotalSystems - ConstrainedSystems
-			RETURN FORMAT(ReadySystems, "#,0") & " ready (" & FORMAT(DIVIDE(ReadySystems, TotalSystems), "0.0%") & ")"
+			RETURN FORMAT(ReadySystems, "#,0") & " normal profile (" & FORMAT(DIVIDE(ReadySystems, TotalSystems), "0.0%") & ")"
 			```
 
 	measure 'Participant Readiness Title' = ```
 			VAR TotalSystems = [Participant Systems]
 			VAR ConstrainedSystems = SUM(gold_mirror_site_locations[constrained_system_count])
-			RETURN "Participant systems | Threshold: 100% | Required: " & FORMAT(TotalSystems, "#,0") & " | Not ready: " & FORMAT(ConstrainedSystems, "#,0")
+			RETURN "Synthetic profiles | Total: " & FORMAT(TotalSystems, "#,0") & " | Non-normal: " & FORMAT(ConstrainedSystems, "#,0") & " | Not a readiness approval"
 			```
 
 	measure 'Site Risk Priority' = SWITCH(SELECTEDVALUE(gold_mirror_site_locations[site_risk_level]), "CRITICAL", 4, "HIGH", 3, "MEDIUM", 2, "LOW", 1, 0)
 		formatString: 0
 
-	measure 'Site Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_site_locations[site_risk_level]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", "5 | CLEAR")
+	measure 'Site Risk Decision Order' = SWITCH(SELECTEDVALUE(gold_mirror_site_locations[site_risk_level]), "CRITICAL", "1 | CRITICAL", "HIGH", "2 | HIGH", "MEDIUM", "3 | MEDIUM", "LOW", "4 | LOW", "CLEAR", "5 | CLEAR", BLANK())
 
 	measure 'Site Decision Banner' = ```
-			"Integrated Defense Rehearsal 001 | 03 Nov 2026 | 1500-1515Z | " &
+			"Lead-event site context | " &
 			IF(
 			    [Locations in Scope] < CALCULATE([Locations in Scope], REMOVEFILTERS(gold_mirror_site_locations)),
-			    FORMAT([Locations in Scope], "0") & " SITES SELECTED - reset selections to restore all sites",
-			    "ALL SITES"
+			    FORMAT([Locations in Scope], "0") & " SITES SELECTED",
+			    "ALL PARTICIPATING SITES"
 			)
+			& " | Casework selections may narrow findings further"
 			```
 
 	measure 'Active Site Risks' = SUM(gold_mirror_site_locations[active_risk_count])

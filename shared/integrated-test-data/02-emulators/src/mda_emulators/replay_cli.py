@@ -5,8 +5,9 @@ import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from uuid import uuid4
 
-from .replay import load_json_lines, paced_records, rebase_event_times
+from .replay import load_json_lines, paced_records, parse_rfc3339, rebase_event_times
 from .transports import JsonLinesTransport, KafkaTransport
 
 
@@ -21,6 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--bootstrap-servers")
     parser.add_argument("--managed-identity-client-id")
+    parser.add_argument("--run-id", help="Explicit replay identity; omit for a unique rehearsal run.")
     parser.add_argument(
         "--speed",
         type=float,
@@ -30,7 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--keep-event-times",
         action="store_true",
-        help="Retain checked-in event times instead of rebasing valid timestamps to now.",
+        help="Retain checked-in timestamps instead of shifting the latest event to playback start.",
     )
     return parser
 
@@ -51,7 +53,17 @@ def main() -> None:
     args = build_parser().parse_args()
     records = load_json_lines(args.input)
     if not args.keep_event_times:
-        records = rebase_event_times(records, datetime.now(timezone.utc))
+        event_times = [parsed for event in records if (parsed := parse_rfc3339(event.get("event_time_utc"))) is not None]
+        if not event_times:
+            raise ValueError("At least one valid event_time_utc is required for rebasing")
+        replay_start = datetime.now(timezone.utc) - (max(event_times) - min(event_times))
+        records = rebase_event_times(records, replay_start)
+    replay_run_id = args.run_id or f"replay-{uuid4()}"
+    for event in records:
+        event["recorded_simulation_run_id"] = event.get("simulation_run_id")
+        event["simulation_run_id"] = replay_run_id
+        event["transport_mode"] = "recorded_replay"
+        event["replay_speed"] = args.speed
     transport = create_transport(args)
     published = 0
     try:
@@ -62,7 +74,7 @@ def main() -> None:
             published += 1
     finally:
         transport.close()
-    print(f"Published {published} synthetic records to {args.topic}")
+    print(f"Published {published} synthetic records to {args.topic}; replay run {replay_run_id}")
 
 
 if __name__ == "__main__":

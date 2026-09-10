@@ -48,7 +48,7 @@ object. The nested form is intentional and matches the raw KQL table contract.
 
 `RawIntegratedTestEvents` deliberately preserves the complete `topic`, `key`,
 and `event` envelope. KQL update policies parse valid nested `event` fields into
-the typed tables used by reports:
+append-only typed tables:
 
 | `event.event_type` | Parsed destination |
 |---|---|
@@ -63,6 +63,17 @@ remain in the raw table for evidence and replay, are excluded from typed tables,
 and are copied to `EventValidationIssue` with a reason code and original
 payload.
 
+Admission and rejection share `ClassifyIntegratedTestEvents()`. This checks the
+supported envelope, not every payload field or operational meaning. The dashboard
+uses `CanonicalIntegratedTestEvents(startTime, endTime)` to deduplicate by
+scenario/run/event ID. Typed historical tables are not retroactively cleaned by
+a schema deployment and should not be treated as deduplicated event counts.
+
+`TestSourceCoverage()` compares the latest declared source families with observed
+events only for recorded runs whose event spans overlap the selected window. A
+silent gap within that span remains visible. Families are not source instances;
+absent declarations or entirely unrecorded runs leave completeness unknown.
+
 Use `EventValidationHealth()` as the source for a Fabric Activator rule. Trigger
 when `alert_state` equals `ALERT` (or `issue_count` is greater than zero), then
 route the action to the test-data steward through Teams or email. Keeping this
@@ -71,10 +82,10 @@ preservation.
 
 ## Outcome
 
-- **Test-floor engineers:** the `MDA Live Test Control` Real-Time Dashboard
-    queries Eventhouse directly with live refresh. It presents raw-event volume,
-    latest source readiness, a mission timeline, command-flow latency, and the
-    malformed-event quarantine queue in one operational view.
+- **Test-floor engineers:** the `MDA Live Test Control` item opens **Evidence
+    Review**, with explicit clock bases, declared source-family coverage,
+    deduplicated event counts, reported processing duration, and rejected
+    envelopes. Automatic refresh alone does not establish live currency.
 - **Leadership:** the `MDA During-Test Decision Brief` Power BI report presents
     the execution recommendation, review posture, recovery ownership,
     acknowledgment state, and evidence-backed findings. Its second page provides
@@ -95,3 +106,33 @@ the Eventstream route is published, and an end-to-end event is observed.
 See [LIVE_OPERATIONS_DESIGN.md](LIVE_OPERATIONS_DESIGN.md) for the role-specific
 test-floor and director experiences, state semantics, demonstration sequence,
 and acceptance criteria required before the demo is presented as live.
+
+## Clock and Replay Contract
+
+- `event_time_utc`: synthetic event time; not the receiver clock.
+- `ingest_time_utc`: synthetic source receipt retained from the input.
+- `published_time_utc`: actual producer publication time, added without
+    overwriting the source receipt field.
+- `ingestion_time()`: approximate Eventhouse receipt time; it is not proof of
+    clock synchronization or exact transport latency. Old rows may return null.
+- A default replay invocation creates a unique run ID and shifts the latest
+    event to playback start so accelerated events do not sit in the future.
+    `recorded_*` fields preserve shifted originals. `--keep-event-times` retains
+    the original window; `--run-id` explicitly reuses an identity for idempotency tests.
+
+The dashboard's raw/rejected tiles use a receipt window; its analytical tiles use
+an event window. Do not reconcile those counts across unlike clocks. For the
+local recorded fixture, use the [quick-look](../../shared/integrated-test-data/projections/realtime/QUICK_LOOK.md)
+and its [build script](../../shared/integrated-test-data/scripts/build_review_package.py).
+The package verifies local bytes and leaves review pending.
+
+Before presentation, deploy the schema and execute
+[AcceptanceChecks.kql](fabric-items/kqldb_mda_test.KQLDatabase/AcceptanceChecks.kql).
+Fabric's item-definition importer does not accept ingestion-time policy commands.
+Execute [ReceiptClockSetup.kql](fabric-items/kqldb_mda_test.KQLDatabase/ReceiptClockSetup.kql)
+separately before ingesting the rehearsal, and verify receipt timestamps. The
+setting does not add timestamps retroactively to previously ingested rows.
+Require six cases and zero failures. Separately verify a post-run empty window,
+a declared family with no observations, receipt timestamps, and duplicate
+reconciliation in a clean rehearsal. These are service-side gates, not claims
+made by local source-contract tests.

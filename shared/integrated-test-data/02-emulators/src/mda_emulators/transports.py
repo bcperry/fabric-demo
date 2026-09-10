@@ -109,7 +109,7 @@ class KafkaTransport:
 
 def _stamp_publish_time(event: dict[str, Any]) -> dict[str, Any]:
     published_event = dict(event)
-    published_event["ingest_time_utc"] = (
+    published_event["published_time_utc"] = (
         datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     )
     return published_event

@@ -1,0 +1,12 @@
+let valid = dynamic({"event_id":"acceptance-001","event_type":"command.integration","site_id":"site-demo","source_system":"DEMO_SOURCE","source_instance_id":"demo-01","event_time_utc":"2026-09-01T14:00:00Z"});
+let cases = union
+    (print topic='ACCEPT', key='', event=valid),
+    (print topic='MISSING_SOURCE_SYSTEM', key='', event=bag_remove_keys(valid, dynamic(['source_system']))),
+    (print topic='MISSING_SOURCE_INSTANCE_ID', key='', event=bag_remove_keys(valid, dynamic(['source_instance_id']))),
+    (print topic='INVALID_EVENT_TIME', key='', event=bag_set_key(valid, 'event_time_utc', '2026-02-30T14:00:00Z')),
+    (print topic='INVALID_EVENT_TIME', key='', event=bag_set_key(valid, 'event_time_utc', '2026/09/01 14:00:00')),
+    (print topic='UNSUPPORTED_EVENT_TYPE', key='', event=bag_set_key(valid, 'event_type', 'unsupported'));
+ClassifyIntegratedTestEvents(cases)
+| extend Expected=iff(topic == 'ACCEPT', '', topic)
+| summarize Cases=count(), Failures=countif(reason_code != Expected)
+| extend Passed=Cases == 6 and Failures == 0
