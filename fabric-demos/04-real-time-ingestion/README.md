@@ -1,5 +1,65 @@
 # 04 - Real-Time Ingestion
 
+## On-demand Live Test
+
+The separate [Live Test folder](https://app.fabric.microsoft.com/groups/10327698-2b0d-446f-9b1b-beabe18a4bda/list?subfolderId=124442)
+contains an on-demand synthetic asset stream, independent of the governed evidence stream below.
+
+1. Open [Start Live Test](https://app.fabric.microsoft.com/groups/10327698-2b0d-446f-9b1b-beabe18a4bda/synapsenotebooks/0025467b-0c80-4b3d-ae03-241016221e19) and select **Run all**.
+2. On the first run in a Spark session, complete the Microsoft device-code sign-in shown in the cell output. Use an account with permission to read/start/stop `job-mda-live-test` in the commercial demo subscription. Tokens remain in session memory, not notebook source. Tenant Conditional Access may restrict this flow.
+3. Open [Live Test - Asset Monitor](https://app.fabric.microsoft.com/groups/10327698-2b0d-446f-9b1b-beabe18a4bda/kustodashboards/f4b3e1bd-a1c1-4bd3-a581-98fc9a6912f0). The map shows five-second breadcrumb positions from the current flight's last hour, plus a distinct latest-position marker labeled with asset and freshness status. Previous flights are excluded. These are dots, not a connected route line. The other tiles show recent records, altitude, temperature, and error word. Zoom out for Pacific context as needed.
+4. A flight runs for 15 minutes and stops automatically. Change `ACTION` to `status` or `stop` and rerun the cell to inspect or stop it. Restore `start` for the next flight. The active-execution check avoids ordinary repeated clicks, but is not an atomic multi-user lock.
+
+The dashboard requests live updates with a 10-second minimum and a 30-second fallback.
+This is refreshed telemetry, not frame-by-frame animation. `LIVE` means sample age under
+30 seconds; `STALE` retains the last point after a flight stops; `NO DATA` means no sample
+in the last day. Receipt lag is approximate and depends on clock alignment. These are
+synthetic visualization trajectories, not validated flight dynamics or operational readiness decisions.
+
+The manual Container Apps Job runs in East US 2 (Central US compute capacity was unavailable).
+Its managed identity sends to `target-vehicle-telemetry` in the existing Event Hubs namespace.
+`live_target_telemetry` consumes through `fabric-live-test`, using workspace identity, and writes
+`RawTargetVehicleEvents` in the existing Eventhouse. The original `mda-test-events`,
+`RawIntegratedTestEvents`, capacity, and evidence dashboards are unchanged.
+
+Deployment source: [live-test.bicep](infrastructure/live-test.bicep),
+[LiveTest.kql](fabric-items/kqldb_mda_test.KQLDatabase/LiveTest.kql), and
+[publish_live_test.py](scripts/publish_live_test.py). Deploy infrastructure with `deployJob=false`,
+build the image in ACR, then redeploy with `deployJob=true`:
+
+```bash
+az cloud set --name AzureCloud
+az account set --subscription a679b60b-99ab-4a54-ac23-2523c39342de
+az deployment group create -g fabric-mda-demo -n demo04-live-test --template-file fabric-demos/04-real-time-ingestion/infrastructure/live-test.bicep
+az acr build --registry mdalive4u6mawdzlpyh4 --image target-vehicle:live-test-v1 --file shared/integrated-test-data/02-emulators/Dockerfile.target-vehicle shared/integrated-test-data/02-emulators
+az deployment group create -g fabric-mda-demo -n demo04-live-test --template-file fabric-demos/04-real-time-ingestion/infrastructure/live-test.bicep --parameters deployJob=true
+uv run --no-project python fabric-demos/04-real-time-ingestion/scripts/publish_live_test.py dashboard
+uv run --no-project python fabric-demos/04-real-time-ingestion/scripts/publish_live_test.py notebook
+```
+
+Execute the additive KQL setup script against the existing database using the Kusto management
+endpoint, not the database item-definition importer. The publisher targets this deployment's
+workspace, folder, and database IDs; it does not provision a new Fabric workspace.
+The Eventstream connection was configured in Fabric UI: Azure Event Hubs, workspace identity,
+consumer group `fabric-live-test`, JSON, then connect the default stream to the Eventhouse
+destination and Publish. Its exported definition is a record of the working connection,
+not a portable credential or standalone connection provisioning template.
+
+NotebookUtils does not support the ARM token audience. A Key Vault-backed launcher was tested
+but blocked by enforced private-network policy; its unused resources were removed without a
+policy exception. The selected launcher instead uses interactive MSAL device-code authentication.
+Spark startup and Container Apps cold starts add launch delay. Stop the Spark session after use.
+The producer has no always-running replica; ACR storage, Event Hubs, Fabric capacity, and related
+retention still incur costs while no flight is active.
+
+Verification on 2026-09-15: a full bounded job succeeded; live records, a map marker, and all
+three channel charts were observed in Fabric. The exact launcher control function started a
+second Azure execution using CLI authentication. That complete flight retained exactly 18,000
+TSPI, 1,800 temperature, and 900 error-word events; both jobs ended `Succeeded`.
+Notebook export confirms device-code authentication. All six focused tests pass:
+`uv run --no-project --with msal --with requests python -m unittest discover -s tests -p test_live_test.py -v`.
+The revised notebook's interactive user sign-in still requires an end-user check.
+
 Exercise governed during-test findings through Eventstream and Eventhouse. The
 runnable deterministic fixture contains 15 raw records across five event types
 and six source systems, including one duplicate, one malformed record, and one

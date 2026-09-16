@@ -1,0 +1,62 @@
+{
+  "sources": [
+    {
+      "id": "24035c3b-5a1b-44b4-993b-e09d3ab23acf",
+      "name": "azure-event-hub",
+      "type": "AzureEventHubExtended",
+      "properties": {
+        "dataConnectionId": "e561105c-4d87-4260-b76b-b582c8ef7dfe",
+        "consumerGroupName": "fabric-live-test",
+        "startPosition": "Latest"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "id": "32d14ac9-2659-44b9-800a-365ca4d6b93c",
+      "name": "raw-target-telemetry",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "10327698-2b0d-446f-9b1b-beabe18a4bda",
+        "itemId": "210c14b4-028c-4db9-91f2-e617cd21a2dc",
+        "databaseName": "kqldb_mda_test",
+        "tableName": "RawTargetVehicleEvents",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "live_target_telemetry-stream"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "live_target_telemetry-stream",
+          "schema": {
+            "columns": []
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "15dd79ca-145d-4c2b-a41f-d0fb0456cf72",
+      "name": "live_target_telemetry-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "azure-event-hub"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

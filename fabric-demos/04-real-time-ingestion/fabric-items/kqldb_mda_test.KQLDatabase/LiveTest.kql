@@ -1,0 +1,45 @@
+.create-merge table RawTargetVehicleEvents (topic:string, key:string, event:dynamic)
+.alter table RawTargetVehicleEvents policy ingestiontime true
+.alter table RawTargetVehicleEvents policy streamingingestion enable
+.alter-merge table RawTargetVehicleEvents policy retention softdelete = 7d
+.create-or-alter function with (folder='Live Test') LiveTargetEvents() {
+    RawTargetVehicleEvents
+    | where event.schema_version == 'target-vehicle.v1' and event.synthetic == true
+    | extend EventTime=todatetime(event.event_time_utc), ReceivedAt=ingestion_time(),
+        Vehicle=tostring(event.vehicle_id), Run=tostring(event.run_id),
+        EventId=tostring(event.event_id), Sequence=tolong(event.sequence_number),
+        Channel=tostring(event.channel), ElapsedSeconds=toreal(event.elapsed_seconds),
+        Latitude=toreal(event.data.latitude_deg), Longitude=toreal(event.data.longitude_deg),
+        AltitudeM=toreal(event.data.altitude_m), TemperatureC=toreal(event.data.temperature_c),
+        ErrorWord=toint(event.data.error_word)
+    | where isnotnull(EventTime) and isnotempty(Run) and isnotempty(Vehicle)
+    | summarize arg_max(ReceivedAt, *) by Vehicle, Run, EventId
+}
+.create-or-alter function with (folder='Live Test') LiveTargetStatus() {
+    LiveTargetEvents()
+    | where EventTime > ago(1d)
+    | summarize arg_max(EventTime, *)
+    | project Mode=case(isnull(EventTime), 'NO DATA', EventTime > now() + 5s, 'CLOCK ERROR',
+        EventTime > ago(30s), 'LIVE', 'STALE'), Vehicle, Run,
+        LatestSampleUTC=EventTime, LatestReceiptUTC=ReceivedAt,
+        SampleAgeSeconds=datetime_diff('second', now(), EventTime),
+        ApproximateReceiptLagSeconds=datetime_diff('millisecond', ReceivedAt, EventTime) / 1000.0,
+        ClockUTC=now(), Notice='SYNTHETIC - visualization telemetry, not flight dynamics'
+}
+.create-or-alter function with (folder='Live Test') LiveTargetPosition() {
+    LiveTargetEvents()
+    | where Channel == 'tspi' and EventTime > ago(1d)
+    | where Latitude between (-90.0 .. 90.0) and Longitude between (-180.0 .. 180.0)
+    | summarize arg_max(EventTime, *) by Vehicle
+    | project Vehicle, Run, EventTime, Latitude, Longitude, AltitudeM,
+        Mode=iff(EventTime > ago(30s), 'LIVE', 'STALE')
+}
+.create-or-alter function with (folder='Live Test') LiveTargetTrail() {
+    let currentRuns = LiveTargetPosition() | project Vehicle, Run;
+    LiveTargetEvents()
+    | where Channel == 'tspi' and EventTime > ago(1h)
+    | join kind=inner currentRuns on Vehicle, Run
+    | summarize arg_max(EventTime, *) by Vehicle, Run, bin(ElapsedSeconds, 5.0)
+    | project Vehicle, Run, EventTime, Latitude, Longitude, AltitudeM
+    | order by EventTime asc
+}
