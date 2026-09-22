@@ -2,11 +2,11 @@
 
 This repository demonstrates how Microsoft Fabric turns synthetic test records
 into traceable analytical evidence. Start the audience experience with
-[From Data Discrepancy to Reviewable Evidence](DEMO_WALKTHROUGH.md). Use the six
-technical modules below as supporting deep dives.
+the [Fabric demo team brief](DEMO_BRIEF.md): what to show, coverage of the
+demo-review must-haves, verified results and remaining work. Use the six technical
+modules below as supporting deep dives.
 
-The [implementation plan](DEMO_BUILD_PLAN.md) separates local checks from the
-Fabric deployment gates. The [recorded quick-look](shared/integrated-test-data/projections/realtime/QUICK_LOOK.md)
+The [recorded quick-look](shared/integrated-test-data/projections/realtime/QUICK_LOOK.md)
 is a reproducible evidence package, not a human approval or live operational view.
 
 ## Simulated Data

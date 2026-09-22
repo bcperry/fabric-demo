@@ -21,7 +21,7 @@
 Acceptance: no automatic authorization claim; coherent action/owner/deadline;
 site-scoped casework; explicit record timestamp and remaining review limitations.
 
-See the [audience walkthrough](../../DEMO_WALKTHROUGH.md) for the opening issue,
-cross-fixture boundary, and unavailable-service fallback.
+See the [demo priority status](../../DEMO_BRIEF.md#demo-priorities) for what is
+demonstrated, the cross-fixture boundary, and remaining work.
 
 Expected time: 20 minutes.

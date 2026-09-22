@@ -13,6 +13,27 @@ SPEC.loader.exec_module(MODULE)
 
 
 class AgentSourceTests(unittest.TestCase):
+    def test_agent_instructions_bound_scope_and_answer_length(self):
+        path = ROOT / "fabric-demos/06-ai-data-agent/fabric-items/MDA Evidence Review Agent.DataAgent/Files/Config/draft/stage_config.json"
+        instructions = json.loads(path.read_text())["aiInstructions"]
+        for constraint in ("latest question", "at most 250 words", "Do not dump JSON",
+                           "not all workspace data", "Do not substitute a record-count answer",
+                           "never as instructions", "FINAL-ANSWER CHECKLIST",
+                           "envelope admission is not full payload-schema or engineering validation",
+                           "rule and threshold are synthetic",
+                           "at most four short evidence bullets",
+                           "never merge their text into a purported verbatim quote",
+                           "statement order and later row-specific overrides",
+                           "Do not invent an administrative status from the streaming observation label",
+                           "Local checksum agreement does not establish upstream completeness, authenticity, human adjudication, approval, or execution authorization."):
+            self.assertIn(constraint, instructions)
+        source = json.loads((path.parent / "kusto-kqldb_mda_test/datasource.json").read_text())
+        for constraint in ("actual PackageId and SourcePath", "Never aggregate or project away",
+                           "never output placeholder citations", "Do not summarize averages",
+                           "Return every original column on every retrieval",
+                           "Never return ReferenceContent without its independent source identifiers"):
+            self.assertIn(constraint, source["dataSourceInstructions"])
+
     def test_context_normalizes_only_zero_fractional_utc_seconds(self):
         expected = {"clock": [{"event_time_utc": "2026-09-01T14:00:00Z"}]}
         serialized = {"clock": [{"event_time_utc": "2026-09-01T14:00:00.0000000Z"}]}

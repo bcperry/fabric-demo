@@ -144,7 +144,7 @@ class AnswerAcceptanceTests(unittest.TestCase):
 
     def test_walkthrough_links_resolve(self):
         for relative in (
-            "DEMO_BUILD_PLAN.md", "DEMO_WALKTHROUGH.md", "README.md",
+            "DEMO_BRIEF.md", "README.md", "shared/setup-scripts/FABRIC_CLI.md",
             "fabric-demos/03-star-schema-bi/DEMO_SCRIPT.md",
             "fabric-demos/04-real-time-ingestion/DEMO_SCRIPT.md",
             "fabric-demos/04-real-time-ingestion/README.md",

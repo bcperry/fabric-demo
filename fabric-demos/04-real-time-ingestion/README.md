@@ -60,6 +60,132 @@ Notebook export confirms device-code authentication. All six focused tests pass:
 `uv run --no-project --with msal --with requests python -m unittest discover -s tests -p test_live_test.py -v`.
 The revised notebook's interactive user sign-in still requires an end-user check.
 
+## Local Live Test Rehearsal
+
+From the repository root, run the actual stdout producer with the pinned
+`normal-collection` input (one simulated second at 20/2/1 Hz for TSPI/temperature/error):
+
+```bash
+uv run --no-project python fabric-demos/04-real-time-ingestion/scripts/rehearse_live_test.py \
+    --output-directory /tmp/live-test-rehearsal-001
+```
+
+Choose a **new directory for every run**, including retries after failure; existing
+directories and symlinks are rejected, never overwritten. The default seed is 42;
+`--run-id` optionally supplies a canonical UUID, otherwise one is generated.
+[rehearse_live_test.py](scripts/rehearse_live_test.py) validates the
+[catalog](../../shared/integrated-test-data/01-contracts/examples/live-test-catalog.json)
+through [live_test_contracts.py](scripts/live_test_contracts.py), hashes the actual
+[input bytes](../../shared/integrated-test-data/01-contracts/examples/live-test-input.json),
+and checks that their parameters match the request. The input SHA256 is
+`4fb31de318a7544f5363e2365e4cd0fca32344cc7c4fe9df5479acd73f985e6f`.
+
+**Freshness expires after 24 hours from the fixture's `received_at`.** The checked-in
+value is `2026-09-18T00:00:00Z`; requests after `2026-09-19T00:00:00Z` fail validation.
+The script does not refresh timestamps. A later rehearsal needs an explicitly
+refreshed, consistent catalog/provenance supplied with `--catalog`; do not bypass
+the freshness check or treat fixture timestamps as real receipt evidence.
+
+Successful output retains the unchanged REQUESTED snapshot, input bytes, raw stdout
+and stderr, local execution provenance, a sanitized `evidence/` bundle, and an outer
+SHA256/size index. Expect 23 telemetry records (20/2/1) and started/completed
+diagnostics. `LOCAL_SOURCE_SHA256` hashes Python source, **not a container image**;
+the catalog image digest remains a non-deployable `SYNTHETIC_PLACEHOLDER`.
+`LOCAL_DECLARED` requester identity grants no RBAC or authorization. This workflow
+uses no cloud, broker, or image resolution; local `COMPLETE` is not ingestion,
+domain validation, review approval, or operational readiness evidence.
+
+## Read-Only Export and Collection
+
+[export_live_test_evidence.py](scripts/export_live_test_evidence.py) reads an existing
+Azure execution, structured Log Analytics diagnostics, and optionally Eventhouse
+telemetry. It does not start jobs or change resources. Use an existing Azure CLI
+login with read permissions; replace these **non-secret** placeholders with verified
+identifiers for the intended run. The workspace ID is its customer UUID, not ARM ID.
+Run from the repository root, using new export and collection directories:
+
+```bash
+export LIVE_TEST_RUN_ID='<canonical-run-uuid>'
+export LIVE_TEST_EXECUTION_ID='<execution-name>'
+export LIVE_TEST_JOB_RESOURCE_ID='/subscriptions/<subscription-uuid>/resourceGroups/<resource-group>/providers/Microsoft.App/jobs/<job-name>'
+export LIVE_TEST_LOG_WORKSPACE_ID='<workspace-customer-uuid>'
+export LIVE_TEST_KUSTO_ENDPOINT='https://<cluster>.kusto.fabric.microsoft.com'
+export LIVE_TEST_DATABASE='<database-name>'
+
+uv run --no-project --with requests python fabric-demos/04-real-time-ingestion/scripts/export_live_test_evidence.py \
+    --run-id "$LIVE_TEST_RUN_ID" --execution-id "$LIVE_TEST_EXECUTION_ID" \
+    --job-resource-id "$LIVE_TEST_JOB_RESOURCE_ID" --log-workspace-id "$LIVE_TEST_LOG_WORKSPACE_ID" \
+    --kusto-endpoint "$LIVE_TEST_KUSTO_ENDPOINT" --database "$LIVE_TEST_DATABASE" \
+    --output-directory /tmp/live-test-export-001
+
+uv run --no-project python fabric-demos/04-real-time-ingestion/scripts/collect_live_test.py \
+    --manifest /tmp/live-test-export-001/manifest.json \
+    --execution /tmp/live-test-export-001/execution.json \
+    --telemetry /tmp/live-test-export-001/telemetry.json \
+    --diagnostics /tmp/live-test-export-001/diagnostics.json \
+    --output-directory /tmp/live-test-evidence-001
+```
+
+Omit both Kusto options to skip telemetry acquisition; that cannot establish complete
+evidence. Export requires one distinct `started` diagnostic. Missing or delayed logs
+are not fabricated; tagged execution images do not establish a digest. Platform logs
+remain separate, job-scoped evidence, not proof of execution linkage. Same-run retries
+cannot reliably be distinguished. Export does not validate the strict local fixture
+contract or recover its input provenance.
+
+[collect_live_test.py](scripts/collect_live_test.py) also accepts supplied local files:
+manifest/execution as JSON objects, telemetry/diagnostics as JSON arrays or JSONL.
+It writes immutable, sanitized, hashed bundles. Identical sanitized inputs may verify
+an existing bundle; conflicting inputs require a **new revision directory**. A
+successful execution or terminal `emitted_counts` alone cannot establish completeness.
+The collector does not acquire raw streams, verify broker receipts, authenticate pins,
+or prove more than manifest membership for execution linkage.
+
+## Verification Boundary
+
+As of 2026-09-18, 105 live-test tests and 24 emulator tests passed. These local results
+do not establish cloud delivery. The approved Azure logging deployment
+`live-test-observability-20260918` succeeded: `log-mda-live-test` has 30-day retention,
+the environment uses the `azure-monitor` destination, and `budget-mda-live-test`
+provides a $50 monthly resource-group budget with actual-cost alerts at 80% and 100%
+to the confirmed recipient. Alerts are not a spending cap.
+
+For the approved deployment, [live-test.bicep](infrastructure/live-test.bicep) accepts
+`imageDigest` (`sha256:<64 lowercase hex characters>`) to pin the job image instead
+of a tag. Do not use the local placeholder digest. Use the isolated
+[observability template](infrastructure/live-test-observability.bicep) for logging
+and budget setup; it references the existing environment, requires its
+`azure-monitor` destination to be set separately, and accepts a confirmed budget
+recipient plus start/end dates without redeploying the job.
+The digest-pinned image completed a ten-second Azure run with 200/20/10 events
+received in Eventhouse and both lifecycle diagnostics retrieved after exit.
+The initially paused capacity and Live Test source/destination had to be resumed;
+verify all three before starting a demonstration. Capacity remains running at
+the user's request. Platform-log export is still unverified.
+
+[publish_live_test_bundle.py](scripts/publish_live_test_bundle.py) publishes the
+collector's five-file bundle to content-addressed OneLake paths, verifies remote
+bytes, and writes the completion index last. It rejects conflicting files and
+supports identical retries without overwrites:
+
+```bash
+uv run --no-project --with requests python fabric-demos/04-real-time-ingestion/scripts/publish_live_test_bundle.py \
+    --workspace-id 10327698-2b0d-446f-9b1b-beabe18a4bda \
+    --lakehouse-id 20efb687-f88b-4c10-8aac-a97974b5bdfe \
+    --bundle-directory /tmp/live-test-evidence-001
+```
+
+Publication and an identical retry were verified for the complete cloud run.
+See the [retained run evidence](../../DEMO_BRIEF.md#retained-run-evidence)
+for exact IDs, digest, receipt counts and retained evidence path. OneLake retains
+sanitized telemetry identities and measurement hashes; full measurement payloads
+remain in Eventhouse. Collection is not yet automatically scheduled or governed
+by a new control service, and hash verification is not approval or a signature.
+Interactive end-user notebook sign-in also remains **UNVERIFIED**; the historical
+flight verification above does not close that gate.
+
+## Governed Evidence Fixture
+
 Exercise governed during-test findings through Eventstream and Eventhouse. The
 runnable deterministic fixture contains 15 raw records across five event types
 and six source systems, including one duplicate, one malformed record, and one

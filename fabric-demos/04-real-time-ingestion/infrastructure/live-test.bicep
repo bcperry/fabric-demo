@@ -3,7 +3,20 @@ param computeLocation string = 'eastus2'
 param eventHubsNamespaceName string = 'evh-mda-demo04-nqajiaxw'
 param deployJob bool = false
 param imageTag string = 'live-test-v1'
+@description('Fresh build digest (sha256:...). When supplied, overrides imageTag. Empty retains the legacy tag fallback; supply a digest for P2 deployment.')
+param imageDigest string = ''
 param fabricWorkspacePrincipalId string = '1e4bc00c-7bac-4c5d-9bcd-a399e53e8ac4'
+
+param enableObservability bool = false
+@description('Empty omits appLogsConfiguration as before. Observability requires azure-monitor. Use the isolated template and CLI environment update for an existing deployment.')
+@allowed(['', 'azure-monitor'])
+param logsDestination string = enableObservability ? 'azure-monitor' : ''
+@description('Confirmed notification email, required when enableObservability is true. No default recipient is assumed.')
+param budgetContactEmail string = ''
+@description('First day of the current month in UTC, required when enableObservability is true.')
+param budgetStartDate string = ''
+@description('Future budget expiration in UTC, required when enableObservability is true.')
+param budgetEndDate string = ''
 
 var suffix = uniqueString(resourceGroup().id)
 
@@ -74,9 +87,20 @@ resource environment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: 'cae-mda-live-test-${computeLocation}'
   location: computeLocation
   properties: {
+    ...(empty(logsDestination) ? {} : { appLogsConfiguration: { destination: logsDestination } })
     workloadProfiles: [
       { name: 'Consumption', workloadProfileType: 'Consumption' }
     ]
+  }
+}
+
+module observability 'live-test-observability.bicep' = if (enableObservability) {
+  params: {
+    location: computeLocation
+    environmentName: environment.name
+    budgetContactEmail: budgetContactEmail
+    budgetStartDate: budgetStartDate
+    budgetEndDate: budgetEndDate
   }
 }
 
@@ -103,7 +127,9 @@ resource job 'Microsoft.App/jobs@2024-03-01' = if (deployJob) {
       containers: [
         {
           name: 'target-vehicle'
-          image: '${registry.properties.loginServer}/target-vehicle:${imageTag}'
+          image: empty(imageDigest)
+            ? '${registry.properties.loginServer}/target-vehicle:${imageTag}'
+            : '${registry.properties.loginServer}/target-vehicle@${imageDigest}'
           args: ['--transport', 'kafka', '--event-hubs', '--duration', '900']
           env: [
             { name: 'KAFKA_BOOTSTRAP_SERVERS', value: '${namespace.name}.servicebus.windows.net:9093' }

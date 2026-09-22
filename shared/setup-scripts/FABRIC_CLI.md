@@ -60,7 +60,7 @@ and verify both a populated historical window and an empty disjoint window.
 deploys the source-bound agent draft using REST (the installed CLI does not
 recognize `DataAgent` paths). `provision-demo-06-ontology` uses the bundled wheel
 with its required `requests` and `pandas` dependencies. See the
-[current platform blockers](../../FABRIC_VERIFICATION.md#blocking-gates) before
+[verified status and remaining work](../../DEMO_BRIEF.md#verified-status) before
 presenting either capability.
 
 The [mirrored-update rehearsal](../../fabric-demos/02-database-mirroring/rehearse_update.py)

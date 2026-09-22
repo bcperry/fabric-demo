@@ -1,3 +1,5 @@
+import io
+import json
 import math
 import random
 import statistics
@@ -6,6 +8,7 @@ import sys
 import threading
 import unittest
 from collections import Counter
+from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -13,7 +16,7 @@ from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from mda_emulators.target_vehicle import CorrelatedNoise, KafkaSink, TargetVehicle
+from mda_emulators.target_vehicle import CorrelatedNoise, KafkaSink, TargetVehicle, main
 
 
 class TargetVehicleTests(unittest.TestCase):
@@ -102,11 +105,18 @@ class TargetVehicleTests(unittest.TestCase):
 
     def test_cli_output_validation_and_sigterm(self):
         script = Path(__file__).resolve().parents[1] / "src/mda_emulators/target_vehicle.py"
-        completed = subprocess.run([sys.executable, str(script), "--fast", "--duration", "1"],
+        run_id = "8205119a-0922-4510-bb7d-de3c163fcba1"
+        completed = subprocess.run([sys.executable, str(script), "--fast", "--duration", "1", "--run-id", run_id],
                                    capture_output=True, text=True, check=True, timeout=10)
         self.assertEqual(len(completed.stdout.splitlines()), 23)
+        self.assertEqual({json.loads(line)["event"]["run_id"] for line in completed.stdout.splitlines()}, {run_id})
+        diagnostics = [json.loads(line) for line in completed.stderr.splitlines()]
+        self.assertEqual([record["kind"] for record in diagnostics], ["started", "completed"])
+        self.assertEqual({record["run_id"] for record in diagnostics}, {run_id})
+        self.assertEqual(diagnostics[-1]["emitted_counts"], {"tspi": 20, "temperature": 2, "error": 1})
         for arguments in (["--duration", "nan"], ["--error-hz", "20"],
-                          ["--transport", "kafka", "--fast"]):
+                  ["--transport", "kafka", "--fast"], ["--run-id", "bad"],
+                  ["--run-id", run_id, "--loop"]):
             invalid = subprocess.run([sys.executable, str(script), *arguments],
                                      capture_output=True, timeout=10)
             self.assertEqual(invalid.returncode, 2)
@@ -115,12 +125,26 @@ class TargetVehicleTests(unittest.TestCase):
         try:
             self.assertTrue(process.stdout.readline())
             process.terminate()
-            process.communicate(timeout=5)
+            _, stderr = process.communicate(timeout=5)
             self.assertEqual(process.returncode, 0)
+            self.assertEqual(json.loads(stderr.splitlines()[-1])["kind"], "canceled")
         finally:
             if process.poll() is None:
                 process.kill()
                 process.communicate()
+
+    def test_delivery_failure_has_no_completion_or_secret(self):
+        sink = Mock()
+        sink.publish.side_effect = RuntimeError("sensitive broker configuration")
+        stderr = io.StringIO()
+        with patch("mda_emulators.target_vehicle.KafkaSink", return_value=sink), \
+                patch("mda_emulators.target_vehicle.signal.signal"), \
+                redirect_stderr(stderr), redirect_stdout(io.StringIO()):
+            result = main(["--transport", "kafka", "--bootstrap-servers", "localhost:9092", "--duration", "1"])
+        self.assertEqual(result, 1)
+        self.assertEqual([json.loads(line)["kind"] for line in stderr.getvalue().splitlines()], ["started", "failed"])
+        self.assertNotIn("sensitive", stderr.getvalue())
+        sink.close.assert_called_once()
 
 
 if __name__ == "__main__":

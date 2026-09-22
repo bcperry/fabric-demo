@@ -156,6 +156,36 @@ With `--seed`, subsequent flights use seed + flight index. Samples use the
 half-open interval `[0, duration)`. Internal rates must stay below the TSPI rate.
 `--fast` is limited to stdout to prevent accidental Kafka floods.
 
+For a caller-issued identity, pass `--run-id <canonical-uuid>` or set
+`LIVE_TEST_RUN_ID`. UUIDs are parsed and emitted in canonical form; omission
+generates a fresh UUID. An explicit run ID cannot be combined with `--loop`.
+
+### Local Live Test Evidence
+
+From the repository root (not this package directory):
+
+```bash
+uv run --no-project python fabric-demos/04-real-time-ingestion/scripts/rehearse_live_test.py \
+  --output-directory /tmp/live-test-rehearsal-001
+```
+
+This invokes the actual producer with stdout/`--fast`, seed 42, and the
+`normal-collection` input: one simulated second at 20/2/1 Hz, producing 23 records.
+It verifies the actual input bytes against the catalog SHA256, retains raw stdout
+and stderr, and indexes the local evidence. Every run or retry requires a new
+directory; no existing output is overwritten. The checked-in fixture expires
+24 hours after `received_at` (`2026-09-19T00:00:00Z` is its current boundary);
+stale input fails rather than silently refreshing timestamps.
+
+The local producer source hash is not a real image digest; the catalog image pin
+is a non-deployable synthetic placeholder. `LOCAL_DECLARED` identity grants no
+RBAC. There is no cloud access or ingestion claim. See the
+[Live Test workflow](../../../fabric-demos/04-real-time-ingestion/README.md#local-live-test-rehearsal)
+for the input hash, freshness requirements, immutable collection revisions, and
+read-only Azure export commands. At the 2026-09-18 checkpoint, 79 live-test tests
+and 24 emulator tests passed; updated-image execution and durable cloud logs
+remain UNVERIFIED.
+
 For secured Kafka, mount a librdkafka JSON configuration as a Kubernetes Secret
 and set `KAFKA_CONFIG_FILE` to its path. For Event Hubs, add `--event-hubs`, use
 the namespace endpoint on port 9093, assign Azure Event Hubs Data Sender, and
@@ -203,5 +233,11 @@ The producer paces against a monotonic clock, flushes on SIGTERM/SIGINT, and
 exits with an error on failed delivery or exhausted queue wait. Kafka uses
 idempotence and all-replica acknowledgements, but has no durable local spool
 or restart checkpoint. A restarted pod begins a new flight; it does not promise
-end-to-end exactly-once delivery. Startup IDs/seeds go to stderr; stdout stays
-JSONL. No HTTP service or inbound port is required.
+end-to-end exactly-once delivery. Stderr contains structured JSONL diagnostics
+with schema `live-test-diagnostic.v1`: `started`, then `completed`, `canceled`
+on a handled stop, or `failed` on a runtime/delivery error. Records include run
+and vehicle IDs, seed, UTC time, duration, rates, and `emitted_counts`. These
+counts represent producer output/attempted enqueues, **not confirmed ingestion**.
+A failed run does not emit `completed`; abrupt termination may leave no terminal
+record. Stdout stays telemetry JSONL in stdout mode. No HTTP service or inbound
+port is required.

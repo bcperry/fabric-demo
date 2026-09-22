@@ -146,7 +146,7 @@ class KafkaSink:
                 raise RuntimeError("Kafka delivery failed; check broker access and topic configuration")
             try:
                 self.producer.produce(topic, key=key, value=value, on_delivery=self.delivered)
-                return
+                return True
             except BufferError:
                 if time.monotonic() >= deadline:
                     raise RuntimeError("Kafka producer queue remained full for 20 seconds") from None
@@ -182,6 +182,8 @@ def main(argv=None):
     parser.add_argument("--temperature-hz", type=positive_number, default=2.0)
     parser.add_argument("--error-hz", type=positive_number, default=1.0)
     parser.add_argument("--seed", type=int, help="Optional replay seed; otherwise generated from OS entropy")
+    parser.add_argument("--run-id", type=uuid.UUID, default=os.getenv("LIVE_TEST_RUN_ID"),
+                        help="Caller-issued UUID for a single run; generated when omitted")
     parser.add_argument("--loop", action="store_true", help="Start another independent flight after each arc")
     parser.add_argument("--fast", action="store_true", help="Generate without wall-clock pacing (stdout only)")
     args = parser.parse_args(argv)
@@ -191,37 +193,57 @@ def main(argv=None):
         parser.error("Kafka requires --bootstrap-servers and does not allow --fast")
     if args.event_hubs and args.transport != "kafka":
         parser.error("--event-hubs requires --transport kafka")
+    if args.run_id and args.loop:
+        parser.error("--run-id cannot be combined with --loop")
     stopped = threading.Event()
     for signal_number in (signal.SIGINT, signal.SIGTERM):
         signal.signal(signal_number, lambda _number, _frame: stopped.set())
-    sink = KafkaSink(args) if args.transport == "kafka" else None
     rates = {"tspi": args.tspi_hz, "temperature": args.temperature_hz, "error": args.error_hz}
     flight_number = 0
-    try:
-        while not stopped.is_set():
-            seed = secrets.randbits(53) if args.seed is None else args.seed + flight_number
-            run_id = str(uuid.uuid4())
-            start = datetime.now(timezone.utc)
-            clock_start = time.monotonic()
-            print(json.dumps({"run_id": run_id, "seed": seed, "vehicle_id": args.vehicle_id}), file=sys.stderr, flush=True)
+    while not stopped.is_set():
+        seed = secrets.randbits(53) if args.seed is None else args.seed + flight_number
+        run_id = str(args.run_id or uuid.uuid4())
+        start = datetime.now(timezone.utc)
+        clock_start = time.monotonic()
+        emitted_counts = dict.fromkeys(rates, 0)
+
+        def diagnostic(kind):
+            print(json.dumps({
+                "schema_version": "live-test-diagnostic.v1", "kind": kind,
+                "run_id": run_id, "vehicle_id": args.vehicle_id, "seed": seed,
+                "event_time_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                "duration_seconds": args.duration, "rates": rates,
+                "emitted_counts": emitted_counts,
+            }, allow_nan=False), file=sys.stderr, flush=True)
+
+        diagnostic("started")
+        sink = None
+        try:
+            sink = KafkaSink(args) if args.transport == "kafka" else None
             vehicle = TargetVehicle(seed, args.duration)
-            for elapsed, event in vehicle.events(start, run_id, args.vehicle_id, rates):
-                if stopped.is_set() or (not args.fast and stopped.wait(max(0, clock_start + elapsed - time.monotonic()))):
-                    break
-                record = {"topic": args.topic, "key": args.vehicle_id, "event": event}
-                payload = json.dumps(record, separators=(",", ":"), allow_nan=False)
-                if sink is None:
-                    print(payload, flush=True)
-                else:
-                    sink.publish(args.topic, args.vehicle_id, payload.encode(), stopped)
-            if not args.fast:
-                stopped.wait(max(0, clock_start + args.duration - time.monotonic()))
-            if not args.loop:
-                break
-            flight_number += 1
-    finally:
-        if sink is not None:
-            sink.close()
+            try:
+                for elapsed, event in vehicle.events(start, run_id, args.vehicle_id, rates):
+                    if stopped.is_set() or (not args.fast and stopped.wait(max(0, clock_start + elapsed - time.monotonic()))):
+                        break
+                    record = {"topic": args.topic, "key": args.vehicle_id, "event": event}
+                    payload = json.dumps(record, separators=(",", ":"), allow_nan=False)
+                    if sink is None:
+                        print(payload, flush=True)
+                    elif not sink.publish(args.topic, args.vehicle_id, payload.encode(), stopped):
+                        break
+                    emitted_counts[event["channel"]] += 1
+                if not args.fast:
+                    stopped.wait(max(0, clock_start + args.duration - time.monotonic()))
+            finally:
+                if sink is not None:
+                    sink.close()
+        except Exception:
+            diagnostic("failed")
+            return 1
+        diagnostic("canceled" if stopped.is_set() else "completed")
+        if not args.loop:
+            break
+        flight_number += 1
     return 0
 
 

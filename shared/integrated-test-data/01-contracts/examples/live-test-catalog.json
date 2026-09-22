@@ -1,0 +1,106 @@
+{
+  "schema_version": "live-test-catalog.v1",
+  "catalog_id": "synthetic-local-live-test",
+  "assets": [
+    {
+      "schema_version": "live-test-asset.v1",
+      "asset_id": "synthetic-producer",
+      "version": "1.0.0",
+      "description": "Local contract descriptor only. Digest is a synthetic placeholder, not a published image. Never launch to Azure.",
+      "owner": "local-fixture-owner",
+      "steward": "local-fixture-steward",
+      "publisher": "local-fixture-publisher",
+      "permitted_use": "LOCAL_CONTRACT_TEST_ONLY",
+      "classification": "SYNTHETIC_UNCLASS",
+      "synthetic": true,
+      "deployable": false,
+      "image_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "digest_kind": "SYNTHETIC_PLACEHOLDER",
+      "input_contract": "live-test-input.v1",
+      "output_contract": "live-test-events.v1",
+      "parameter_bounds": {
+        "duration_seconds": {"min": 1, "max": 300},
+        "tspi_hz": {"min": 0.1, "max": 100},
+        "temperature_hz": {"min": 0.1, "max": 10},
+        "error_hz": {"min": 0.1, "max": 10}
+      },
+      "runtime": {"cpu_cores": 1, "memory_mb": 512, "timeout_seconds": 300},
+      "publication_status": "LOCAL_ONLY"
+    }
+  ],
+  "products": [
+    {
+      "schema_version": "live-test-product.v1",
+      "product_id": "live-test-input",
+      "version": "1.0.0",
+      "description": "Actual local producer duration and rates. Seed is supplied separately in the run request; no domain validation or approval is claimed.",
+      "owner": "local-fixture-owner",
+      "steward": "local-fixture-steward",
+      "permitted_use": "LOCAL_CONTRACT_TEST_ONLY",
+      "classification": "SYNTHETIC_UNCLASS",
+      "synthetic": true,
+      "source": "repository local producer parameter fixture",
+      "uri": "repo://shared/integrated-test-data/01-contracts/examples/live-test-input.json",
+      "sha256": "4fb31de318a7544f5363e2365e4cd0fca32344cc7c4fe9df5479acd73f985e6f",
+      "contract_version": "live-test-input.v1",
+      "effective_at": "2026-09-18T00:00:00Z",
+      "received_at": "2026-09-18T00:00:00Z",
+      "freshness_sla_seconds": 86400,
+      "retention_days": 30,
+      "access_request_path": "local-fixture-owner (descriptive only; grants no access)",
+      "quality_state": "LOCAL_FIXTURE",
+      "review_state": "NOT_REVIEWED",
+      "endorsement_state": "NONE"
+    }
+  ],
+  "presets": [
+    {
+      "schema_version": "live-test-preset.v1",
+      "preset_id": "normal-collection",
+      "version": "1.0.0",
+      "description": "Synthetic local normal-collection contract fixture, not a runnable deployment.",
+      "owner": "local-fixture-owner",
+      "steward": "local-fixture-steward",
+      "permitted_use": "LOCAL_CONTRACT_TEST_ONLY",
+      "classification": "SYNTHETIC_UNCLASS",
+      "synthetic": true,
+      "input": {"product_id": "live-test-input", "version": "1.0.0"},
+      "assets": [{"asset_id": "synthetic-producer", "version": "1.0.0"}],
+      "parameter_bounds": {
+        "duration_seconds": {"min": 1, "max": 120},
+        "tspi_hz": {"min": 0.1, "max": 50},
+        "temperature_hz": {"min": 0.1, "max": 5},
+        "error_hz": {"min": 0.1, "max": 5}
+      },
+      "parameters": {"duration_seconds": 1, "tspi_hz": 20, "temperature_hz": 2, "error_hz": 1},
+      "expected_outputs": ["live-test-events.v1"],
+      "compatibility_rule": "EXACT_CONTRACT_CHAIN"
+    }
+  ],
+  "provenance": [
+    {
+      "schema_version": "live-test-provenance.v1",
+      "provenance_id": "live-test-input-local-pin",
+      "version": "1.0.0",
+      "description": "Actual producer parameter bytes pinned without transformation. Times and identities are fixture values, not receipt or approval evidence.",
+      "owner": "local-fixture-owner",
+      "steward": "local-fixture-steward",
+      "permitted_use": "LOCAL_CONTRACT_TEST_ONLY",
+      "classification": "SYNTHETIC_UNCLASS",
+      "synthetic": true,
+      "source": {
+        "uri": "repo://shared/integrated-test-data/01-contracts/examples/live-test-input.json",
+        "version": "1.0.0",
+        "sha256": "4fb31de318a7544f5363e2365e4cd0fca32344cc7c4fe9df5479acd73f985e6f"
+      },
+      "output": {
+        "product_id": "live-test-input",
+        "version": "1.0.0",
+        "uri": "repo://shared/integrated-test-data/01-contracts/examples/live-test-input.json",
+        "sha256": "4fb31de318a7544f5363e2365e4cd0fca32344cc7c4fe9df5479acd73f985e6f"
+      },
+      "rule_version": "local-source-pin.v1",
+      "recorded_at": "2026-09-18T00:00:00Z"
+    }
+  ]
+}
