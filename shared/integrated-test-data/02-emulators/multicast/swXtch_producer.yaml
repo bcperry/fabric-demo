@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: producer-a
+  labels:
+    app: producer-a
+spec:
+# IF YOU NEED TO FORCE A GIVEN NODE UNCOMMENT AND COMPLETE THE FOLLOWING line
+# nodeName: <NODE-NAME>
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - consumer-a
+            - producer-b
+        topologyKey: kubernetes.io/hostname
+  containers:
+  - name: producer-a
+    image: ubuntu:20.04
+    securityContext:
+      privileged: true
+    env:
+    - name: IS_DAEMON
+      value: "false"
+    - name: PERF_TYPE
+      value: "producer"
+    - name: PERF_NIC
+      value: "eth0"
+    - name: PERF_MCGIP
+      value: "239.0.0.10"
+    - name: PERF_MCGPORT
+      value: "8410"
+    - name: PERF_PPS
+      value: "100"
+    - name: XNIC_SWXTCH_ADDR
+      value: "<swxtch-ctrl-ip>"
+    command: ["/bin/bash"]
+    args: ["-c", "apt update && apt install curl -y;
+                  curl http://$(XNIC_SWXTCH_ADDR)/services/install/swxtch-xnic-k8s-install.sh --output swxtch-xnic-k8s-install.sh; 
+                  chmod +x swxtch-xnic-k8s-install.sh;
+                  ./swxtch-xnic-k8s-install.sh -v 2;
+                  sleep infinity"]

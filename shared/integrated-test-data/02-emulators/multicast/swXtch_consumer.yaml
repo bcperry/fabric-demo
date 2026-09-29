@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consumer-a
+  labels:
+    app: consumer-a
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - producer-a
+            - consumer-b
+        topologyKey: kubernetes.io/hostname
+  containers:
+  - name: consumer-a
+    image: ubuntu:20.04
+    securityContext:
+      privileged: true
+    env:
+    - name: XNIC_SWXTCH_ADDR
+      value: "172.31.80.147"
+    - name: IS_DAEMON
+      value: "false"
+    - name: PERF_TYPE
+      value: "consumer"
+    - name: PERF_NIC
+      value: "eth0"
+    - name: PERF_MCGIP
+      value: "239.0.0.10"
+    - name: PERF_MCGPORT
+      value: "8410"
+    command: ["/bin/bash"]
+    args: ["-c", "apt update && apt install curl -y;
+                  curl http://$(XNIC_SWXTCH_ADDR)/services/install/swxtch-xnic-k8s-install.sh --output swxtch-xnic-k8s-install.sh; 
+                  chmod +x swxtch-xnic-k8s-install.sh;
+                  ./swxtch-xnic-k8s-install.sh -v 2;
+                  sleep infinity"]
